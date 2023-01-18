@@ -1,20 +1,36 @@
-import React, { Component } from "react";
+import React, { Component, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {faFacebook,faGooglePlusG} from "@fortawesome/free-brands-svg-icons";
 import '../css/login.css';
-import '../js/login.js';
 
-export default class Login extends Component{
+const Login = () => {
+    React.useEffect(() => {
+        const signUpButton = document.getElementById('signUp');
+        const logInButton = document.getElementById('logIn');
+        const container = document.getElementById('container');
 
+        signUpButton.addEventListener('click', () => {
+            container.classList.add("right-panel-active");
+        });
 
-    render(){
-        <div class="container" id="container">
-            <div class="form-container sign-up-container">
+        logInButton.addEventListener('click', () => {
+            container.classList.remove("right-panel-active");
+        });
+    }, []);
+
+    return(
+        <div className="container" id="container">
+            <div className="form-container sign-up-container">
                 <form action="#">
                     <h1>Create Account</h1>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                    <div className="social-container">
+                        <a href="#" className="social">
+                        <FontAwesomeIcon className="fab" icon={faFacebook}/>
+                        </a>
+                        <a href="#" className="social">
+                        <FontAwesomeIcon icon={faGooglePlusG} />
+                        </a>
+                        <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
                     </div>
                     <span>or use your email for registration</span>
                     <input type="text" placeholder="Name" />
@@ -23,13 +39,13 @@ export default class Login extends Component{
                     <button>Sign Up</button>
                 </form>
             </div>
-            <div class="form-container log-in-container">
+            <div className="form-container log-in-container">
                 <form action="#">
                     <h1>Log in</h1>
-                    <div class="social-container">
-                        <a href="#" class="social"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#" class="social"><i class="fab fa-google-plus-g"></i></a>
-                        <a href="#" class="social"><i class="fab fa-linkedin-in"></i></a>
+                    <div className="social-container">
+                        <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
+                        <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
+                        <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
                     </div>
                     <span>or use your account</span>
                     <input type="email" placeholder="Email" />
@@ -38,20 +54,21 @@ export default class Login extends Component{
                     <button>Log In</button>
                 </form>
             </div>
-            <div class="overlay-container">
-                <div class="overlay">
-                    <div class="overlay-panel overlay-left">
+            <div className="overlay-container">
+                <div className="overlay">
+                    <div className="overlay-panel overlay-left">
                         <h1>Welcome Back!</h1>
                         <p>Already have an account? Log In</p>
-                        <button class="ghost" id="logIn">Log In</button>
+                        <button className="ghost" id="logIn">Log In</button>
                     </div>
-                    <div class="overlay-panel overlay-right">
+                    <div className="overlay-panel overlay-right">
                         <h1>Hello, There!</h1>
                         <p>Don't have an account? Sign Up Free</p>
-                        <button class="ghost" id="signUp">Sign Up</button>
+                        <button className="ghost" id="signUp">Sign Up</button>
                     </div>
                 </div>
             </div>
         </div>
-    }
+    )
 }
+export default Login
