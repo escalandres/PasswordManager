@@ -20,6 +20,7 @@ body {
 }
 
 h1 {
+    font-size: 2rem;
     font-weight: bold;
     margin: 0;
 }
@@ -42,14 +43,16 @@ span {
 }
 
 a {
-    color: var(--icon);
+    color: #646cff;
     font-size: 14px;
-    text-decoration: none;
+    font-weight: 500;
+    text-decoration: inherit;
     margin: 15px 0;
 }
 
 a:hover{
     text-decoration: underline;
+    color: #535bf2;
 }
 
 button {
@@ -67,6 +70,12 @@ button {
 
 button:active {
     transform: scale(0.95);
+}
+
+button:hover{
+    background-color: #FFFFFF;
+    color: #3F2EFF;
+    border: .1px solid #3F2EFF;
 }
 
 button:focus {
@@ -252,4 +261,8 @@ input {
 
 .h1-black{
     color: var(--icon);
+}
+
+input{
+    border-radius: 2%;
 }

@@ -55,7 +55,7 @@ const Login = () => {
                     </div>
                     <span>or use your account</span>
                     <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
+                    <input type="password" className="mb" placeholder="Password" />
                     <a href="#">Forgot your password?</a>
                     <button>Log In</button>
                 </form>
@@ -75,6 +75,7 @@ const Login = () => {
                 </div>
             </div>
         </div>
+        
     )
 }
 export default Login
