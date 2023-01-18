@@ -1,5 +1,9 @@
 @import url('https://fonts.googleapis.com/css?family=Montserrat:400,800');
 
+:root{
+    --icon: #333;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -33,19 +37,24 @@ p {
 }
 
 span {
+    color: var(--icon);
     font-size: 12px;
 }
 
 a {
-    color: #333;
+    color: var(--icon);
     font-size: 14px;
     text-decoration: none;
     margin: 15px 0;
 }
 
+a:hover{
+    text-decoration: underline;
+}
+
 button {
     border-radius: 20px;
-  border: none;
+    border: none;
     background-color: #3F2EFF;
     color: #FFFFFF;
     font-size: 12px;
@@ -66,13 +75,13 @@ button:focus {
 
 button.ghost {
     background-color: transparent;
-      border: 1px solid #FFFFFF;   
-
+    border: 1px solid #FFFFFF;   
     transition: 0.5s;
 }
 
 button.ghost:hover {
     background-color: #FFFFFF;
+    border-color: #FFFFFF;
     color: #0E1119;
     cursor: pointer;
 }
@@ -235,4 +244,12 @@ input {
     margin: 0 5px;
     height: 40px;
     width: 40px;
+}
+
+.icon{
+    color: var(--icon);
+}
+
+.h1-black{
+    color: var(--icon);
 }

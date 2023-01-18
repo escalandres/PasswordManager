@@ -1,6 +1,6 @@
 import React, { Component, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {faFacebook,faGooglePlusG} from "@fortawesome/free-brands-svg-icons";
+import {faFacebook,faGooglePlusG, faLinkedinIn} from "@fortawesome/free-brands-svg-icons";
 import '../css/login.css';
 
 const Login = () => {
@@ -22,15 +22,16 @@ const Login = () => {
         <div className="container" id="container">
             <div className="form-container sign-up-container">
                 <form action="#">
-                    <h1>Create Account</h1>
+                    <h1 className="h1-black">Create Account</h1>
                     <div className="social-container">
                         <a href="#" className="social">
-                        <FontAwesomeIcon className="fab" icon={faFacebook}/>
+                        <FontAwesomeIcon className="icon" icon={faFacebook}/>
                         </a>
                         <a href="#" className="social">
-                        <FontAwesomeIcon icon={faGooglePlusG} />
+                        <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
                         </a>
-                        <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
+                        <a href="#" className="social">
+                        <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
                     </div>
                     <span>or use your email for registration</span>
                     <input type="text" placeholder="Name" />
@@ -41,11 +42,16 @@ const Login = () => {
             </div>
             <div className="form-container log-in-container">
                 <form action="#">
-                    <h1>Log in</h1>
+                    <h1 className="h1-black">Log in</h1>
                     <div className="social-container">
-                        <a href="#" className="social"><i className="fab fa-facebook-f"></i></a>
-                        <a href="#" className="social"><i className="fab fa-google-plus-g"></i></a>
-                        <a href="#" className="social"><i className="fab fa-linkedin-in"></i></a>
+                        <a href="#" className="social">
+                        <FontAwesomeIcon className="icon" icon={faFacebook}/>
+                        </a>
+                        <a href="#" className="social">
+                        <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
+                        </a>
+                        <a href="#" className="social">
+                        <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
                     </div>
                     <span>or use your account</span>
                     <input type="email" placeholder="Email" />
