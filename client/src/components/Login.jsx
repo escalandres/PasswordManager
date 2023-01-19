@@ -1,8 +1,12 @@
-import React, { Component, useEffect } from "react";
+import React, { Component, useEffect, useState, useRef } from "react";
+import Cookies from 'universal-cookie';
+import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faFacebook,faGooglePlusG, faLinkedinIn} from "@fortawesome/free-brands-svg-icons";
 import '../css/login.css';
 
+
+const cookies = new Cookies();
 const Login = () => {
     React.useEffect(() => {
         const signUpButton = document.getElementById('signUp');
@@ -17,6 +21,48 @@ const Login = () => {
             container.classList.remove("right-panel-active");
         });
     }, []);
+
+    const [isSignup, setIsSignup] = useState(true);
+    const switchMode = () => {
+        setIsSignup((prevIsSignup) => !prevIsSignup);
+    }
+
+    const data = {
+        name: '',
+        email: '',
+        password: ''
+    }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if(!captcha.current.getValue()){
+            Toastt();
+            Alertt();
+        }
+        else{
+            const { username, password, phoneNumber, avatarURL } = form;
+
+            const URL = 'http://localhost:5000/auth';
+            //const URL = 'https://chat-app-project-ing-web.herokuapp.com/auth';
+
+            const { data: { token, userId, hashedPassword, fullName } } = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, {
+                username, password, fullName: form.fullName, phoneNumber, avatarURL,
+            });
+
+            cookies.set('token', token);
+            cookies.set('username', username);
+            cookies.set('fullName', fullName);
+            cookies.set('userId', userId);
+
+            if(isSignup) {
+                cookies.set('phoneNumber', phoneNumber);
+                cookies.set('avatarURL', avatarURL);
+                cookies.set('hashedPassword', hashedPassword);
+            }
+
+            window.location.reload();
+        }
+    }
+
 
     return(
         <div className="container" id="container">
