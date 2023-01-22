@@ -3,7 +3,7 @@ const cors = require('cors');
 const multer = require('multer');
 const uuid = require("uuid").v4;
 
-// const authRoutes = require("./routes/auth.js");
+const authRoutes = require("./routes/auth.js");
 
 
 const app = express();
@@ -55,7 +55,7 @@ app.get('/icon', (req,res)=>{
     res.sendFile(__dirname+'/img/laptop.PNG');
 });
 
-// app.use('/auth', authRoutes);
+app.use('/auth', authRoutes);
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) =>{

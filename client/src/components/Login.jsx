@@ -7,6 +7,15 @@ import '../css/login.css';
 
 
 const cookies = new Cookies();
+
+const initialState = {
+    sname: '',
+    semail: '',
+    spassword: '',
+    lemail: '',
+    lpassword: ''
+}
+
 const Login = () => {
     React.useEffect(() => {
         const signUpButton = document.getElementById('signUp');
@@ -21,31 +30,30 @@ const Login = () => {
             container.classList.remove("right-panel-active");
         });
     }, []);
-
+    const [form, setForm] = useState(initialState);
     const [isSignup, setIsSignup] = useState(true);
     const switchMode = () => {
         setIsSignup((prevIsSignup) => !prevIsSignup);
     }
 
-    const data = {
-        name: '',
-        email: '',
-        password: ''
+    const handleChange = (e) => {
+        setForm({ ...form, [e.target.name]: e.target.value });
     }
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if(!captcha.current.getValue()){
-            Toastt();
-            Alertt();
-        }
-        else{
-            const { username, password, phoneNumber, avatarURL } = form;
-
+        // if(!captcha.current.getValue()){
+        //     Toastt();
+        //     Alertt();
+        // }
+        // else{
+            const { sname, semail, spassword, lemail, lpassword} = form;
+            
             const URL = 'http://localhost:5000/auth';
             //const URL = 'https://chat-app-project-ing-web.herokuapp.com/auth';
 
-            const { data: { token, userId, hashedPassword, fullName } } = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, {
-                username, password, fullName: form.fullName, phoneNumber, avatarURL,
+            const { data: { token, userId, name, email, hashedPassword } } = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, {
+                sname, semail, spassword, lemail, lpassword,
             });
 
             cookies.set('token', token);
@@ -60,7 +68,7 @@ const Login = () => {
             }
 
             window.location.reload();
-        }
+        //}
     }
 
 
@@ -80,10 +88,22 @@ const Login = () => {
                         <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
                     </div>
                     <span>or use your email for registration</span>
-                    <input type="text" placeholder="Name" />
-                    <input type="email" placeholder="Email" />
-                    <input type="password" placeholder="Password" />
-                    <button>Sign Up</button>
+                    <form onSubmit={handleSubmit}>
+                        {isSignup && (
+                            <input type="text" placeholder="Name" name="sname"
+                                onChange={handleChange}/>
+                        )}
+                        {isSignup && (
+                        <input type="email" placeholder="Email" name="semail"
+                            onChange={handleChange}/>
+                        )}
+                        {isSignup && (
+                        <input type="password" placeholder="Password" name="spassword"
+                            onChange={handleChange}/>
+                        )}
+                        <button>Sign Up</button>
+                    </form>
+                    
                 </form>
             </div>
             <div className="form-container log-in-container">
@@ -100,8 +120,10 @@ const Login = () => {
                         <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
                     </div>
                     <span>or use your account</span>
-                    <input type="email" placeholder="Email" />
-                    <input type="password" className="mb" placeholder="Password" />
+                    <input type="email" placeholder="Email" name="lname"
+                            onChange={handleChange}/>
+                    <input type="password" className="mb" placeholder="Password" name="lpassword"
+                            onChange={handleChange}/>
                     <a href="#">Forgot your password?</a>
                     <button>Log In</button>
                 </form>
