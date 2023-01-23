@@ -5,13 +5,10 @@ const mongoose = require('mongoose');
 const User = require('../model/user');
 require('dotenv').config();
 
+const JWT_SECRET = process.env.JWT_SECRET;
+
+
 mongoose.connect("mongodb://127.0.0.1:27017/password_manager");
-const UserModel = new mongoose.model("users", {
-    userId: String,
-    email: String,
-    name: String,
-    password: String
-});
 
 
 
@@ -44,7 +41,7 @@ const login = async(req, res) =>{
     try{
         const { lemail, lpassword} = req.body;
         console.log(req.body)
-        var user = await User.findOne({lemail}).exec();
+        const user = await User.findOne({lemail}).exec();
         console.log(user)
         if(!user) {
             return res.status(404).send({ message: "The user does not exist" });
@@ -53,7 +50,10 @@ const login = async(req, res) =>{
             return res.status(400).send({ message: "The password is invalid" });
         }
         else{
-            res.status(200).json({message: "Usuario logueado"});
+            
+            const token = jwt.sign({id: user.userId, id: user.semail}, JWT_SECRET )
+            console.log(token)
+            res.status(200).json({message: "Usuario logueado", status: 'ok', data: token});
         }
     }
     catch (error){
