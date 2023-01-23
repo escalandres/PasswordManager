@@ -7,7 +7,7 @@ import '../css/login.css';
 
 
 const cookies = new Cookies();
-
+const login = true;
 const initialState = {
     sname: '',
     semail: '',
@@ -31,7 +31,7 @@ const Login = () => {
         });
     }, []);
     const [form, setForm] = useState(initialState);
-    const [isSignup, setIsSignup] = useState(true);
+    const [isSignup, setIsSignup] = useState(false);
     const switchMode = () => {
         setIsSignup((prevIsSignup) => !prevIsSignup);
     }
@@ -49,7 +49,9 @@ const Login = () => {
         // else{
             const { sname, semail, spassword, lemail, lpassword} = form;
             
-            const URL = 'http://localhost:5000/auth';
+            const URL = 'http://localhost:5200/auth';
+            //if(sname&&semail&&)
+
             //const URL = 'https://chat-app-project-ing-web.herokuapp.com/auth';
 
             // const { data: { token, userId, name, email, hashedPassword } } = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, {
@@ -79,20 +81,19 @@ const Login = () => {
     return(
         <div className="container" id="container">
             <div className="form-container sign-up-container">
-                <h1 className="h1-black">Create Account</h1>
-                <div className="social-container">
-                    <a href="#" className="social">
-                    <FontAwesomeIcon className="icon" icon={faFacebook}/>
-                    </a>
-                    <a href="#" className="social">
-                    <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
-                    </a>
-                    <a href="#" className="social">
-                    <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
-                </div>
-                <span>or use your email for registration</span>
                 <form action="#" onSubmit={handleSubmit}>
-                    
+                    <h1 className="h1-black">Create Account</h1>
+                    <div className="social-container">
+                        <a href="#" className="social">
+                        <FontAwesomeIcon className="icon" icon={faFacebook}/>
+                        </a>
+                        <a href="#" className="social">
+                        <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
+                        </a>
+                        <a href="#" className="social">
+                        <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
+                    </div>
+                    <span>or use your email for registration</span>
                         {isSignup && (
                             <input type="text" placeholder="Name" name="sname"
                                 onChange={handleChange}/>
@@ -109,26 +110,25 @@ const Login = () => {
                 </form>
             </div>
             <div className="form-container log-in-container">
-                <h1 className="h1-black">Log in</h1>
-                <div className="social-container">
-                    <a href="#" className="social">
-                    <FontAwesomeIcon className="icon" icon={faFacebook}/>
-                    </a>
-                    <a href="#" className="social">
-                    <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
-                    </a>
-                    <a href="#" className="social">
-                    <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
-                </div>
-                <span>or use your account</span>
                 <form onSubmit={handleSubmit}>
-                    
-                    <input type="email" placeholder="Email" name="lname"
-                            onChange={handleChange}/>
-                    <input type="password" className="mb" placeholder="Password" name="lpassword"
-                            onChange={handleChange}/>
-                    <a href="#">Forgot your password?</a>
-                    <button>Log In</button>
+                    <h1 className="h1-black">Log in</h1>
+                    <div className="social-container">
+                        <a href="#" className="social">
+                        <FontAwesomeIcon className="icon" icon={faFacebook}/>
+                        </a>
+                        <a href="#" className="social">
+                        <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
+                        </a>
+                        <a href="#" className="social">
+                        <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
+                    </div>
+                    <span>or use your account</span>
+                        <input type="email" placeholder="Email" name="lemail"
+                                onChange={handleChange}/>
+                        <input type="password" className="mb" placeholder="Password" name="lpassword"
+                                onChange={handleChange}/>
+                        <a href="#">Forgot your password?</a>
+                        <button>Log In</button>
                 </form>
             </div>
             <div className="overlay-container">

@@ -2,12 +2,12 @@ const bcrypt = require('bcrypt');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-
+const User = require('../model/user');
 require('dotenv').config();
 
-mongoose.connect("mongodb://localhost/password_manager");
-const UserModel = new mongoose.model("user", {
-    id: String,
+mongoose.connect("mongodb://127.0.0.1:27017/password_manager");
+const UserModel = new mongoose.model("users", {
+    userId: String,
     email: String,
     name: String,
     password: String
@@ -17,6 +17,7 @@ const UserModel = new mongoose.model("user", {
 
 const signup = async(req, res) =>{
     try{
+        console.log(req.body)
         const {sname, semail, spassword} = req.body;
         const userId = crypto.randomBytes(16).toString('hex');
         const hashedPassword = await bcrypt.hash(spassword, 10);
@@ -25,9 +26,11 @@ const signup = async(req, res) =>{
             "iat": 1614540008,
             "exp": 1614542008
         }, "secret", {noTimestamp:true});
-        var user = new UserModel({userId, sname, semail, hashedPassword});
-        var result = await user.save();
-        console.log(result);
+        //var user = new UserModel({userId, sname, semail, hashedPassword});
+        const response = await User.create({
+            userId, semail, sname, hashedPassword
+        })
+        console.log(response)
         // res.status(200).json({token, userId, sname, semail, hashedPassword})
         res.status(200).json({message: "Usuario registrado"})
 
@@ -40,15 +43,17 @@ const signup = async(req, res) =>{
 const login = async(req, res) =>{
     try{
         const { lemail, lpassword} = req.body;
-        var user = await UserModel.findOne({lemail}).exec();
+        console.log(req.body)
+        var user = await User.findOne({lemail}).exec();
+        console.log(user)
         if(!user) {
-            return response.status(400).send({ message: "The username does not exist" });
+            return res.status(404).send({ message: "The user does not exist" });
         }
-        if(!bcrypt.compareSync(lpassword, user.password)) {
-            return response.status(400).send({ message: "The password is invalid" });
+        if(!bcrypt.compareSync(lpassword, user.hashedPassword)) {
+            return res.status(400).send({ message: "The password is invalid" });
         }
         else{
-            response.status(200).json({message: "Usuario logueado"});
+            res.status(200).json({message: "Usuario logueado"});
         }
     }
     catch (error){
