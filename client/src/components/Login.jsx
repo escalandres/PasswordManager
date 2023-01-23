@@ -94,18 +94,12 @@ const Login = () => {
                         <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
                     </div>
                     <span>or use your email for registration</span>
-                        {isSignup && (
-                            <input type="text" placeholder="Name" name="sname"
-                                onChange={handleChange}/>
-                        )}
-                        {isSignup && (
+                        <input type="text" placeholder="Name" name="sname"
+                            onChange={handleChange}/>
                         <input type="email" placeholder="Email" name="semail"
                             onChange={handleChange}/>
-                        )}
-                        {isSignup && (
                         <input type="password" placeholder="Password" name="spassword"
                             onChange={handleChange}/>
-                        )}
                         <button>Sign Up</button>
                 </form>
             </div>
@@ -124,9 +118,9 @@ const Login = () => {
                     </div>
                     <span>or use your account</span>
                         <input type="email" placeholder="Email" name="lemail"
-                                onChange={handleChange}/>
+                            onChange={handleChange}/>
                         <input type="password" className="mb" placeholder="Password" name="lpassword"
-                                onChange={handleChange}/>
+                            onChange={handleChange}/>
                         <a href="#">Forgot your password?</a>
                         <button>Log In</button>
                 </form>
