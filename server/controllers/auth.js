@@ -5,8 +5,9 @@ const mongoose = require('mongoose');
 
 require('dotenv').config();
 
-Mongoose.connect("mongodb://localhost/password_manager");
-const UserModel = new Mongoose.model("user", {
+mongoose.connect("mongodb://localhost/password_manager");
+const UserModel = new mongoose.model("user", {
+    id: String,
     email: String,
     name: String,
     password: String
@@ -27,7 +28,9 @@ const signup = async(req, res) =>{
         var user = new UserModel({userId, sname, semail, hashedPassword});
         var result = await user.save();
         console.log(result);
-        res.status(200).json({token, userId, sname, semail, hashedPassword})
+        // res.status(200).json({token, userId, sname, semail, hashedPassword})
+        res.status(200).json({message: "Usuario registrado"})
+
     }catch (error){
         console.log(error);
         res.status(500).json({message: error})
@@ -41,11 +44,11 @@ const login = async(req, res) =>{
         if(!user) {
             return response.status(400).send({ message: "The username does not exist" });
         }
-        if(!Bcrypt.compareSync(lpassword, user.password)) {
+        if(!bcrypt.compareSync(lpassword, user.password)) {
             return response.status(400).send({ message: "The password is invalid" });
         }
         else{
-            response.status(200).json({message: user});
+            response.status(200).json({message: "Usuario logueado"});
         }
     }
     catch (error){

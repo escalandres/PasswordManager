@@ -52,20 +52,24 @@ const Login = () => {
             const URL = 'http://localhost:5000/auth';
             //const URL = 'https://chat-app-project-ing-web.herokuapp.com/auth';
 
-            const { data: { token, userId, name, email, hashedPassword } } = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, {
-                sname, semail, spassword, lemail, lpassword,
-            });
+            // const { data: { token, userId, name, email, hashedPassword } } = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, {
+            //     sname, semail, spassword, lemail, lpassword,
+            // });
+            const answer = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, {
+                    sname, semail, spassword, lemail, lpassword,
+                });
+                console.log(answer)
+                alert(answer)
+            // cookies.set('token', token);
+            // cookies.set('username', username);
+            // cookies.set('fullName', fullName);
+            // cookies.set('userId', userId);
 
-            cookies.set('token', token);
-            cookies.set('username', username);
-            cookies.set('fullName', fullName);
-            cookies.set('userId', userId);
-
-            if(isSignup) {
-                cookies.set('phoneNumber', phoneNumber);
-                cookies.set('avatarURL', avatarURL);
-                cookies.set('hashedPassword', hashedPassword);
-            }
+            // if(isSignup) {
+            //     cookies.set('phoneNumber', phoneNumber);
+            //     cookies.set('avatarURL', avatarURL);
+            //     cookies.set('hashedPassword', hashedPassword);
+            // }
 
             window.location.reload();
         //}
@@ -75,20 +79,20 @@ const Login = () => {
     return(
         <div className="container" id="container">
             <div className="form-container sign-up-container">
-                <form action="#">
-                    <h1 className="h1-black">Create Account</h1>
-                    <div className="social-container">
-                        <a href="#" className="social">
-                        <FontAwesomeIcon className="icon" icon={faFacebook}/>
-                        </a>
-                        <a href="#" className="social">
-                        <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
-                        </a>
-                        <a href="#" className="social">
-                        <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
-                    </div>
-                    <span>or use your email for registration</span>
-                    <form onSubmit={handleSubmit}>
+                <h1 className="h1-black">Create Account</h1>
+                <div className="social-container">
+                    <a href="#" className="social">
+                    <FontAwesomeIcon className="icon" icon={faFacebook}/>
+                    </a>
+                    <a href="#" className="social">
+                    <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
+                    </a>
+                    <a href="#" className="social">
+                    <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
+                </div>
+                <span>or use your email for registration</span>
+                <form action="#" onSubmit={handleSubmit}>
+                    
                         {isSignup && (
                             <input type="text" placeholder="Name" name="sname"
                                 onChange={handleChange}/>
@@ -102,24 +106,23 @@ const Login = () => {
                             onChange={handleChange}/>
                         )}
                         <button>Sign Up</button>
-                    </form>
-                    
                 </form>
             </div>
             <div className="form-container log-in-container">
-                <form action="#">
-                    <h1 className="h1-black">Log in</h1>
-                    <div className="social-container">
-                        <a href="#" className="social">
-                        <FontAwesomeIcon className="icon" icon={faFacebook}/>
-                        </a>
-                        <a href="#" className="social">
-                        <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
-                        </a>
-                        <a href="#" className="social">
-                        <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
-                    </div>
-                    <span>or use your account</span>
+                <h1 className="h1-black">Log in</h1>
+                <div className="social-container">
+                    <a href="#" className="social">
+                    <FontAwesomeIcon className="icon" icon={faFacebook}/>
+                    </a>
+                    <a href="#" className="social">
+                    <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
+                    </a>
+                    <a href="#" className="social">
+                    <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
+                </div>
+                <span>or use your account</span>
+                <form onSubmit={handleSubmit}>
+                    
                     <input type="email" placeholder="Email" name="lname"
                             onChange={handleChange}/>
                     <input type="password" className="mb" placeholder="Password" name="lpassword"
@@ -133,12 +136,12 @@ const Login = () => {
                     <div className="overlay-panel overlay-left">
                         <h1>Welcome Back!</h1>
                         <p>Already have an account? Log In</p>
-                        <button className="ghost" id="logIn">Log In</button>
+                        <button className="ghost" id="logIn" onClick={switchMode}>Log In</button>
                     </div>
                     <div className="overlay-panel overlay-right">
                         <h1>Hello, There!</h1>
                         <p>Don't have an account? Sign Up Free</p>
-                        <button className="ghost" id="signUp">Sign Up</button>
+                        <button className="ghost" id="signUp" onClick={switchMode}>Sign Up</button>
                     </div>
                 </div>
             </div>
