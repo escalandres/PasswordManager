@@ -2,9 +2,15 @@ const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
 const uuid = require("uuid").v4;
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+const User = require('../model/user');
+require('dotenv').config();
+mongoose.connect("mongodb://127.0.0.1:27017/password_manager");
 
+const JWT_SECRET = process.env.JWT_SECRET;
 const authRoutes = require("./routes/auth.js");
-
+const changePasswordRoutes = require("./routes/change-password.js");
 
 const app = express();
 const PORT = process.env.PORT || 5000;
@@ -56,6 +62,18 @@ app.get('/icon', (req,res)=>{
 });
 
 app.use('/auth', authRoutes);
+
+app.post('/login/verify', (req,res)=>{
+    try{
+        const token = jwt.verify(req.body.token+'1', JWT_SECRET);
+        console.dir(token)
+    }catch(error){
+        res.json({message: "invalid token"})
+    }
+    
+});
+
+app.use('/change-password', changePasswordRoutes);
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) =>{

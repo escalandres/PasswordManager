@@ -1,0 +1,45 @@
+const bcrypt = require('bcrypt');
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+const mongoose = require('mongoose');
+const User = require('../model/user');
+require('dotenv').config();
+
+const JWT_SECRET = process.env.JWT_SECRET;
+
+
+mongoose.connect("mongodb://127.0.0.1:27017/password_manager");
+
+
+
+const checkUser = async(req, res) =>{
+    try{
+        const {name, email} = req.body;
+        const user = await User.findOne({email}).exec();
+        if(user.sname === name && email === user.semail){
+            res.json({message: "El usuario existe", status: "OK", data: email})
+        }else{
+            res.json({message: "El usuario no existe", status: "NO"})
+        }
+    }catch(error){
+        res.json({message: "invalid token"})
+    }
+}
+
+const newPassword = async(req, res) =>{
+    try{
+        const {email, password} = req.body;
+        console.log(req.body)
+        const newPassword = await bcrypt.hash(password, 10);
+        const user = await User.findOne({email}).exec();
+        const result = user.updateOne({email: email},{$set: {"hashedPassword": newPassword}})
+        console.log(user)
+    }
+    catch (error){
+        console.log(error);
+        res.status(500).json({ message: error})
+    }
+}
+
+
+module.exports = {checkUser, newPassword}

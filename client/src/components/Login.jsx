@@ -7,7 +7,6 @@ import '../css/login.css';
 
 
 const cookies = new Cookies();
-const login = true;
 const initialState = {
     sname: '',
     semail: '',
@@ -58,10 +57,26 @@ const Login = () => {
             //     sname, semail, spassword, lemail, lpassword,
             // });
             const answer = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, {
-                    sname, semail, spassword, lemail, lpassword,
+                sname, semail, spassword, lemail, lpassword,
+            });
+            console.dir(answer)
+            if(answer.data.status === "ok"){
+                cookies.set('token', answer.data.data,{
+                    maxAge: 60 * 60 * 4,
+                    sameSite: true
                 });
-                console.log(answer)
-                alert(answer)
+
+                const token = cookies.get('token')
+                const result = await axios.post('http://localhost:5200/login/verify', {
+                    token
+                });
+                console.dir(result)
+                if(result.data.message === "invalid token"){
+                    alert('Debe ingresar su email')
+                }
+            }
+            
+            
             // cookies.set('token', token);
             // cookies.set('username', username);
             // cookies.set('fullName', fullName);
@@ -73,7 +88,7 @@ const Login = () => {
             //     cookies.set('hashedPassword', hashedPassword);
             // }
 
-            window.location.reload();
+            //window.location.reload();
         //}
     }
 
@@ -121,7 +136,7 @@ const Login = () => {
                             onChange={handleChange}/>
                         <input type="password" className="mb" placeholder="Password" name="lpassword"
                             onChange={handleChange}/>
-                        <a href="#">Forgot your password?</a>
+                        <a href="/change-password">Forgot your password?</a>
                         <button>Log In</button>
                 </form>
             </div>

@@ -51,7 +51,9 @@ const login = async(req, res) =>{
         }
         else{
             
-            const token = jwt.sign({id: user.userId, id: user.semail}, JWT_SECRET )
+            const token = jwt.sign({id: user.userId, email: user.semail,
+                name: user.sname, password: user.hashedPassword
+            }, JWT_SECRET )
             console.log(token)
             res.status(200).json({message: "Usuario logueado", status: 'ok', data: token});
         }
