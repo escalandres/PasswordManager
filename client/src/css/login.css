@@ -279,3 +279,43 @@ input {
 input{
     border-radius: 2%;
 }
+
+.form__section{
+    margin-top: 2.5rem;
+}
+
+.input-container{
+    width: 100%;
+    text-align: left;
+    margin: 0.3rem 0;
+}
+
+label{
+    color: var(--icon);
+    text-align: left;
+}
+
+.reset-text__container{
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.reset-btn{
+    margin-top: 1rem;
+}
+
+.reset-span{
+    
+    color: white;
+    font-size: 0.9rem;
+    font-weight: 500;
+    
+}
+
+.reset-a{
+    text-decoration: none;
+    color: white;
+    margin: 0 1rem 0 0.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}

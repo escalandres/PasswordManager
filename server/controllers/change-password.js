@@ -31,9 +31,10 @@ const newPassword = async(req, res) =>{
         const {email, password} = req.body;
         console.log(req.body)
         const newPassword = await bcrypt.hash(password, 10);
-        const user = await User.findOne({email}).exec();
-        const result = user.updateOne({email: email},{$set: {"hashedPassword": newPassword}})
-        console.log(user)
+        //const user = await User.findOne({email}).exec();
+        await User.updateOne({email},{$set: {"hashedPassword": newPassword}})
+        //console.log(user)
+        res.status(200).json({message: "Contraseña cambiada", status: "OK"})
     }
     catch (error){
         console.log(error);

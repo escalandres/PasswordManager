@@ -4,7 +4,6 @@ const multer = require('multer');
 const uuid = require("uuid").v4;
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
-const User = require('../model/user');
 require('dotenv').config();
 mongoose.connect("mongodb://127.0.0.1:27017/password_manager");
 
@@ -16,12 +15,6 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 
 require('dotenv').config();
-
-// const accountSid = process.env.TWILIO_ACCOUNT_SID;
-// const authToken = process.env.TWILIO_AUTH_TOKEN;
-// const messagingServiceSid = process.env.TWILIO_MESSAGING_SERVICE_SID;
-// const twilioClient = require('twilio')(accountSid, authToken);
-
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded());
