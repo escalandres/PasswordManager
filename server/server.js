@@ -4,6 +4,10 @@ const multer = require('multer');
 const uuid = require("uuid").v4;
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
+const fs = require('fs');
+
+
+
 require('dotenv').config();
 mongoose.connect("mongodb://127.0.0.1:27017/password_manager");
 
@@ -82,6 +86,76 @@ const storage = multer.diskStorage({
     }
 })
 
+app.get('/cifrar', (req,res)=>{
+    const path = __dirname+'/files/archivo.json';
+//     const d1 = [{nombre: 'adios',
+//     password: '1234',
+//     e: 'g'
+// }];
+//     fs.writeFileSync(path, d1, "utf-8")
+
+    const data = {nombre: 'hello',
+        password: '5555',
+        e: 'c'
+    };
+    console.log(__dirname+'/files/archivo.json')
+    try{
+        // let file = fs.writeFileSync(path, {
+        //     encoding: "utf8",
+        //     flag: "a+",
+        //     mode: 0o666
+        // })
+        let file = fs.readFileSync(path, "utf-8");
+        // console.log(typeof(file))
+        // console.log(file)
+        let file2 = JSON.parse(file);
+        // console.log(file2)
+        file2.push(data) 
+        console.log('hola')
+        file = JSON.stringify(file2);
+        fs.writeFileSync(path, file, "utf-8")
+        // const result = fs.readFileSync(path, 'utf8');
+        // const c = JSON.parse(result);
+        // console.log(c.password)
+        console.log('adios')
+        res.send('ok')
+    }
+    catch(err) {
+        // Falló la escritura
+        console.log('error')
+        console.log(err)
+    }
+})
+
+app.get('/file', (req,res)=>{
+    const path = __dirname+'/files/archivo.json';
+    try{
+        // let file = fs.writeFileSync(path, {
+        //     encoding: "utf8",
+        //     flag: "a+",
+        //     mode: 0o666
+        // })
+        let file = fs.readFileSync(path, "utf-8");
+        // console.log(typeof(file))
+        // console.log(file)
+        let file2 = JSON.parse(file);
+        console.dir(file2)
+        //data.push(file2) 
+        //console.log('hola')
+        //file = JSON.stringify(data);
+        //fs.writeFileSync(path, file, "utf-8")
+        // const result = fs.readFileSync(path, 'utf8');
+        // const c = JSON.parse(result);
+        // console.log(c.password)
+        console.log('adios')
+        res.send(file2)
+    }
+    catch(err) {
+        // Falló la escritura
+        console.log('error')
+        console.log(err)
+    }
+})
 
 const fileFilter = (req, file, cb) =>{
     if(file.mimetype.split("/")[0]==='image'){
