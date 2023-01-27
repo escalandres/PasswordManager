@@ -5,7 +5,7 @@ const uuid = require("uuid").v4;
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const fs = require('fs');
-
+const encryption = require('./functions/fileEncryption');
 
 
 require('dotenv').config();
@@ -88,13 +88,14 @@ const storage = multer.diskStorage({
 
 app.get('/cifrar', (req,res)=>{
     const path = __dirname+'/files/archivo.json';
+    const path2 = __dirname+'/files/';
 //     const d1 = [{nombre: 'adios',
 //     password: '1234',
 //     e: 'g'
 // }];
 //     fs.writeFileSync(path, d1, "utf-8")
 
-    const data = {nombre: 'hello',
+    const data = {nombre: 'mcquein',
         password: '5555',
         e: 'c'
     };
@@ -118,6 +119,14 @@ app.get('/cifrar', (req,res)=>{
         // const c = JSON.parse(result);
         // console.log(c.password)
         console.log('adios')
+        let fileToEncrypt = fs.readFileSync(path, "utf-8");
+        let encrypted = encryption.encrypt(fileToEncrypt, "123456")
+        fs.writeFileSync(path2+'fileEncrypted.json', encrypted, (err, file) =>{
+            if(err) return console.error(err.message);
+            if(file){
+                console.log('File Encrypted successfully')
+            }
+        })
         res.send('ok')
     }
     catch(err) {
@@ -128,27 +137,44 @@ app.get('/cifrar', (req,res)=>{
 })
 
 app.get('/file', (req,res)=>{
-    const path = __dirname+'/files/archivo.json';
+    // const {email, password}= req.body;
+    const path = __dirname+'/files/fileEncrypted.json';
     try{
         // let file = fs.writeFileSync(path, {
         //     encoding: "utf8",
         //     flag: "a+",
         //     mode: 0o666
         // })
-        let file = fs.readFileSync(path, "utf-8");
-        // console.log(typeof(file))
-        // console.log(file)
-        let file2 = JSON.parse(file);
-        console.dir(file2)
-        //data.push(file2) 
-        //console.log('hola')
-        //file = JSON.stringify(data);
-        //fs.writeFileSync(path, file, "utf-8")
-        // const result = fs.readFileSync(path, 'utf8');
-        // const c = JSON.parse(result);
-        // console.log(c.password)
-        console.log('adios')
-        res.send(file2)
+        if(fs.existsSync(path)){
+            console.log("Existe")
+            let file = fs.readFileSync(path, (err, file)=>{
+                if(err) return console.error(err.message);
+                if(file){
+                    console.log('File read')
+                }
+            });
+            const decryptedFile = encryption.decrypt(file, "123456");
+            console.log('File Decrypted successfully')
+
+            // console.log(typeof(file))
+            // console.log(file)
+            let file2 = JSON.parse(decryptedFile);
+            console.dir(file2)
+            //data.push(file2) 
+            //console.log('hola')
+            //file = JSON.stringify(data);
+            //fs.writeFileSync(path, file, "utf-8")
+            // const result = fs.readFileSync(path, 'utf8');
+            // const c = JSON.parse(result);
+            // console.log(c.password)
+            console.log('adios')
+            res.send(file2)
+            
+        }
+        else{
+            console.log("No existe")
+        }
+        
     }
     catch(err) {
         // Falló la escritura
