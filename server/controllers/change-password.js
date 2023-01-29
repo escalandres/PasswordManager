@@ -6,9 +6,9 @@ const User = require('../model/user');
 require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
+const DATABASE = process.env.DATABASE_URL;
 
-
-mongoose.connect("mongodb://127.0.0.1:27017/password_manager");
+mongoose.connect(DATABASE);
 
 
 

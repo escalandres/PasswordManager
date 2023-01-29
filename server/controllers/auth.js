@@ -3,12 +3,13 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = require('../model/user');
+
 require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
+const DATABASE = process.env.DATABASE_URL;
 
-
-mongoose.connect("mongodb://127.0.0.1:27017/password_manager");
+mongoose.connect(DATABASE);
 
 
 
@@ -16,6 +17,10 @@ const signup = async(req, res) =>{
     try{
         console.log(req.body)
         const {sname, semail, spassword} = req.body;
+        const {name = sname, email = semail} = {sname, semail};
+        console.log(name)
+        console.log(email)
+        //const newuser = new newUser(req.body.sname, req.body.semail, req.body.spassword)
         const userId = crypto.randomBytes(16).toString('hex');
         const hashedPassword = await bcrypt.hash(spassword, 10);
         let token = jwt.sign({
@@ -25,7 +30,7 @@ const signup = async(req, res) =>{
         }, "secret", {noTimestamp:true});
         //var user = new UserModel({userId, sname, semail, hashedPassword});
         const response = await User.create({
-            userId, semail, sname, hashedPassword
+            userId, email, name, hashedPassword
         })
         console.log(response)
         // res.status(200).json({token, userId, sname, semail, hashedPassword})

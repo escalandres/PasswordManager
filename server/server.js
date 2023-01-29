@@ -67,7 +67,7 @@ app.post('/login/verify', (req,res)=>{
     }catch(error){
         res.json({message: "invalid token"})
     }
-    
+
 });
 
 app.use('/change-password', changePasswordRoutes);
@@ -86,20 +86,21 @@ const storage = multer.diskStorage({
     }
 })
 
+app.use('/password', authRoutes);
+
 app.get('/cifrar', (req,res)=>{
     const path = __dirname+'/files/archivo.json';
-    const path2 = __dirname+'/files/';
-//     const d1 = [{nombre: 'adios',
+    const path2 = __dirname+'/files/archivo.pmf';
+//     const data = [{nombre: 'adios',
 //     password: '1234',
 //     e: 'g'
 // }];
 //     fs.writeFileSync(path, d1, "utf-8")
 
-    const data = {nombre: 'mcquein',
-        password: '5555',
-        e: 'c'
+    const data = {nombre: 'mario kart',
+        password: '66666666',
+        e: 'ssakdkagk'
     };
-    console.log(__dirname+'/files/archivo.json')
     try{
         // let file = fs.writeFileSync(path, {
         //     encoding: "utf8",
@@ -111,7 +112,7 @@ app.get('/cifrar', (req,res)=>{
         // console.log(file)
         let file2 = JSON.parse(file);
         // console.log(file2)
-        file2.push(data) 
+        file2.push(data)
         console.log('hola')
         file = JSON.stringify(file2);
         fs.writeFileSync(path, file, "utf-8")
@@ -121,65 +122,56 @@ app.get('/cifrar', (req,res)=>{
         console.log('adios')
         let fileToEncrypt = fs.readFileSync(path, "utf-8");
         let encrypted = encryption.encrypt(fileToEncrypt, "123456")
-        fs.writeFileSync(path2+'fileEncrypted.json', encrypted, (err, file) =>{
+        fs.writeFileSync(path2, encrypted, (err, file) =>{
             if(err) return console.error(err.message);
             if(file){
                 console.log('File Encrypted successfully')
             }
         })
+        fs.unlinkSync(path)
+        console.log('File removed')
         res.send('ok')
     }
     catch(err) {
         // Falló la escritura
         console.log('error')
         console.log(err)
+        res.send('error')
     }
 })
 
 app.get('/file', (req,res)=>{
     // const {email, password}= req.body;
-    const path = __dirname+'/files/fileEncrypted.json';
+    const path = __dirname+'/files/archivo.pmf';
     try{
-        // let file = fs.writeFileSync(path, {
-        //     encoding: "utf8",
-        //     flag: "a+",
-        //     mode: 0o666
-        // })
         if(fs.existsSync(path)){
             console.log("Existe")
             let file = fs.readFileSync(path, (err, file)=>{
                 if(err) return console.error(err.message);
                 if(file){
                     console.log('File read')
+
                 }
             });
+            console.log(file)
             const decryptedFile = encryption.decrypt(file, "123456");
             console.log('File Decrypted successfully')
-
-            // console.log(typeof(file))
-            // console.log(file)
             let file2 = JSON.parse(decryptedFile);
             console.dir(file2)
-            //data.push(file2) 
-            //console.log('hola')
-            //file = JSON.stringify(data);
-            //fs.writeFileSync(path, file, "utf-8")
-            // const result = fs.readFileSync(path, 'utf8');
-            // const c = JSON.parse(result);
-            // console.log(c.password)
             console.log('adios')
             res.send(file2)
-            
+
         }
         else{
             console.log("No existe")
         }
-        
+
     }
     catch(err) {
         // Falló la escritura
         console.log('error')
         console.log(err)
+        res.send('error')
     }
 })
 
