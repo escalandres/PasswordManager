@@ -8,35 +8,57 @@ import '../css/login.css';
 
 const cookies = new Cookies();
 const initialState = {
-    sname: '',
-    semail: '',
-    spassword: '',
-    lemail: '',
-    lpassword: ''
+    email: '',
+    username: '',
+    password: '',
+    url: '',
 }
 
-const Login = () => {
-    React.useEffect(() => {
-        const signUpButton = document.getElementById('signUp');
-        const logInButton = document.getElementById('logIn');
-        const container = document.getElementById('container');
+const passwords = [];
 
-        signUpButton.addEventListener('click', () => {
-            container.classList.add("right-panel-active");
-        });
-
-        logInButton.addEventListener('click', () => {
-            container.classList.remove("right-panel-active");
-        });
-    }, []);
+const PasswordGallery = () => {
     const [form, setForm] = useState(initialState);
-    const [isSignup, setIsSignup] = useState(false);
-    const switchMode = () => {
-        setIsSignup((prevIsSignup) => !prevIsSignup);
-    }
-
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
+    }
+    useEffect(() => {
+        getPasswords();
+    }, []);
+    const getPasswords = async() =>{
+        let URL = 'http://localhost:5200/password/get-passwords';
+        const user = cookies.get('user')
+        const token = user.token;
+        const answer = await axios.post(`${URL}`, {
+            token
+        });
+        if(answer.data.status === 'OK'){
+            answer.data.data.forEach((data) => {
+                passwords.push(
+                    <div className="passwords-container">
+                        <diiv className="form-group">
+                            <label className="label">Email</label>
+                            <input name="email" type="email" value={data.email} />
+                        </diiv>
+                        <diiv className="form-group">
+                            <label className="label">Username</label>
+                            <input name="username" type="text" value={data.username} />
+                        </diiv>
+                        <diiv className="form-group">
+                            <label className="label">Password</label>
+                            <input name="password" type="password" value={data.password} />
+                        </diiv>
+                        <diiv className="form-group">
+                            <label className="label">Website</label>
+                            <input name="url" type="url" value={data.url} />
+                        </diiv>
+                    </div>
+                    
+                );
+            });
+        }
+        else{
+            return null;
+        }
     }
 
     const handleSubmit = async (e) => {
@@ -97,30 +119,22 @@ const Login = () => {
 
     return(
         <div className="container" id="container">
-            <div className="form-container sign-up-container">
+            <div className="form-container new-password-container">
                 <form action="#" onSubmit={handleSubmit}>
-                    <h1 className="h1-black">Create Account</h1>
-                    <div className="social-container">
-                        <a href="#" className="social">
-                        <FontAwesomeIcon className="icon" icon={faFacebook}/>
-                        </a>
-                        <a href="#" className="social">
-                        <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
-                        </a>
-                        <a href="#" className="social">
-                        <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
-                    </div>
-                    <span>or use your email for registration</span>
-                        <input type="text" placeholder="Name" name="sname"
+                    <h1 className="h1-black">Create a new password</h1>
+                        <input type="email" placeholder="Email" name="email"
                             onChange={handleChange}/>
-                        <input type="email" placeholder="Email" name="semail"
+                        <input type="text" placeholder="username" name="username"
                             onChange={handleChange}/>
-                        <input type="password" placeholder="Password" name="spassword"
+                        <input type="password" placeholder="Password" name="password"
                             onChange={handleChange}/>
-                        <button>Sign Up</button>
+                            <input type="url" placeholder="Url" name="url"
+                            onChange={handleChange}/>
+                        <button>Save Password</button>
                 </form>
             </div>
-            <div className="form-container log-in-container">
+            <div className="form-container passwords-container">
+            
                 <form onSubmit={handleSubmit}>
                     <h1 className="h1-black">Log in</h1>
                     <div className="social-container">
@@ -142,22 +156,8 @@ const Login = () => {
                         <button>Log In</button>
                 </form>
             </div>
-            <div className="overlay-container">
-                <div className="overlay">
-                    <div className="overlay-panel overlay-left">
-                        <h1>Welcome Back!</h1>
-                        <p>Already have an account? Log In</p>
-                        <button className="ghost" id="logIn" onClick={switchMode}>Log In</button>
-                    </div>
-                    <div className="overlay-panel overlay-right">
-                        <h1>Hello, There!</h1>
-                        <p>Don't have an account? Sign Up Free</p>
-                        <button className="ghost" id="signUp" onClick={switchMode}>Sign Up</button>
-                    </div>
-                </div>
-            </div>
         </div>
         
     )
 }
-export default Login
+export default PasswordGallery

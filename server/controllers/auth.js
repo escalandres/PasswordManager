@@ -3,7 +3,7 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const User = require('../model/user');
-
+const file = require('./fileManager')
 require('dotenv').config();
 
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -33,6 +33,7 @@ const signup = async(req, res) =>{
             userId, email, name, hashedPassword
         })
         console.log(response)
+        file.createFile(userId, spassword)
         // res.status(200).json({token, userId, sname, semail, hashedPassword})
         res.status(200).json({message: "Usuario registrado"})
 
@@ -60,7 +61,7 @@ const login = async(req, res) =>{
                 name: user.sname, password: user.hashedPassword
             }, JWT_SECRET )
             console.log(token)
-            res.status(200).json({message: "Usuario logueado", status: 'ok', data: token});
+            res.status(200).json({message: "Usuario logueado", status: 'ok', data: {token: token, email: user.email, name: user.name}});
         }
     }
     catch (error){

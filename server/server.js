@@ -6,7 +6,7 @@ const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const fs = require('fs');
 const encryption = require('./functions/fileEncryption');
-
+const fileRoutes = require("./routes/fileManager.js")
 
 require('dotenv').config();
 mongoose.connect("mongodb://127.0.0.1:27017/password_manager");
@@ -62,8 +62,10 @@ app.use('/auth', authRoutes);
 
 app.post('/login/verify', (req,res)=>{
     try{
-        const token = jwt.verify(req.body.token+'1', JWT_SECRET);
+        const token = jwt.verify(req.body.token, JWT_SECRET);
+        console.log('token')
         console.dir(token)
+        console.log(token.password)
     }catch(error){
         res.json({message: "invalid token"})
     }
@@ -71,7 +73,7 @@ app.post('/login/verify', (req,res)=>{
 });
 
 app.use('/change-password', changePasswordRoutes);
-
+app.use('/password', fileRoutes);
 const storage = multer.diskStorage({
     destination: (req, file, cb) =>{
         cb(null, "uploads");
@@ -85,8 +87,6 @@ const storage = multer.diskStorage({
 
     }
 })
-
-app.use('/password', authRoutes);
 
 app.get('/cifrar', (req,res)=>{
     const path = __dirname+'/files/archivo.json';
