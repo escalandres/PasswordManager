@@ -45,9 +45,10 @@ const signup = async(req, res) =>{
 const login = async(req, res) =>{
     try{
         const { lemail, lpassword} = req.body;
-        // console.log(req.body)
-        const user = await User.findOne({lemail}).exec();
-        // console.log(user)
+        console.log(req.body)
+        console.log(lemail)
+        const user = await User.findOne({email: lemail}).exec();
+        console.log(user)
         if(!user) {
             return res.status(404).send({ message: "The user does not exist" });
         }

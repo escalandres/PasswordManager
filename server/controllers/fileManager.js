@@ -145,9 +145,9 @@ const getFile = async(req, res) => {
         console.dir(file2)
         
         
-        let encryptedPasswords = cipher.encrypt(decryptedFile, FILE_KEY)
-        // res.send({satus: 'OK', data: encryptedPasswords})
-        res.send({status: 'OK', data: file2})
+        let encryptedPasswords = cipher.encryptMessage(file2, FILE_KEY)
+        res.send({satus: 'OK', data: encryptedPasswords})
+        //res.send({status: 'OK', data: file2})
     }
     catch(err) {
         // Falló la escritura

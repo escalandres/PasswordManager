@@ -4,9 +4,23 @@ import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faFacebook,faGooglePlusG, faLinkedinIn} from "@fortawesome/free-brands-svg-icons";
 import '../css/login.css';
-import decrypt from "../../functions/decrypt";
 // import dotenv from 'dotenv'
-//import { encrypt } from "../../../server/functions/encrypt";
+
+import CryptoJS from "crypto-js";
+
+function encryptMessage(data, key){
+    var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
+    return ciphertext;
+}   
+
+function decryptMessage(ciphertext, key){
+    var bytes = CryptoJS.AES.decrypt(ciphertext, key);
+    var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+    return decryptedData
+}
+
+
+
 const cookies = new Cookies();
 const initialState = {
     email: '',
@@ -40,33 +54,39 @@ const PasswordGallery = () => {
             user
         });
         //import.meta.env.REACT_APP_FILE_SECRET
-        console.dir(answer)
-        console.dir(answer.data.status)
+        //console.dir(answer)
+        //console.dir(answer.data.status)
         console.dir(answer.data.data)
+        var decryptedData = decryptMessage(answer.data.data, '7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
+        console.log('Hasta aqui')
+        console.log(decryptedData)
+        console.log('mensaje')
+        console.log(typeof(decryptedData))
+        console.log(decryptedData[0])
         // console.log('SECRET: '+'7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
         // let result = decrypt(answer.data.data.data,'7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
         // console.dir(result)
         // console.dir(JSON.parse(result))
         if(answer.data.status === "OK"){
-            answer.data.data.forEach((data) => {
-                console.log('si')
+            decryptedData.forEach((password, index) => {
+                console.log(data)
                 passwords.push(
-                    <div className="passwords-container">
+                    <div className="passwords-container" key={index}>
                         <diiv className="form-group">
                             <label className="label">Email</label>
-                            <input name="email" type="email" value={data.email} />
+                            <input name="email" type="email" value={password.email} />
                         </diiv>
                         <diiv className="form-group">
                             <label className="label">Username</label>
-                            <input name="username" type="text" value={data.username} />
+                            <input name="username" type="text" value={password.username} />
                         </diiv>
                         <diiv className="form-group">
                             <label className="label">Password</label>
-                            <input name="password" type="password" value={data.password} />
+                            <input name="password" type="password" value={password.password} />
                         </diiv>
                         <diiv className="form-group">
                             <label className="label">Website</label>
-                            <input name="url" type="url" value={data.url} />
+                            <input name="url" type="url" value={password.url} />
                         </diiv>
                     </div>
                     
@@ -139,7 +159,7 @@ const PasswordGallery = () => {
 
     return(
         <div className="container" id="container">
-            <div className="form-container new-password-container">
+            <div className="form-container log-in-container new-password-container">
                 <form action="#" onSubmit={handleSubmit}>
                     <h1 className="h1-black">Create a new password</h1>
                         <input type="email" placeholder="Email" name="email"
@@ -155,7 +175,7 @@ const PasswordGallery = () => {
                 </form>
             </div>
             
-            <div className="signup-container passwords-container">
+            <div className="form-container sign-up-container">
                 {passwords}
                 <form onSubmit={handleSubmit}>
                     
