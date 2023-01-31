@@ -23,19 +23,18 @@ const signup = async(req, res) =>{
         //const newuser = new newUser(req.body.sname, req.body.semail, req.body.spassword)
         const userId = crypto.randomBytes(16).toString('hex');
         const hashedPassword = await bcrypt.hash(spassword, 10);
-        let token = jwt.sign({
-            "userId": userId,
-            "iat": 1614540008,
-            "exp": 1614542008
-        }, "secret", {noTimestamp:true});
+        const token = jwt.sign({id: userId, email: semail,
+            name: sname, password: spassword
+        }, JWT_SECRET )
         //var user = new UserModel({userId, sname, semail, hashedPassword});
         const response = await User.create({
             userId, email, name, hashedPassword
         })
         console.log(response)
-        file.createFile(userId, spassword)
+        let result = file.createFile(userId, spassword)
         // res.status(200).json({token, userId, sname, semail, hashedPassword})
-        res.status(200).json({message: "Usuario registrado"})
+        console.log(result)
+        res.status(200).json({message: "Usuario registrado", status: 'ok', data: {token: token, email: email, name: name}})
 
     }catch (error){
         console.log(error);
@@ -57,8 +56,8 @@ const login = async(req, res) =>{
         }
         else{
             
-            const token = jwt.sign({id: user.userId, email: user.semail,
-                name: user.sname, password: user.hashedPassword
+            const token = jwt.sign({id: user.userId, email: user.email,
+                name: user.name, password: lpassword
             }, JWT_SECRET )
             console.log(token)
             res.status(200).json({message: "Usuario logueado", status: 'ok', data: {token: token, email: user.email, name: user.name}});

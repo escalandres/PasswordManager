@@ -4,8 +4,9 @@ import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faFacebook,faGooglePlusG, faLinkedinIn} from "@fortawesome/free-brands-svg-icons";
 import '../css/login.css';
-
-
+import decrypt from "../../functions/decrypt";
+// import dotenv from 'dotenv'
+//import { encrypt } from "../../../server/functions/encrypt";
 const cookies = new Cookies();
 const initialState = {
     email: '',
@@ -14,7 +15,12 @@ const initialState = {
     url: '',
 }
 
+// dotenv.config()
 const passwords = [];
+
+const achu =()=>{
+    let URL = 'http://localhost:5200/password/get-passwords';
+}
 
 const PasswordGallery = () => {
     const [form, setForm] = useState(initialState);
@@ -27,12 +33,23 @@ const PasswordGallery = () => {
     const getPasswords = async() =>{
         let URL = 'http://localhost:5200/password/get-passwords';
         const user = cookies.get('user')
+        console.log('hola')
+        console.log(user)
         const token = user.token;
         const answer = await axios.post(`${URL}`, {
-            token
+            user
         });
-        if(answer.data.status === 'OK'){
+        //import.meta.env.REACT_APP_FILE_SECRET
+        console.dir(answer)
+        console.dir(answer.data.status)
+        console.dir(answer.data.data)
+        // console.log('SECRET: '+'7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
+        // let result = decrypt(answer.data.data.data,'7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
+        // console.dir(result)
+        // console.dir(JSON.parse(result))
+        if(answer.data.status === "OK"){
             answer.data.data.forEach((data) => {
+                console.log('si')
                 passwords.push(
                     <div className="passwords-container">
                         <diiv className="form-group">
@@ -54,12 +71,15 @@ const PasswordGallery = () => {
                     </div>
                     
                 );
+                console.log(passwords)
             });
         }
         else{
             return null;
         }
     }
+
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -131,29 +151,14 @@ const PasswordGallery = () => {
                             <input type="url" placeholder="Url" name="url"
                             onChange={handleChange}/>
                         <button>Save Password</button>
+                        <button onClick={achu}>Achu</button>
                 </form>
             </div>
-            <div className="form-container passwords-container">
             
+            <div className="signup-container passwords-container">
+                {passwords}
                 <form onSubmit={handleSubmit}>
-                    <h1 className="h1-black">Log in</h1>
-                    <div className="social-container">
-                        <a href="#" className="social">
-                        <FontAwesomeIcon className="icon" icon={faFacebook}/>
-                        </a>
-                        <a href="#" className="social">
-                        <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
-                        </a>
-                        <a href="#" className="social">
-                        <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
-                    </div>
-                    <span>or use your account</span>
-                        <input type="email" placeholder="Email" name="lemail"
-                            onChange={handleChange}/>
-                        <input type="password" className="mb" placeholder="Password" name="lpassword"
-                            onChange={handleChange}/>
-                        <a href="/change-password">Forgot your password?</a>
-                        <button>Log In</button>
+                    
                 </form>
             </div>
         </div>

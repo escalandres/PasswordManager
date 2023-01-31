@@ -142,7 +142,7 @@ app.get('/cifrar', (req,res)=>{
 
 app.get('/file', (req,res)=>{
     // const {email, password}= req.body;
-    const path = __dirname+'/files/archivo.pmf';
+    const path = __dirname+'/files/6a746de91d15a162fb6fcfb361b5b4f7.pmf';
     try{
         if(fs.existsSync(path)){
             console.log("Existe")
@@ -154,7 +154,7 @@ app.get('/file', (req,res)=>{
                 }
             });
             console.log(file)
-            const decryptedFile = encryption.decrypt(file, "123456");
+            const decryptedFile = encryption.decrypt(file, "12345");
             console.log('File Decrypted successfully')
             let file2 = JSON.parse(decryptedFile);
             console.dir(file2)

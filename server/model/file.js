@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const FileSchema = new mongoose.Schema(
     {
         userId: {type: String, required: true, unique: true},
-        file: {data: Buffer, contentType: String},
+        path: {type: String, required: true},
     },
     {collection: 'files'}
 )
