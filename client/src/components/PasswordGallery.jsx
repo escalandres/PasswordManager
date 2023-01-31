@@ -19,7 +19,7 @@ function decryptMessage(ciphertext, key){
     return decryptedData
 }
 
-
+var decryptedData = {};
 
 const cookies = new Cookies();
 const initialState = {
@@ -36,6 +36,58 @@ const achu =()=>{
     let URL = 'http://localhost:5200/password/get-passwords';
 }
 
+const getPasswords = async() =>{
+    let URL = 'http://localhost:5200/password/get-passwords';
+    const user = cookies.get('user')
+    const answer = await axios.post(`${URL}`, {
+        user
+    });
+    //import.meta.env.REACT_APP_FILE_SECRET
+    //console.dir(answer)
+    //console.dir(answer.data.status)
+    console.dir(answer.data.data)
+    decryptedData = decryptMessage(answer.data.data, '7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
+    console.log('Hasta aqui')
+    console.log(decryptedData)
+    console.log('mensaje')
+    console.log(typeof(decryptedData))
+    console.log(decryptedData[0])
+    // console.log('SECRET: '+'7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
+    // let result = decrypt(answer.data.data.data,'7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
+    // console.dir(result)
+    // console.dir(JSON.parse(result))
+    // if(answer.data.status === "OK"){
+    //     decryptedData.forEach((password, index) => {
+    //         console.log(data)
+    //         passwords.push(
+    //             <div className="passwords-container" key={index}>
+    //                 <div className="form-group">
+    //                     <label className="label">Email</label>
+    //                     <input name="email" type="email" value={password.email} />
+    //                 </div>
+    //                 <div className="form-group">
+    //                     <label className="label">Username</label>
+    //                     <input name="username" type="text" value={password.username} />
+    //                 </div>
+    //                 <div className="form-group">
+    //                     <label className="label">Password</label>
+    //                     <input name="password" type="password" value={password.password} />
+    //                 </div>
+    //                 <div className="form-group">
+    //                     <label className="label">Website</label>
+    //                     <input name="url" type="url" value={password.url} />
+    //                 </div>
+    //             </div>
+                
+    //         );
+    //         console.log(passwords)
+    //     });
+    // }
+    // else{
+    //     return null;
+    // }
+}
+
 const PasswordGallery = () => {
     const [form, setForm] = useState(initialState);
     const handleChange = (e) => {
@@ -44,61 +96,18 @@ const PasswordGallery = () => {
     useEffect(() => {
         getPasswords();
     }, []);
-    const getPasswords = async() =>{
-        let URL = 'http://localhost:5200/password/get-passwords';
-        const user = cookies.get('user')
-        console.log('hola')
-        console.log(user)
-        const token = user.token;
-        const answer = await axios.post(`${URL}`, {
-            user
-        });
-        //import.meta.env.REACT_APP_FILE_SECRET
-        //console.dir(answer)
-        //console.dir(answer.data.status)
-        console.dir(answer.data.data)
-        var decryptedData = decryptMessage(answer.data.data, '7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
-        console.log('Hasta aqui')
-        console.log(decryptedData)
-        console.log('mensaje')
-        console.log(typeof(decryptedData))
-        console.log(decryptedData[0])
-        // console.log('SECRET: '+'7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
-        // let result = decrypt(answer.data.data.data,'7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
-        // console.dir(result)
-        // console.dir(JSON.parse(result))
-        if(answer.data.status === "OK"){
-            decryptedData.forEach((password, index) => {
-                console.log(data)
-                passwords.push(
-                    <div className="passwords-container" key={index}>
-                        <diiv className="form-group">
-                            <label className="label">Email</label>
-                            <input name="email" type="email" value={password.email} />
-                        </diiv>
-                        <diiv className="form-group">
-                            <label className="label">Username</label>
-                            <input name="username" type="text" value={password.username} />
-                        </diiv>
-                        <diiv className="form-group">
-                            <label className="label">Password</label>
-                            <input name="password" type="password" value={password.password} />
-                        </diiv>
-                        <diiv className="form-group">
-                            <label className="label">Website</label>
-                            <input name="url" type="url" value={password.url} />
-                        </diiv>
-                    </div>
-                    
-                );
-                console.log(passwords)
-            });
-        }
-        else{
-            return null;
-        }
-    }
-
+    
+    let URL = 'http://localhost:5200/password/get-passwords';
+    const user = cookies.get('user')
+    const answer = await axios.post(`${URL}`, {
+        user
+    });
+    //import.meta.env.REACT_APP_FILE_SECRET
+    //console.dir(answer)
+    //console.dir(answer.data.status)
+    console.dir(answer.data.data)
+    decryptedData = decryptMessage(answer.data.data, '7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
+    console.log('Hasta aqui')
 
 
     const handleSubmit = async (e) => {
@@ -159,7 +168,7 @@ const PasswordGallery = () => {
 
     return(
         <div className="container" id="container">
-            <div className="form-container log-in-container new-password-container">
+            {/* <div className="form-container log-in-container new-password-container">
                 <form action="#" onSubmit={handleSubmit}>
                     <h1 className="h1-black">Create a new password</h1>
                         <input type="email" placeholder="Email" name="email"
@@ -173,13 +182,36 @@ const PasswordGallery = () => {
                         <button>Save Password</button>
                         <button onClick={achu}>Achu</button>
                 </form>
-            </div>
+            </div> */}
             
-            <div className="form-container sign-up-container">
-                {passwords}
-                <form onSubmit={handleSubmit}>
+            <div className="form-container">
+                <div className="passwords-container">
+                    {decryptedData.map((password, index) =>{
+                        return(
+                            <div key={index}>
+                                <div className="form-group">
+                                    <label className="label">Email</label>
+                                    <input name="email" type="email" value={password.email} />
+                                </div>
+                                <div className="form-group">
+                                    <label className="label">Username</label>
+                                    <input name="username" type="text" value={password.username} />
+                                </div>
+                                <div className="form-group">
+                                    <label className="label">Password</label>
+                                    <input name="password" type="password" value={password.password} />
+                                </div>
+                                <div className="form-group">
+                                    <label className="label">Website</label>
+                                    <input name="url" type="url" value={password.url} />
+                                </div>
+                            </div>
+                        );
+                    })
+
+                    }
                     
-                </form>
+                </div>
             </div>
         </div>
         
