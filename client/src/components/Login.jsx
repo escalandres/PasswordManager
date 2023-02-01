@@ -1,4 +1,5 @@
 import React, { Component, useEffect, useState, useRef } from "react";
+import { Navigate, useNavigate } from 'react-router-dom';
 import Cookies from 'universal-cookie';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -29,6 +30,7 @@ const Login = () => {
             container.classList.remove("right-panel-active");
         });
     }, []);
+    const navigate = useNavigate();
     const [form, setForm] = useState(initialState);
     const [isSignup, setIsSignup] = useState(false);
     const switchMode = () => {
@@ -65,17 +67,20 @@ const Login = () => {
                     maxAge: 60 * 60 * 4,
                     sameSite: true
                 });
-                const user = cookies.get('user')
-                const token = user.token;
-                console.log(user.email)
-                const result = await axios.post('http://localhost:5200/login/verify', {
-                    token
-                });
+                // const user = cookies.get('user')
+                // const token = user.token;
+                // console.log(user.email)
+                // const result = await axios.post('http://localhost:5200/login/verify', {
+                //     token
+                // });
                 
-                console.dir(result)
-                if(result.data.message === "invalid token"){
-                    alert('Debe ingresar su email')
-                }
+                // console.dir(result)
+                // if(result.data.message === "invalid token"){
+                //     alert('Debe ingresar su email')
+                // }
+                // <Link to='/path' > some stuff </Link>
+                navigate("/password-gallery");
+                // <Navigate to="/password-gallery" />
             }
             
             
