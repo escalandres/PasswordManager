@@ -65,16 +65,27 @@ const createFile = async(userId, key) => {
 
 const updateFile = async(req, res) => {
     try{
+        console.log(req.body)
+        console.log(req.body.user.token)
         const token = jwt.verify(req.body.user.token, JWT_SECRET);
         const data = {
-            email: req.body.user.email,
-            username: req.body.user.username,
-            password: req.body.user.password,
-            url: req.body.user.url
+            email: req.body.email,
+            username: req.body.username,
+            password: req.body.password,
+            url: req.body.url
         }
-        let userId = token.userId
-        let user = await File.findOne({userId}).exec();
-        let userFile = user.file
+        console.log(token)
+        let userId = token.id
+        console.log('userId: '+userId)
+        let user = await File.findOne({userId: userId}).exec();
+        console.log(user)
+        let userFile = fs.readFileSync(user.path, (err, file)=>{
+            if(err) return console.error(err.message);
+            if(file){
+                console.log('File read')
+
+            }
+        });
         let decryptedFile = encryption.decrypt(userFile, token.password)
         let file2 = JSON.parse(decryptedFile);
         console.dir(file2)
@@ -82,11 +93,23 @@ const updateFile = async(req, res) => {
         userFile = JSON.stringify(file2);
         let encryptedFile = encryption.encrypt(userFile, token.password)
         console.log('Archivo encriptado')
-        await File.updateOne({userId},{$set: {"file": encryptedFile}})
+        fs.writeFileSync(user.path, encryptedFile, (err, file) =>{
+            if(err) return console.error(err.message);
+            if(file){
+                console.log('File Encrypted successfully')
+            }
+        })
 
         console.log('check')
-        let show = await File.findOne({userId}).exec();
-        let show2 = encryption.decrypt(show.file, token.password)
+        let show = await File.findOne({userId: userId}).exec();
+        let showFile = fs.readFileSync(show.path, (err, file)=>{
+            if(err) return console.error(err.message);
+            if(file){
+                console.log('File read')
+
+            }
+        });
+        let show2 = encryption.decrypt(showFile, token.password)
         let show3 = JSON.parse(show2)
         console.log(show3)
         // fs.writeFileSync(path, file, "utf-8")
@@ -127,7 +150,7 @@ const getFile = async(req, res) => {
         const token = jwt.verify(req.body.user.token, JWT_SECRET);
         console.dir(token)
         let userId = token.id
-        let user = await File.findOne({userId}).exec();
+        let user = await File.findOne({userId: userId}).exec();
         let userFilePath = user.path
         console.log('file: '+userFilePath)
         let userFile = fs.readFileSync(userFilePath, (err, file)=>{

@@ -40,7 +40,20 @@ const getPasswords = async() =>{
         user
     });
     decryptedData = decryptMessage(answer.data.data, import.meta.env.VITE_FILE_KEY)
-    console.log(decryptedData[0])
+    console.log(decryptedData)
+    decryptedData.forEach((password, index) => {
+        passwords.push(
+        <div key={index}>
+            <h2>Email: {password.email}</h2>
+            <h2>Username: {password.username}</h2>
+            <h2>Password: {password.password}</h2>
+            <h2>Url: {password.url}</h2>
+    
+            <hr />
+        </div>,
+        );
+    });
+    console.log(passwords)
 }
 
 const PasswordGallery = () => {
@@ -55,54 +68,15 @@ const PasswordGallery = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // if(!captcha.current.getValue()){
-        //     Toastt();
-        //     Alertt();
-        // }
-        // else{
-            const { sname, semail, spassword, lemail, lpassword} = form;
-            
-            const URL = 'http://localhost:5200/auth';
-            //if(sname&&semail&&)
-
-            //const URL = 'https://chat-app-project-ing-web.herokuapp.com/auth';
-
-            // const { data: { token, userId, name, email, hashedPassword } } = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, {
-            //     sname, semail, spassword, lemail, lpassword,
-            // });
-            const answer = await axios.post(`${URL}/${isSignup ? 'signup' : 'login'}`, {
-                sname, semail, spassword, lemail, lpassword,
+            const { email, username, password, url} = form;
+            const URL = 'http://localhost:5200/password/save-password';
+            const user = cookies.get('user')
+            console.log(user)
+            const answer = await axios.post(`${URL}`, {
+                user, email, username, password, url
             });
-            console.dir(answer)
-            if(answer.data.status === "ok"){
-                cookies.set('user', answer.data.data,{
-                    maxAge: 60 * 60 * 4,
-                    sameSite: true
-                });
-                const user = cookies.get('user')
-                const token = user.token;
-                console.log(user.email)
-                const result = await axios.post('http://localhost:5200/login/verify', {
-                    token
-                });
-                
-                console.dir(result)
-                if(result.data.message === "invalid token"){
-                    alert('Debe ingresar su email')
-                }
-            }
+            console.log(answer)
             
-            
-            // cookies.set('token', token);
-            // cookies.set('username', username);
-            // cookies.set('fullName', fullName);
-            // cookies.set('userId', userId);
-
-            // if(isSignup) {
-            //     cookies.set('phoneNumber', phoneNumber);
-            //     cookies.set('avatarURL', avatarURL);
-            //     cookies.set('hashedPassword', hashedPassword);
-            // }
 
             //window.location.reload();
         //}
@@ -123,16 +97,16 @@ const PasswordGallery = () => {
                             <input type="url" placeholder="Url" name="url"
                             onChange={handleChange}/>
                         <button>Save Password</button>
-                        <button onClick={achu}>Achu</button>
                 </form>
             </div> */}
             
             <div className="form-container">
                 <div className="passwords-container">
-                    {decryptedData.map((password, index) =>{
+                {console.log(decryptedData)}
+                    {passwords.map((password, index) =>{
                         return(
-                            <div key={index}>
-                                <div className="form-group">
+                            <div id={index} key={index}>
+                                {/* <div className="form-group">
                                     <label className="label">Email</label>
                                     <input name="email" type="email" value={password.email} />
                                 </div>
@@ -147,7 +121,11 @@ const PasswordGallery = () => {
                                 <div className="form-group">
                                     <label className="label">Website</label>
                                     <input name="url" type="url" value={password.url} />
-                                </div>
+                                </div> */}
+                                <h2>Email: {password.email}</h2>
+                                <h2>Username: {password.username}</h2>
+                                <h2>Password: {password.password}</h2>
+                                <h2>Url: {password.url}</h2>
                             </div>
                         );
                     })
