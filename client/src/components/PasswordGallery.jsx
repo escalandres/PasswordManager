@@ -3,9 +3,12 @@ import Cookies from 'universal-cookie';
 import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faFacebook,faGooglePlusG, faLinkedinIn} from "@fortawesome/free-brands-svg-icons";
+import {faSpinner} from "@fortawesome/free-solid-svg-icons"
 import '../css/login.css';
 import '../css/password.css';
 import CryptoJS from "crypto-js";
+import Button from 'react-bootstrap/Button';
+import Form from 'react-bootstrap/Form';
 let i = 1;
 function encryptMessage(data){
     var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), import.meta.env.VITE_FILE_KEY).toString();
@@ -32,37 +35,16 @@ const achu =()=>{
     let URL = 'http://localhost:5200/password/get-passwords';
 }
 
-const getPasswords = async() =>{
-    let URL = 'http://localhost:5200/password/get-passwords';
-    const user = cookies.get('user')
-    const answer = await axios.post(`${URL}`, {
-        user
-    });
-    let decryptedData = decryptMessage(answer.data.data, import.meta.env.VITE_FILE_KEY)
-    return decryptedData;
-    // console.log(decryptedData)
-    // passwords.push(decryptedData)
-    //console.log(passwords)
-    // decryptedData.forEach((password, index) => {
-    //     passwords.push(
-    //     <div key={index}>
-    //         <h2>Email: {password.email}</h2>
-    //         <h2>Username: {password.username}</h2>
-    //         <h2>Password: {password.password}</h2>
-    //         <h2>Url: {password.url}</h2>
-    
-    //         <hr />
-    //     </div>,
-    //     );
-    // });
-    // console.log(passwords)
-}
 
 class PasswordGallery extends React.Component {
 // const PasswordGallery = () => {
     state = {
         passwords: []
     };
+    constructor(props) {
+        super(props);
+        this.handleSubmit = this.handleSubmit.bind(this);
+    }
     //const [form, setForm] = useState(initialState);
     handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -84,7 +66,7 @@ class PasswordGallery extends React.Component {
         }
     }
 
-    handleSubmit = async (e) => {
+    async handleSubmit(e){
         e.preventDefault();
             const { email, username, password, url} = form;
             const URL = 'http://localhost:5200/password/save-password';
@@ -102,7 +84,7 @@ class PasswordGallery extends React.Component {
 
     render(){
     return(
-        <div className="container" id="container">
+        <div className="" id="">
             {/* <div className="form-container log-in-container new-password-container">
                 <form action="#" onSubmit={handleSubmit}>
                     <h1 className="h1-black">Create a new password</h1>
@@ -118,38 +100,43 @@ class PasswordGallery extends React.Component {
                 </form>
             </div> */}
             
-            <div className="form-container">
+            <div className="">
                 <div className="passwords-container">
                 {console.log(this.state.passwords)}
                     {this.state.passwords.map((password, index) =>{
                         return(
                             <div id={index} key={index}>
-                                {/* <div className="form-group">
-                                    <label className="label">Email</label>
-                                    <input name="email" type="email" value={password.email} />
-                                </div>
-                                <div className="form-group">
-                                    <label className="label">Username</label>
-                                    <input name="username" type="text" value={password.username} />
-                                </div>
-                                <div className="form-group">
-                                    <label className="label">Password</label>
-                                    <input name="password" type="password" value={password.password} />
-                                </div>
-                                <div className="form-group">
-                                    <label className="label">Website</label>
-                                    <input name="url" type="url" value={password.url} />
-                                </div> */}
-                                <h2>Email: {password.email}</h2>
-                                <h2>Username: {password.username}</h2>
-                                <h2>Password: {password.password}</h2>
-                                <h2>Url: {password.url}</h2>
+                                <form onSubmit={this.handleSubmit}>
+                                    <div className="form-group">
+                                        <label className="label">Email</label>
+                                        <input name="email" type="email" value={password.email} onChange={this.handleChange}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="label">Username</label>
+                                        <input name="username" type="text" value={password.username} onChange={this.handleChange}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="label">Password</label>
+                                        <input name="password" type="password" value={password.password} onChange={this.handleChange}/>
+                                    </div>
+                                    <div className="form-group">
+                                        <label className="label">Website</label>
+                                        <input name="url" type="url" value={password.url} onChange={this.handleChange}/>
+                                    </div>
+                                    {/* <h2>Email: {password.email}</h2>
+                                    <h2>Username: {password.username}</h2>
+                                    <h2>Password: {password.password}</h2>
+                                    <h2>Url: {password.url}</h2> */}
+                                </form>
                             </div>
+                            
                         );
                     })
 
                     }
                     
+                    <FontAwesomeIcon className="load-icon fa-pulse fa-3x fa-fw" icon={faSpinner} />
+
                 </div>
             </div>
         </div>
