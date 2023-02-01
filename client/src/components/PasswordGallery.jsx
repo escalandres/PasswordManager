@@ -4,22 +4,20 @@ import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faFacebook,faGooglePlusG, faLinkedinIn} from "@fortawesome/free-brands-svg-icons";
 import '../css/login.css';
-// import dotenv from 'dotenv'
-
 import CryptoJS from "crypto-js";
-
-function encryptMessage(data, key){
-    var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), key).toString();
+let i = 1;
+function encryptMessage(data){
+    var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), import.meta.env.VITE_FILE_KEY).toString();
     return ciphertext;
 }   
 
-function decryptMessage(ciphertext, key){
-    var bytes = CryptoJS.AES.decrypt(ciphertext, key);
+function decryptMessage(ciphertext){
+    var bytes = CryptoJS.AES.decrypt(ciphertext, import.meta.env.VITE_FILE_KEY);
     var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
     return decryptedData
 }
 
-var decryptedData = {};
+var decryptedData = [{}];
 
 const cookies = new Cookies();
 const initialState = {
@@ -29,7 +27,6 @@ const initialState = {
     url: '',
 }
 
-// dotenv.config()
 const passwords = [];
 
 const achu =()=>{
@@ -42,50 +39,8 @@ const getPasswords = async() =>{
     const answer = await axios.post(`${URL}`, {
         user
     });
-    //import.meta.env.REACT_APP_FILE_SECRET
-    //console.dir(answer)
-    //console.dir(answer.data.status)
-    console.dir(answer.data.data)
-    decryptedData = decryptMessage(answer.data.data, '7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
-    console.log('Hasta aqui')
-    console.log(decryptedData)
-    console.log('mensaje')
-    console.log(typeof(decryptedData))
+    decryptedData = decryptMessage(answer.data.data, import.meta.env.VITE_FILE_KEY)
     console.log(decryptedData[0])
-    // console.log('SECRET: '+'7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
-    // let result = decrypt(answer.data.data.data,'7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
-    // console.dir(result)
-    // console.dir(JSON.parse(result))
-    // if(answer.data.status === "OK"){
-    //     decryptedData.forEach((password, index) => {
-    //         console.log(data)
-    //         passwords.push(
-    //             <div className="passwords-container" key={index}>
-    //                 <div className="form-group">
-    //                     <label className="label">Email</label>
-    //                     <input name="email" type="email" value={password.email} />
-    //                 </div>
-    //                 <div className="form-group">
-    //                     <label className="label">Username</label>
-    //                     <input name="username" type="text" value={password.username} />
-    //                 </div>
-    //                 <div className="form-group">
-    //                     <label className="label">Password</label>
-    //                     <input name="password" type="password" value={password.password} />
-    //                 </div>
-    //                 <div className="form-group">
-    //                     <label className="label">Website</label>
-    //                     <input name="url" type="url" value={password.url} />
-    //                 </div>
-    //             </div>
-                
-    //         );
-    //         console.log(passwords)
-    //     });
-    // }
-    // else{
-    //     return null;
-    // }
 }
 
 const PasswordGallery = () => {
@@ -96,18 +51,6 @@ const PasswordGallery = () => {
     useEffect(() => {
         getPasswords();
     }, []);
-    
-    let URL = 'http://localhost:5200/password/get-passwords';
-    const user = cookies.get('user')
-    const answer = await axios.post(`${URL}`, {
-        user
-    });
-    //import.meta.env.REACT_APP_FILE_SECRET
-    //console.dir(answer)
-    //console.dir(answer.data.status)
-    console.dir(answer.data.data)
-    decryptedData = decryptMessage(answer.data.data, '7@Q@Aq!d?Q&N6Dh$g3MF$Yr8sQRnhbrYRCEi@CTm')
-    console.log('Hasta aqui')
 
 
     const handleSubmit = async (e) => {

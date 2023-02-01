@@ -65,12 +65,12 @@ const createFile = async(userId, key) => {
 
 const updateFile = async(req, res) => {
     try{
-        const token = jwt.verify(req.body.token, JWT_SECRET);
+        const token = jwt.verify(req.body.user.token, JWT_SECRET);
         const data = {
-            email: req.body.email,
-            username: req.body.username,
-            password: req.body.password,
-            url: req.body.url
+            email: req.body.user.email,
+            username: req.body.user.username,
+            password: req.body.user.password,
+            url: req.body.user.url
         }
         let userId = token.userId
         let user = await File.findOne({userId}).exec();
@@ -144,7 +144,7 @@ const getFile = async(req, res) => {
         console.log('json parse')
         console.dir(file2)
         
-        
+        console.log(FILE_KEY)
         let encryptedPasswords = cipher.encryptMessage(file2, FILE_KEY)
         res.send({satus: 'OK', data: encryptedPasswords})
         //res.send({status: 'OK', data: file2})
