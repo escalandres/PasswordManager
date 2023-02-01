@@ -105,12 +105,12 @@ class PasswordGallery extends React.Component {
                 {console.log(this.state.passwords)}
                     {this.state.passwords.map((password, index) =>{
                         return(
-                            <div id={index} key={index}>
-                                <form onSubmit={this.handleSubmit}>
-                                    <div className="form-group">
-                                        <label className="label">Email</label>
-                                        <input name="email" type="email" value={password.email} onChange={this.handleChange}/>
-                                    </div>
+                            <div className="password-container" id={index} key={index}>
+                                <Form onSubmit={this.handleSubmit}>
+                                    <Form.Group className="form-group">
+                                        <Form.Label className="label">Email</Form.Label>
+                                        <Form.Control name="email" type="email" value={password.email} onChange={this.handleChange}/>
+                                    </Form.Group>
                                     <div className="form-group">
                                         <label className="label">Username</label>
                                         <input name="username" type="text" value={password.username} onChange={this.handleChange}/>
@@ -127,7 +127,7 @@ class PasswordGallery extends React.Component {
                                     <h2>Username: {password.username}</h2>
                                     <h2>Password: {password.password}</h2>
                                     <h2>Url: {password.url}</h2> */}
-                                </form>
+                                </Form>
                             </div>
                             
                         );
