@@ -4,6 +4,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faFacebook,faGooglePlusG, faLinkedinIn} from "@fortawesome/free-brands-svg-icons";
 import '../css/login.css';
+import '../css/password.css';
 import CryptoJS from "crypto-js";
 let i = 1;
 function encryptMessage(data){
@@ -17,8 +18,6 @@ function decryptMessage(ciphertext){
     return decryptedData
 }
 
-var decryptedData = [{}];
-
 const cookies = new Cookies();
 const initialState = {
     email: '',
@@ -27,7 +26,7 @@ const initialState = {
     url: '',
 }
 
-const passwords = [];
+var passwords = [];
 
 const achu =()=>{
     let URL = 'http://localhost:5200/password/get-passwords';
@@ -39,34 +38,53 @@ const getPasswords = async() =>{
     const answer = await axios.post(`${URL}`, {
         user
     });
-    decryptedData = decryptMessage(answer.data.data, import.meta.env.VITE_FILE_KEY)
-    console.log(decryptedData)
-    decryptedData.forEach((password, index) => {
-        passwords.push(
-        <div key={index}>
-            <h2>Email: {password.email}</h2>
-            <h2>Username: {password.username}</h2>
-            <h2>Password: {password.password}</h2>
-            <h2>Url: {password.url}</h2>
+    let decryptedData = decryptMessage(answer.data.data, import.meta.env.VITE_FILE_KEY)
+    return decryptedData;
+    // console.log(decryptedData)
+    // passwords.push(decryptedData)
+    //console.log(passwords)
+    // decryptedData.forEach((password, index) => {
+    //     passwords.push(
+    //     <div key={index}>
+    //         <h2>Email: {password.email}</h2>
+    //         <h2>Username: {password.username}</h2>
+    //         <h2>Password: {password.password}</h2>
+    //         <h2>Url: {password.url}</h2>
     
-            <hr />
-        </div>,
-        );
-    });
-    console.log(passwords)
+    //         <hr />
+    //     </div>,
+    //     );
+    // });
+    // console.log(passwords)
 }
 
-const PasswordGallery = () => {
-    const [form, setForm] = useState(initialState);
-    const handleChange = (e) => {
+class PasswordGallery extends React.Component {
+// const PasswordGallery = () => {
+    state = {
+        passwords: []
+    };
+    //const [form, setForm] = useState(initialState);
+    handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
-    useEffect(() => {
-        getPasswords();
-    }, []);
+    // useEffect(() => {
+    //     getPasswords();
+    // }, []);
+    async componentDidMount() {
+        try{
+            let URL = 'http://localhost:5200/password/get-passwords';
+            const user = cookies.get('user')
+            const answer = await axios.post(`${URL}`, {
+                user
+            });
+            let decryptedData = decryptMessage(answer.data.data, import.meta.env.VITE_FILE_KEY)
+            this.setState(state =>({passwords: decryptedData}));
+        } catch{
 
+        }
+    }
 
-    const handleSubmit = async (e) => {
+    handleSubmit = async (e) => {
         e.preventDefault();
             const { email, username, password, url} = form;
             const URL = 'http://localhost:5200/password/save-password';
@@ -82,7 +100,7 @@ const PasswordGallery = () => {
         //}
     }
 
-
+    render(){
     return(
         <div className="container" id="container">
             {/* <div className="form-container log-in-container new-password-container">
@@ -102,8 +120,8 @@ const PasswordGallery = () => {
             
             <div className="form-container">
                 <div className="passwords-container">
-                {console.log(decryptedData)}
-                    {passwords.map((password, index) =>{
+                {console.log(this.state.passwords)}
+                    {this.state.passwords.map((password, index) =>{
                         return(
                             <div id={index} key={index}>
                                 {/* <div className="form-group">
@@ -137,5 +155,5 @@ const PasswordGallery = () => {
         </div>
         
     )
-}
+}}
 export default PasswordGallery
