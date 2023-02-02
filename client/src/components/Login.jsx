@@ -5,7 +5,7 @@ import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faFacebook,faGooglePlusG, faLinkedinIn} from "@fortawesome/free-brands-svg-icons";
 import '../css/login.css';
-
+import {faSpinner} from "@fortawesome/free-solid-svg-icons"
 
 const cookies = new Cookies();
 const initialState = {
@@ -16,6 +16,7 @@ const initialState = {
     lpassword: ''
 }
 
+const load = document.getElementById("load-container");
 
 
 const Login = () => {
@@ -50,6 +51,8 @@ const Login = () => {
         //     Alertt();
         // }
         // else{
+            // load.classList.remove("hide")
+            document.getElementById("load-container").classList.remove("hide")
             const { sname, semail, spassword, lemail, lpassword} = form;
             
             const URL = 'http://localhost:5200/auth';
@@ -68,8 +71,12 @@ const Login = () => {
                 cookies.set('user', answer.data.data,{
                     maxAge: 60 * 60 * 4,
                     sameSite: true
-                });
-                navigate("/password-gallery");
+                });setTimeout(() => {
+                    // load.classList.add("hide")
+                    document.getElementById("load-container").classList.add("hide")
+                    navigate("/password-gallery");
+                }, 2000);
+                
             }
             
             
@@ -91,6 +98,9 @@ const Login = () => {
 
     return(
         <div className="body">
+            <div id="load-container" className="load-container hide">
+                <FontAwesomeIcon className="load-icon fa-pulse fa-3x fa-fw" icon={faSpinner} />
+            </div>
             <div className="container" id="container">
                 <div className="form-container sign-up-container">
                     <form action="#" onSubmit={handleSubmit}>
