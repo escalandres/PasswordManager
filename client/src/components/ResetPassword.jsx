@@ -61,40 +61,40 @@ const ResetPassword = () => {
                     <h1 className="h1-black">Recupere su cuenta</h1>
                     <div className="form__section">
                         <div className="input-container">
-                            <label>Correo electrónico</label>
-                            <input type="email" placeholder="Email" name="email"
+                            <label className="pm-label">Correo electrónico</label>
+                            <input className="pm-input" type="email" placeholder="Email" name="email"
                                 onChange={handleChange}/>
                         </div>
                         {!isChecked &&(
                             <div className="input-container">
-                                <label>Nombre</label>
-                                <input type="text" placeholder="Name" name="name"
+                                <label className="pm-label">Nombre</label>
+                                <input className="pm-input" type="text" placeholder="Name" name="name"
                                     onChange={handleChange}/>
                             </div>
                         )}
                         {isChecked &&(
                             <div className="input-container">
-                                <label>New Password</label>
-                                <input type="password" placeholder="New Password" name="password"
+                                <label className="pm-label">New Password</label>
+                                <input className="pm-input" type="password" placeholder="New Password" name="password"
                                     onChange={handleChange}/>
                             </div>
                         )}
                     </div>
                     
-                    <button className="reset-btn" type="submit">Recuperar Contraseña</button>
+                    <button className="reset-btn pm-btn" type="submit">Recuperar Contraseña</button>
 
                 </form>
             </div>
             <div className="overlay-container">
                 <div className="overlay">
                     <div className="overlay-panel overlay-right">
-                        <h1>Hello, There!</h1>
+                        <h1 className="pm-h1">Hello, There!</h1>
                         <div className="reset-text__container">
-                            <p>
+                            <p className="pm-p">
                                 <span className="reset-span">¿No tienes una cuenta?</span>
                                 <a href="/" className="reset-a">Registrate</a>
                             </p>
-                            <p>
+                            <p className="pm-p">
                                 <span className="reset-span">También puedes</span>
                                 <a href="/" className="reset-a">Iniciar sesión</a>
                             </p>

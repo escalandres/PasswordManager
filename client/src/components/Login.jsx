@@ -5,7 +5,13 @@ import axios from 'axios';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faFacebook,faGooglePlusG, faLinkedinIn} from "@fortawesome/free-brands-svg-icons";
 import '../css/login.css';
-import {faSpinner} from "@fortawesome/free-solid-svg-icons"
+import {faSpinner} from "@fortawesome/free-solid-svg-icons";
+import AlertMessage from "./AlertMessage";
+// import {Alert} from 'react-bootstrap/';
+import Alert from 'react-bootstrap/Alert';
+
+//
+
 
 const cookies = new Cookies();
 const initialState = {
@@ -35,6 +41,7 @@ const Login = () => {
     }, []);
     const navigate = useNavigate();
     const [form, setForm] = useState(initialState);
+    const [show, setShow] = React.useState(false)
     const [isSignup, setIsSignup] = useState(false);
     const switchMode = () => {
         setIsSignup((prevIsSignup) => !prevIsSignup);
@@ -78,7 +85,9 @@ const Login = () => {
                 }, 2000);
                 
             }
-            
+            else{
+                setShow(true)
+            }
             
             // cookies.set('token', token);
             // cookies.set('username', username);
@@ -98,13 +107,16 @@ const Login = () => {
 
     return(
         <div className="body">
+            <div id="alert-container" className="alert-container">
+                <AlertMessage type="danger" text="¡El email y/o contraseña son incorrectos!"/>
+            </div>
             <div id="load-container" className="load-container hide">
                 <FontAwesomeIcon className="load-icon fa-pulse fa-3x fa-fw" icon={faSpinner} />
             </div>
             <div className="container" id="container">
                 <div className="form-container sign-up-container">
                     <form action="#" onSubmit={handleSubmit}>
-                        <h1 className="h1-black">Create Account</h1>
+                        <h1 className="h1-black pm-h1">Create Account</h1>
                         <div className="social-container">
                             <a href="#" className="social">
                             <FontAwesomeIcon className="icon" icon={faFacebook}/>
@@ -116,18 +128,18 @@ const Login = () => {
                             <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
                         </div>
                         <span>or use your email for registration</span>
-                            <input type="text" placeholder="Name" name="sname"
+                            <input className="pm-input" type="text" placeholder="Name" name="sname"
                                 onChange={handleChange}/>
-                            <input type="email" placeholder="Email" name="semail"
+                            <input className="pm-input" type="email" placeholder="Email" name="semail"
                                 onChange={handleChange}/>
-                            <input type="password" placeholder="Password" name="spassword"
+                            <input className="pm-input" type="password" placeholder="Password" name="spassword"
                                 onChange={handleChange}/>
-                            <button>Sign Up</button>
+                            <button className="pm-btn">Sign Up</button>
                     </form>
                 </div>
                 <div className="form-container log-in-container">
                     <form onSubmit={handleSubmit}>
-                        <h1 className="h1-black">Log in</h1>
+                        <h1 className="h1-black pm-h1">Log in</h1>
                         <div className="social-container">
                             <a href="#" className="social">
                             <FontAwesomeIcon className="icon" icon={faFacebook}/>
@@ -139,25 +151,25 @@ const Login = () => {
                             <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
                         </div>
                         <span>or use your account</span>
-                            <input type="email" placeholder="Email" name="lemail"
+                            <input className="pm-input" type="email" placeholder="Email" name="lemail"
                                 onChange={handleChange}/>
-                            <input type="password" className="mb" placeholder="Password" name="lpassword"
+                            <input className="pm-input" type="password" placeholder="Password" name="lpassword"
                                 onChange={handleChange}/>
-                            <a href="/change-password">Forgot your password?</a>
-                            <button>Log In</button>
+                            <a className="pm-a" href="/change-password">Forgot your password?</a>
+                            <button className="pm-btn">Log In</button>
                     </form>
                 </div>
                 <div className="overlay-container">
                     <div className="overlay">
                         <div className="overlay-panel overlay-left">
-                            <h1>Welcome Back!</h1>
+                            <h1 className="pm-h1">Welcome Back!</h1>
                             <p>Already have an account? Log In</p>
-                            <button className="ghost" id="logIn" onClick={switchMode}>Log In</button>
+                            <button className="pm-btn ghost" id="logIn" onClick={switchMode}>Log In</button>
                         </div>
                         <div className="overlay-panel overlay-right">
-                            <h1>Hello, There!</h1>
+                            <h1 className="pm-h1">Hello, There!</h1>
                             <p>Don't have an account? Sign Up Free</p>
-                            <button className="ghost" id="signUp" onClick={switchMode}>Sign Up</button>
+                            <button className="pm-btn ghost" id="signUp" onClick={switchMode}>Sign Up</button>
                         </div>
                     </div>
                 </div>

@@ -7,8 +7,8 @@ import {faSpinner} from "@fortawesome/free-solid-svg-icons"
 import '../css/login.css';
 import '../css/password.css';
 import CryptoJS from "crypto-js";
-import Button from 'react-bootstrap/Button';
-import Form from 'react-bootstrap/Form';
+import {Button, Form, Alert} from 'react-bootstrap';
+
 let i = 1;
 function encryptMessage(data){
     var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), import.meta.env.VITE_FILE_KEY).toString();
@@ -136,7 +136,9 @@ class PasswordGallery extends React.Component {
                     }
                     
                     <FontAwesomeIcon className="load-icon fa-pulse fa-3x fa-fw" icon={faSpinner} />
-
+                    <Alert id="alert" variant="danger" fade="false" show="true">
+                    ¡El email y/o contraseña son incorrectos!
+                </Alert>
                 </div>
             </div>
         </div>
