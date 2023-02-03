@@ -50,10 +50,10 @@ const login = async(req, res) =>{
         const user = await User.findOne({email: lemail}).exec();
         console.log(user)
         if(!user) {
-            return res.status(404).send({ message: "The user does not exist" });
+            return res.send({ message: "The user does not exist", status: "error" });
         }
         if(!bcrypt.compareSync(lpassword, user.hashedPassword)) {
-            return res.status(400).send({ message: "The password is invalid" });
+            return res.send({ message: "The password is invalid" });
         }
         else{
             

@@ -21,6 +21,7 @@ const createFile = async(userId, key) => {
     console.log(path)
     const extensions = ['.json','.pmf'];
     const data = [{
+        name: '',
         email: '',
         username: '',
         password: '',
@@ -69,6 +70,7 @@ const updateFile = async(req, res) => {
         console.log(req.body.user.token)
         const token = jwt.verify(req.body.user.token, JWT_SECRET);
         const data = {
+            name: req.body.name,
             email: req.body.email,
             username: req.body.username,
             password: req.body.password,

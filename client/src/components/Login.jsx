@@ -78,7 +78,8 @@ const Login = () => {
                 cookies.set('user', answer.data.data,{
                     maxAge: 60 * 60 * 4,
                     sameSite: true
-                });setTimeout(() => {
+                });
+                setTimeout(() => {
                     // load.classList.add("hide")
                     document.getElementById("load-container").classList.add("hide")
                     navigate("/password-gallery");
@@ -86,7 +87,17 @@ const Login = () => {
                 
             }
             else{
-                setShow(true)
+                setTimeout(() => {
+                    console.log('p')
+                    document.getElementById("load-container").classList.add("hide")
+                    document.getElementById("alert-container").classList.remove("hide")
+                }, 2000);
+
+                setTimeout(() => {
+                    console.log('w')
+                    // load.classList.add("hide")
+                    document.getElementById("alert-container").classList.add("hide")
+                }, 4000);
             }
             
             // cookies.set('token', token);
@@ -107,7 +118,7 @@ const Login = () => {
 
     return(
         <div className="body">
-            <div id="alert-container" className="alert-container">
+            <div id="alert-container" className="alert-container hide">
                 <AlertMessage type="danger" text="¡El email y/o contraseña son incorrectos!"/>
             </div>
             <div id="load-container" className="load-container hide">

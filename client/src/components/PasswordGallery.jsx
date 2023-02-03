@@ -7,7 +7,7 @@ import {faSpinner} from "@fortawesome/free-solid-svg-icons"
 import '../css/login.css';
 import '../css/password.css';
 import CryptoJS from "crypto-js";
-import {Button, Form, Alert} from 'react-bootstrap';
+import {Button, Form, Alert, Modal} from 'react-bootstrap';
 
 let i = 1;
 function encryptMessage(data){
@@ -23,6 +23,7 @@ function decryptMessage(ciphertext){
 
 const cookies = new Cookies();
 const initialState = {
+    name: '',
     email: '',
     username: '',
     password: '',
@@ -31,19 +32,36 @@ const initialState = {
 
 var passwords = [];
 
-const achu =()=>{
-    let URL = 'http://localhost:5200/password/get-passwords';
+function passData(name,email,username,password,url){
+    // document.getElementById('modalName').value = name;
+    // document.getElementById('modalEmail').value = email;
+    // document.getElementById('modalUsername').value = username;
+    // document.getElementById('modalPassword').value = password;
+    // document.getElementById('modalUrl').value = url;
+    document.getElementById('modalName').setAttribute('value', name);
+    document.getElementById('modalEmail').setAttribute('value', email);
+    document.getElementById('modalUsername').setAttribute('value', username);
+    document.getElementById('modalPassword').setAttribute('value',password);
+    document.getElementById('modalUrl').setAttribute('value', url);
 }
 
-
+// function PasswordGallery () {
 class PasswordGallery extends React.Component {
 // const PasswordGallery = () => {
     state = {
+        show: false,
         passwords: []
     };
     constructor(props) {
         super(props);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClose = () => this.state.show = false;
+    // handleShow = () => this.state.show = true;
+    this.handleShow = () =>{
+        
+        this.state.show = true;
+        alert(this.state.show)
+    }
     }
     //const [form, setForm] = useState(initialState);
     handleChange = (e) => {
@@ -65,7 +83,7 @@ class PasswordGallery extends React.Component {
 
         }
     }
-
+    
     async handleSubmit(e){
         e.preventDefault();
             const { email, username, password, url} = form;
@@ -85,6 +103,49 @@ class PasswordGallery extends React.Component {
     render(){
     return(
         <div className="" id="">
+        <h1>H</h1>
+                <Modal
+                    show={this.state.show}
+                    onHide={this.handleClose}
+                >
+                    
+                    
+                    <Form onSubmit={this.handleSubmit}>
+                        <Modal.Header closeButton>
+                        <Modal.Title id="modalName">LLLL</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                        <Form.Group className="form-group">
+                            <Form.Label className="label" >Email</Form.Label>
+                            <Form.Control id="modalEmail" name="email" type="email" onChange={this.handleChange}/>
+                        </Form.Group>
+                        <Form.Group className="form-group">
+                            <Form.Label className="label">Username</Form.Label>
+                            <Form.Control id="modalUsername" name="username" type="text" onChange={this.handleChange}/>
+                        </Form.Group>
+                        <Form.Group className="form-group">
+                            <Form.Label className="label">Password</Form.Label>
+                            <Form.Control id="modalPassword" name="password" type="password" onChange={this.handleChange}/>
+                        </Form.Group>
+                        <Form.Group className="form-group">
+                            <Form.Label className="label">Website</Form.Label>
+                            <Form.Control id="modalUrl" name="url" type="url" onChange={this.handleChange}/>
+                        </Form.Group>
+                        {/* <Button onClick={() => {this.handleShow;passData(password.name, password.email, password.username, password.password, password.url)}}>Show Data</Button> */}
+                        {/* <h2>Email: {password.email}</h2>
+                        <h2>Username: {password.username}</h2>
+                        <h2>Password: {password.password}</h2>
+                        <h2>Url: {password.url}</h2> */}
+                        </Modal.Body>
+                    </Form>
+                    
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={this.handleClose}>
+                        Close
+                    </Button>
+                    <Button variant="primary">Understood</Button>
+                    </Modal.Footer>
+                </Modal>
             {/* <div className="form-container log-in-container new-password-container">
                 <form action="#" onSubmit={handleSubmit}>
                     <h1 className="h1-black">Create a new password</h1>
@@ -108,21 +169,27 @@ class PasswordGallery extends React.Component {
                             <div className="password-container" id={index} key={index}>
                                 <Form onSubmit={this.handleSubmit}>
                                     <Form.Group className="form-group">
+                                        <Form.Text className="text-muted">{password.name}</Form.Text>
+                                    </Form.Group>
+                                    {/* <Form.Group className="form-group">
                                         <Form.Label className="label">Email</Form.Label>
                                         <Form.Control name="email" type="email" value={password.email} onChange={this.handleChange}/>
                                     </Form.Group>
-                                    <div className="form-group">
-                                        <label className="label">Username</label>
-                                        <input name="username" type="text" value={password.username} onChange={this.handleChange}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label className="label">Password</label>
-                                        <input name="password" type="password" value={password.password} onChange={this.handleChange}/>
-                                    </div>
-                                    <div className="form-group">
-                                        <label className="label">Website</label>
-                                        <input name="url" type="url" value={password.url} onChange={this.handleChange}/>
-                                    </div>
+                                    <Form.Group className="form-group">
+                                        <Form.Label className="label">Username</Form.Label>
+                                        <Form.Control name="username" type="text" value={password.username} onChange={this.handleChange}/>
+                                    </Form.Group>
+                                    <Form.Group className="form-group">
+                                        <Form.Label className="label">Password</Form.Label>
+                                        <Form.Control name="password" type="password" value={password.password} onChange={this.handleChange}/>
+                                    </Form.Group>
+                                    <Form.Group className="form-group">
+                                        <Form.Label className="label">Website</Form.Label>
+                                        <Form.Control name="url" type="url" value={password.url} onChange={this.handleChange}/>
+                                    </Form.Group> */}
+                                    {/* <Button onClick={() => {this.handleShow;passData(password.name, password.email, password.username, password.password, password.url)}}>Show Data</Button> */}
+                                    <Button onClick={this.handleShow}>Show Data</Button>
+                                    {/* <Button onClick={passData(password.name, password.email, password.username, password.password, password.url)}>Show Data</Button> */}
                                     {/* <h2>Email: {password.email}</h2>
                                     <h2>Username: {password.username}</h2>
                                     <h2>Password: {password.password}</h2>
@@ -135,11 +202,14 @@ class PasswordGallery extends React.Component {
 
                     }
                     
-                    <FontAwesomeIcon className="load-icon fa-pulse fa-3x fa-fw" icon={faSpinner} />
-                    <Alert id="alert" variant="danger" fade="false" show="true">
+                    {/* <FontAwesomeIcon className="load-icon fa-pulse fa-3x fa-fw" icon={faSpinner} /> */}
+                    {/* <Alert id="alert" variant="danger" fade="false" show="true">
                     ¡El email y/o contraseña son incorrectos!
-                </Alert>
+                </Alert> */}
                 </div>
+            </div>
+            <div>
+            
             </div>
         </div>
         
