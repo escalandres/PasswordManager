@@ -59,6 +59,8 @@ class PasswordGallery extends React.Component {
             text: '',
             type: ''
         };
+        this.form  = useState(initialState);
+        this.setForm = useState(initialState);
         this.toggle = this.toggle.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleOpenNewPassword = this.handleOpenNewPassword.bind(this);
@@ -74,9 +76,9 @@ class PasswordGallery extends React.Component {
     handleOpenNewPassword(){
         this.setState({show: !this.state.show});
     }
-    const [form, setForm] = useState(initialState);
+    // const [form, setForm] = useState(initialState);
     handleChange = (e) => {
-        setForm({ ...form, [e.target.name]: e.target.value });
+        this.setForm({ ...this.form, [e.target.name]: e.target.value });
     }
     // useEffect(() => {
     //     getPasswords();
