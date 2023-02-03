@@ -4,7 +4,7 @@ import '../css/alert.css';
 export default class AlertMessage extends Component{
     render(){
         return(
-            <div id="" className="">
+            <div id="alert-message" className="">
                 <Alert className="alert" variant={this.props.type}>
                     {this.props.text}
                 </Alert>

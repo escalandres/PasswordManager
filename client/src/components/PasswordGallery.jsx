@@ -7,8 +7,9 @@ import {faSpinner} from "@fortawesome/free-solid-svg-icons"
 import '../css/login.css';
 import '../css/password.css';
 import CryptoJS from "crypto-js";
-import {Button, Form, Alert, Modal} from 'react-bootstrap';
-
+import {Button, Form, Alert, Modal, Spinner} from 'react-bootstrap';
+import AlertMessage from "./AlertMessage";
+import "bootstrap/dist/css/bootstrap.min.css";
 let i = 1;
 function encryptMessage(data){
     var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), import.meta.env.VITE_FILE_KEY).toString();
@@ -48,22 +49,32 @@ function passData(name,email,username,password,url){
 // function PasswordGallery () {
 class PasswordGallery extends React.Component {
 // const PasswordGallery = () => {
-    state = {
-        show: false,
-        passwords: []
-    };
+    
     constructor(props) {
         super(props);
+        this.state = {
+            show: false,
+            passwords: [],
+            modal: false,
+            text: '',
+            type: ''
+        };
+        this.toggle = this.toggle.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleClose = () => this.state.show = false;
+        this.handleOpenNewPassword = this.handleOpenNewPassword.bind(this);
     // handleShow = () => this.state.show = true;
     this.handleShow = () =>{
         
         this.state.show = true;
-        alert(this.state.show)
     }
     }
-    //const [form, setForm] = useState(initialState);
+    toggle() {
+        this.setState({modal: !this.state.modal});
+    }
+    handleOpenNewPassword(){
+        this.setState({show: !this.state.show});
+    }
+    const [form, setForm] = useState(initialState);
     handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
@@ -86,7 +97,8 @@ class PasswordGallery extends React.Component {
     
     async handleSubmit(e){
         e.preventDefault();
-            const { email, username, password, url} = form;
+            document.getElementById("newPasswordSpinner").classList.remove("hide")
+            const { name, email, username, password, url} = form;
             const URL = 'http://localhost:5200/password/save-password';
             const user = cookies.get('user')
             console.log(user)
@@ -94,8 +106,30 @@ class PasswordGallery extends React.Component {
                 user, email, username, password, url
             });
             console.log(answer)
-            
+            if(answer.data.status === "OK"){
+                document.getElementById("newPasswordSpinner").classList.add("hide")
+                this.handleOpenNewPassword()
+                // this.setState({modal: !this.state.modal});
+                this.setState({text: "New password saved successfully!"});
+                this.setState({type: "success"});
+                // document.getElementById("alert-message").setAttribute("text", "New password saved successfully!")
+                // document.getElementById("alert-message").setAttribute("type", "success")
+                // document.getElementById("alert-container").classList.remove("hide")
+                setTimeout(() => {
+                    console.log('w')
+                    // load.classList.add("hide")
+                    document.getElementById("alert-container").classList.add("hide")
+                }, 4000);
+            }
+            else{
+                document.getElementById("newPasswordSpinner").classList.add("hide")
+                this.handleOpenNewPassword()
+                this.setState({text: "Error on saving password!"});
+                this.setState({type: "danger"});
+                // document.getElementById("message").setAttribute("text", "")
+                // document.getElementById("message").setAttribute("type", "")
 
+            }
             //window.location.reload();
         //}
     }
@@ -103,13 +137,19 @@ class PasswordGallery extends React.Component {
     render(){
     return(
         <div className="" id="">
+            <div id="alert-container" className="alert-container hide">
+                <AlertMessage id="message" text={this.state.text} type={this.state.type} />            
+            </div>
+            
+            <Button onClick={this.handleOpenNewPassword} variant="success">Create new Password</Button>
+
         <h1>H</h1>
                 <Modal
-                    show={this.state.show}
-                    onHide={this.handleClose}
+                    onHide={this.toggle}
+                    show={this.state.modal}
                 >
                     
-                    
+                    <Modal.Dialog>
                     <Form onSubmit={this.handleSubmit}>
                         <Modal.Header closeButton>
                         <Modal.Title id="modalName">LLLL</Modal.Title>
@@ -140,11 +180,12 @@ class PasswordGallery extends React.Component {
                     </Form>
                     
                     <Modal.Footer>
-                    <Button variant="secondary" onClick={this.handleClose}>
+                    <Button variant="secondary" onClick={this.toggle}>
                         Close
                     </Button>
                     <Button variant="primary">Understood</Button>
                     </Modal.Footer>
+                    </Modal.Dialog>
                 </Modal>
             {/* <div className="form-container log-in-container new-password-container">
                 <form action="#" onSubmit={handleSubmit}>
@@ -188,7 +229,7 @@ class PasswordGallery extends React.Component {
                                         <Form.Control name="url" type="url" value={password.url} onChange={this.handleChange}/>
                                     </Form.Group> */}
                                     {/* <Button onClick={() => {this.handleShow;passData(password.name, password.email, password.username, password.password, password.url)}}>Show Data</Button> */}
-                                    <Button onClick={this.handleShow}>Show Data</Button>
+                                    <Button onClick={this.toggle}>Show Data</Button>
                                     {/* <Button onClick={passData(password.name, password.email, password.username, password.password, password.url)}>Show Data</Button> */}
                                     {/* <h2>Email: {password.email}</h2>
                                     <h2>Username: {password.username}</h2>
@@ -209,7 +250,50 @@ class PasswordGallery extends React.Component {
                 </div>
             </div>
             <div>
-            
+            <Modal
+                    onHide={this.handleOpenNewPassword}
+                    show={this.state.show}
+                    id="newPassword-modal"
+                >
+                    
+                    <Modal.Dialog>
+                    <Form onSubmit={this.handleSubmit}>
+                        <Modal.Header closeButton>
+                            <div id="newPasswordSpinner" className="hide"><Spinner id="" animation="border"  />;</div>
+                            
+                            <Modal.Title id="modalName">Create a new password</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                            <Form.Group className="form-group">
+                                <Form.Label className="label" >Page Name</Form.Label>
+                                <Form.Control id="newPasswordName" name="name" type="text" onChange={this.handleChange}/>
+                            </Form.Group>
+                            <Form.Group className="form-group">
+                                <Form.Label className="label" >Email</Form.Label>
+                                <Form.Control id="newPasswordEmail" name="email" type="email" onChange={this.handleChange}/>
+                            </Form.Group>
+                            <Form.Group className="form-group">
+                                <Form.Label className="label">Username</Form.Label>
+                                <Form.Control id="newPasswordUsername" name="username" type="text" onChange={this.handleChange}/>
+                            </Form.Group>
+                            <Form.Group className="form-group">
+                                <Form.Label className="label">Password</Form.Label>
+                                <Form.Control id="newPasswordPassword" name="password" type="password" onChange={this.handleChange}/>
+                            </Form.Group>
+                            <Form.Group className="form-group">
+                                <Form.Label className="label">Website</Form.Label>
+                                <Form.Control id="newPasswordUrl" name="url" type="url" onChange={this.handleChange}/>
+                            </Form.Group>
+                        </Modal.Body>
+                        <Modal.Footer>
+                            <Button variant="secondary" onClick={this.toggle}>
+                                Close
+                            </Button>
+                            <Button>Save Password</Button>
+                        </Modal.Footer>
+                    </Form>
+                    </Modal.Dialog>
+                </Modal>
             </div>
         </div>
         

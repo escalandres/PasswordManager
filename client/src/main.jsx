@@ -5,7 +5,7 @@ import App from './App';
 import ResetPassword from './components/ResetPassword'
 import PasswordGallery from './components/PasswordGallery';
 import './index.css'
-import '../node_modules/bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
 const router = createBrowserRouter(
   [
     {
