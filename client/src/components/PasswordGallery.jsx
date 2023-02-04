@@ -31,7 +31,16 @@ const initialState = {
     url: '',
 }
 
-var passwords = [];
+const initialPass = [];
+const initialBool = false;
+var pass = [];
+const state = {
+    show: false,
+    passwords: [],
+    modal: false,
+    text: '',
+    type: ''
+};
 
 function passData(name,email,username,password,url){
     // document.getElementById('modalName').value = name;
@@ -47,57 +56,73 @@ function passData(name,email,username,password,url){
 }
 
 // function PasswordGallery () {
-class PasswordGallery extends React.Component {
-// const PasswordGallery = () => {
+//class PasswordGallery extends React.Component {
+const PasswordGallery = () => {
+    const [passwords, setPasswords] = useState(initialPass);
+    const [modal, setModal] = useState(initialBool);
+    React.useEffect(() => {
+        const fetchData = async () =>{
+            try{
+                console.log('Hola')
+                let URL = 'http://localhost:5200/password/get-passwords';
+                const user = cookies.get('user')
+                const answer = await axios.post(`${URL}`, {
+                    user
+                });
+                let decryptedData = decryptMessage(answer.data.data, import.meta.env.VITE_FILE_KEY)
+                console.log('passwords')
+                console.log(passwords)
+                pass = decryptedData,
+                setPasswords((passwords) => decryptedData); 
+                //state.passwords = decryptedData;
+            } catch{
     
-    constructor(props) {
-        super(props);
-        this.state = {
-            show: false,
-            passwords: [],
-            modal: false,
-            text: '',
-            type: ''
-        };
-        this.form  = useState(initialState);
-        this.setForm = useState(initialState);
-        this.toggle = this.toggle.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.handleOpenNewPassword = this.handleOpenNewPassword.bind(this);
-    // handleShow = () => this.state.show = true;
-    this.handleShow = () =>{
+            }
+        }
+        // call the function
+        fetchData()
+            // make sure to catch any error
+            .catch(console.error);
+    }, []);
+    const handleShow = () =>{
         
-        this.state.show = true;
+        state.show = true;
     }
+
+    const [form, setForm] = useState(initialState);
+    
+    const toggle = () =>{
+        setModal((modal) => !modal);
     }
-    toggle() {
-        this.setState({modal: !this.state.modal});
-    }
-    handleOpenNewPassword(){
-        this.setState({show: !this.state.show});
+    const handleOpenNewPassword = () =>{
+        state.show = !state.show;
     }
     // const [form, setForm] = useState(initialState);
-    handleChange = (e) => {
-        this.setForm({ ...this.form, [e.target.name]: e.target.value });
+    const handleChange = (e) => {
+        setForm({ ...this.form, [e.target.name]: e.target.value });
     }
     // useEffect(() => {
     //     getPasswords();
     // }, []);
-    async componentDidMount() {
-        try{
-            let URL = 'http://localhost:5200/password/get-passwords';
-            const user = cookies.get('user')
-            const answer = await axios.post(`${URL}`, {
-                user
-            });
-            let decryptedData = decryptMessage(answer.data.data, import.meta.env.VITE_FILE_KEY)
-            this.setState(state =>({passwords: decryptedData}));
-        } catch{
+    // const componentDidMount = async (e) => {
+    //     try{
+    //         console.log('Hola')
+    //         let URL = 'http://localhost:5200/password/get-passwords';
+    //         const user = cookies.get('user')
+    //         const answer = await axios.post(`${URL}`, {
+    //             user
+    //         });
+    //         let decryptedData = decryptMessage(answer.data.data, import.meta.env.VITE_FILE_KEY)
+    //         console.log(passwords)
+    //         pass = decryptedData,
+    //         setPasswords({passwords: decryptedData}); 
+    //         //state.passwords = decryptedData;
+    //     } catch{
 
-        }
-    }
+    //     }
+    // }
     
-    async handleSubmit(e){
+    const handleSubmit = async (e) => {
         e.preventDefault();
             document.getElementById("newPasswordSpinner").classList.remove("hide")
             const { name, email, username, password, url} = form;
@@ -105,15 +130,15 @@ class PasswordGallery extends React.Component {
             const user = cookies.get('user')
             console.log(user)
             const answer = await axios.post(`${URL}`, {
-                user, email, username, password, url
+                name, user, email, username, password, url
             });
             console.log(answer)
             if(answer.data.status === "OK"){
                 document.getElementById("newPasswordSpinner").classList.add("hide")
-                this.handleOpenNewPassword()
+                handleOpenNewPassword()
                 // this.setState({modal: !this.state.modal});
-                this.setState({text: "New password saved successfully!"});
-                this.setState({type: "success"});
+                state.text = "New password saved successfully!";
+                state.type = "success";
                 // document.getElementById("alert-message").setAttribute("text", "New password saved successfully!")
                 // document.getElementById("alert-message").setAttribute("type", "success")
                 // document.getElementById("alert-container").classList.remove("hide")
@@ -125,9 +150,9 @@ class PasswordGallery extends React.Component {
             }
             else{
                 document.getElementById("newPasswordSpinner").classList.add("hide")
-                this.handleOpenNewPassword()
-                this.setState({text: "Error on saving password!"});
-                this.setState({type: "danger"});
+                handleOpenNewPassword()
+                state.text = "Error on saving password!";
+                state.type = "danger";
                 // document.getElementById("message").setAttribute("text", "")
                 // document.getElementById("message").setAttribute("type", "")
 
@@ -136,42 +161,41 @@ class PasswordGallery extends React.Component {
         //}
     }
 
-    render(){
     return(
         <div className="" id="">
             <div id="alert-container" className="alert-container hide">
-                <AlertMessage id="message" text={this.state.text} type={this.state.type} />            
+                <AlertMessage id="message" text={state.text} type={state.type} />            
             </div>
             
-            <Button onClick={this.handleOpenNewPassword} variant="success">Create new Password</Button>
+            <Button onClick={handleOpenNewPassword} variant="success">Create new Password</Button>
 
         <h1>H</h1>
                 <Modal
-                    onHide={this.toggle}
-                    show={this.state.modal}
+                    onHide={toggle}
+                    show={state.modal}
                 >
                     
                     <Modal.Dialog>
-                    <Form onSubmit={this.handleSubmit}>
+                    <Form onSubmit={handleSubmit}>
                         <Modal.Header closeButton>
                         <Modal.Title id="modalName">LLLL</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                         <Form.Group className="form-group">
                             <Form.Label className="label" >Email</Form.Label>
-                            <Form.Control id="modalEmail" name="email" type="email" onChange={this.handleChange}/>
+                            <Form.Control id="modalEmail" name="email" type="email" onChange={handleChange}/>
                         </Form.Group>
                         <Form.Group className="form-group">
                             <Form.Label className="label">Username</Form.Label>
-                            <Form.Control id="modalUsername" name="username" type="text" onChange={this.handleChange}/>
+                            <Form.Control id="modalUsername" name="username" type="text" onChange={handleChange}/>
                         </Form.Group>
                         <Form.Group className="form-group">
                             <Form.Label className="label">Password</Form.Label>
-                            <Form.Control id="modalPassword" name="password" type="password" onChange={this.handleChange}/>
+                            <Form.Control id="modalPassword" name="password" type="password" onChange={handleChange}/>
                         </Form.Group>
                         <Form.Group className="form-group">
                             <Form.Label className="label">Website</Form.Label>
-                            <Form.Control id="modalUrl" name="url" type="url" onChange={this.handleChange}/>
+                            <Form.Control id="modalUrl" name="url" type="url" onChange={handleChange}/>
                         </Form.Group>
                         {/* <Button onClick={() => {this.handleShow;passData(password.name, password.email, password.username, password.password, password.url)}}>Show Data</Button> */}
                         {/* <h2>Email: {password.email}</h2>
@@ -182,7 +206,7 @@ class PasswordGallery extends React.Component {
                     </Form>
                     
                     <Modal.Footer>
-                    <Button variant="secondary" onClick={this.toggle}>
+                    <Button variant="secondary" onClick={toggle}>
                         Close
                     </Button>
                     <Button variant="primary">Understood</Button>
@@ -206,11 +230,11 @@ class PasswordGallery extends React.Component {
             
             <div className="">
                 <div className="passwords-container">
-                {console.log(this.state.passwords)}
-                    {this.state.passwords.map((password, index) =>{
+                {console.log(pass)}
+                    {pass.map((password, index) =>{
                         return(
                             <div className="password-container" id={index} key={index}>
-                                <Form onSubmit={this.handleSubmit}>
+                                <Form onSubmit={handleSubmit}>
                                     <Form.Group className="form-group">
                                         <Form.Text className="text-muted">{password.name}</Form.Text>
                                     </Form.Group>
@@ -231,7 +255,7 @@ class PasswordGallery extends React.Component {
                                         <Form.Control name="url" type="url" value={password.url} onChange={this.handleChange}/>
                                     </Form.Group> */}
                                     {/* <Button onClick={() => {this.handleShow;passData(password.name, password.email, password.username, password.password, password.url)}}>Show Data</Button> */}
-                                    <Button onClick={this.toggle}>Show Data</Button>
+                                    <Button onClick={toggle}>Show Data</Button>
                                     {/* <Button onClick={passData(password.name, password.email, password.username, password.password, password.url)}>Show Data</Button> */}
                                     {/* <h2>Email: {password.email}</h2>
                                     <h2>Username: {password.username}</h2>
@@ -253,13 +277,13 @@ class PasswordGallery extends React.Component {
             </div>
             <div>
             <Modal
-                    onHide={this.handleOpenNewPassword}
-                    show={this.state.show}
+                    onHide={handleOpenNewPassword}
+                    show={modal}
                     id="newPassword-modal"
                 >
                     
                     <Modal.Dialog>
-                    <Form onSubmit={this.handleSubmit}>
+                    <Form onSubmit={handleSubmit}>
                         <Modal.Header closeButton>
                             <div id="newPasswordSpinner" className="hide"><Spinner id="" animation="border"  />;</div>
                             
@@ -268,27 +292,27 @@ class PasswordGallery extends React.Component {
                         <Modal.Body>
                             <Form.Group className="form-group">
                                 <Form.Label className="label" >Page Name</Form.Label>
-                                <Form.Control id="newPasswordName" name="name" type="text" onChange={this.handleChange}/>
+                                <Form.Control id="newPasswordName" name="name" type="text" onChange={handleChange}/>
                             </Form.Group>
                             <Form.Group className="form-group">
                                 <Form.Label className="label" >Email</Form.Label>
-                                <Form.Control id="newPasswordEmail" name="email" type="email" onChange={this.handleChange}/>
+                                <Form.Control id="newPasswordEmail" name="email" type="email" onChange={handleChange}/>
                             </Form.Group>
                             <Form.Group className="form-group">
                                 <Form.Label className="label">Username</Form.Label>
-                                <Form.Control id="newPasswordUsername" name="username" type="text" onChange={this.handleChange}/>
+                                <Form.Control id="newPasswordUsername" name="username" type="text" onChange={handleChange}/>
                             </Form.Group>
                             <Form.Group className="form-group">
                                 <Form.Label className="label">Password</Form.Label>
-                                <Form.Control id="newPasswordPassword" name="password" type="password" onChange={this.handleChange}/>
+                                <Form.Control id="newPasswordPassword" name="password" type="password" onChange={handleChange}/>
                             </Form.Group>
                             <Form.Group className="form-group">
                                 <Form.Label className="label">Website</Form.Label>
-                                <Form.Control id="newPasswordUrl" name="url" type="url" onChange={this.handleChange}/>
+                                <Form.Control id="newPasswordUrl" name="url" type="url" onChange={handleChange}/>
                             </Form.Group>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={this.toggle}>
+                            <Button variant="secondary" onClick={toggle}>
                                 Close
                             </Button>
                             <Button>Save Password</Button>
@@ -300,5 +324,5 @@ class PasswordGallery extends React.Component {
         </div>
         
     )
-}}
+}
 export default PasswordGallery
