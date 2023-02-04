@@ -31,6 +31,14 @@ const initialState = {
     url: '',
 }
 
+const data = {
+    name: '',
+    email: '',
+    username: '',
+    password: '',
+    url: '',
+}
+
 const initialPass = [];
 const initialBool = false;
 var pass = [];
@@ -42,17 +50,22 @@ const state = {
     type: ''
 };
 
-function passData(name,email,username,password,url){
+function passData(passwordData){
     // document.getElementById('modalName').value = name;
     // document.getElementById('modalEmail').value = email;
     // document.getElementById('modalUsername').value = username;
     // document.getElementById('modalPassword').value = password;
     // document.getElementById('modalUrl').value = url;
-    document.getElementById('modalName').setAttribute('value', name);
-    document.getElementById('modalEmail').setAttribute('value', email);
-    document.getElementById('modalUsername').setAttribute('value', username);
-    document.getElementById('modalPassword').setAttribute('value',password);
-    document.getElementById('modalUrl').setAttribute('value', url);
+    data.name = passwordData.name;
+    data.email = passwordData.email;
+    data.username = passwordData.username;
+    data.password = passwordData.password;
+    data.url = passwordData.url;
+    // document.getElementById('modalName').setAttribute('value', passwordData.name);
+    // document.getElementById('modalEmail').setAttribute('value', passwordData.email);
+    // document.getElementById('modalUsername').setAttribute('value', passwordData.username);
+    // document.getElementById('modalPassword').setAttribute('value',passwordData.password);
+    // document.getElementById('modalUrl').setAttribute('value', passwordData.url);
 }
 
 // function PasswordGallery () {
@@ -60,6 +73,7 @@ function passData(name,email,username,password,url){
 const PasswordGallery = () => {
     const [passwords, setPasswords] = useState(initialPass);
     const [modal, setModal] = useState(initialBool);
+    const [show, setShow] = useState(initialBool);
     React.useEffect(() => {
         const fetchData = async () =>{
             try{
@@ -85,8 +99,7 @@ const PasswordGallery = () => {
             .catch(console.error);
     }, []);
     const handleShow = () =>{
-        
-        state.show = true;
+        setShow((show) => !show);
     }
 
     const [form, setForm] = useState(initialState);
@@ -95,11 +108,11 @@ const PasswordGallery = () => {
         setModal((modal) => !modal);
     }
     const handleOpenNewPassword = () =>{
-        state.show = !state.show;
+        setShow((show) => !show);
     }
     // const [form, setForm] = useState(initialState);
     const handleChange = (e) => {
-        setForm({ ...this.form, [e.target.name]: e.target.value });
+        setForm({ ...form, [e.target.name]: e.target.value });
     }
     // useEffect(() => {
     //     getPasswords();
@@ -121,7 +134,12 @@ const PasswordGallery = () => {
 
     //     }
     // }
-    
+    const wrapperFunction = (data) => {
+        //do something
+        toggle();
+        //do something
+        passData(data);
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
             document.getElementById("newPasswordSpinner").classList.remove("hide")
@@ -146,6 +164,7 @@ const PasswordGallery = () => {
                     console.log('w')
                     // load.classList.add("hide")
                     document.getElementById("alert-container").classList.add("hide")
+                    window.location.reload();
                 }, 4000);
             }
             else{
@@ -172,30 +191,30 @@ const PasswordGallery = () => {
         <h1>H</h1>
                 <Modal
                     onHide={toggle}
-                    show={state.modal}
+                    show={modal}
                 >
                     
                     <Modal.Dialog>
                     <Form onSubmit={handleSubmit}>
                         <Modal.Header closeButton>
-                        <Modal.Title id="modalName">LLLL</Modal.Title>
+                        <Modal.Title id="modalName">{data.name}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                         <Form.Group className="form-group">
                             <Form.Label className="label" >Email</Form.Label>
-                            <Form.Control id="modalEmail" name="email" type="email" onChange={handleChange}/>
+                            <Form.Control id="modalEmail" name="email" type="email" value={data.email} onChange={handleChange}/>
                         </Form.Group>
                         <Form.Group className="form-group">
                             <Form.Label className="label">Username</Form.Label>
-                            <Form.Control id="modalUsername" name="username" type="text" onChange={handleChange}/>
+                            <Form.Control id="modalUsername" name="username" type="text" value={data.username} onChange={handleChange}/>
                         </Form.Group>
                         <Form.Group className="form-group">
                             <Form.Label className="label">Password</Form.Label>
-                            <Form.Control id="modalPassword" name="password" type="password" onChange={handleChange}/>
+                            <Form.Control id="modalPassword" name="password" type="password" value={data.password} onChange={handleChange}/>
                         </Form.Group>
                         <Form.Group className="form-group">
                             <Form.Label className="label">Website</Form.Label>
-                            <Form.Control id="modalUrl" name="url" type="url" onChange={handleChange}/>
+                            <Form.Control id="modalUrl" name="url" type="url" value={data.url} onChange={handleChange}/>
                         </Form.Group>
                         {/* <Button onClick={() => {this.handleShow;passData(password.name, password.email, password.username, password.password, password.url)}}>Show Data</Button> */}
                         {/* <h2>Email: {password.email}</h2>
@@ -230,7 +249,7 @@ const PasswordGallery = () => {
             
             <div className="">
                 <div className="passwords-container">
-                {console.log(pass)}
+                
                     {pass.map((password, index) =>{
                         return(
                             <div className="password-container" id={index} key={index}>
@@ -254,8 +273,9 @@ const PasswordGallery = () => {
                                         <Form.Label className="label">Website</Form.Label>
                                         <Form.Control name="url" type="url" value={password.url} onChange={this.handleChange}/>
                                     </Form.Group> */}
-                                    {/* <Button onClick={() => {this.handleShow;passData(password.name, password.email, password.username, password.password, password.url)}}>Show Data</Button> */}
-                                    <Button onClick={toggle}>Show Data</Button>
+                                    
+                                    <Button onClick={() => {toggle();passData(pass[index])}}>Show Data</Button>
+                                    {/* <Button onClick={toggle}>Show Data</Button> */}
                                     {/* <Button onClick={passData(password.name, password.email, password.username, password.password, password.url)}>Show Data</Button> */}
                                     {/* <h2>Email: {password.email}</h2>
                                     <h2>Username: {password.username}</h2>
@@ -278,7 +298,7 @@ const PasswordGallery = () => {
             <div>
             <Modal
                     onHide={handleOpenNewPassword}
-                    show={modal}
+                    show={show}
                     id="newPassword-modal"
                 >
                     
@@ -312,10 +332,10 @@ const PasswordGallery = () => {
                             </Form.Group>
                         </Modal.Body>
                         <Modal.Footer>
-                            <Button variant="secondary" onClick={toggle}>
+                            <Button variant="secondary" onClick={handleOpenNewPassword}>
                                 Close
                             </Button>
-                            <Button>Save Password</Button>
+                            <Button type="submit">Save Password</Button>
                         </Modal.Footer>
                     </Form>
                     </Modal.Dialog>

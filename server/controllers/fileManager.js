@@ -66,6 +66,7 @@ const createFile = async(userId, key) => {
 
 const updateFile = async(req, res) => {
     try{
+        console.log('updateFile')
         console.log(req.body)
         console.log(req.body.user.token)
         const token = jwt.verify(req.body.user.token, JWT_SECRET);
@@ -113,7 +114,9 @@ const updateFile = async(req, res) => {
         });
         let show2 = encryption.decrypt(showFile, token.password)
         let show3 = JSON.parse(show2)
+        console.log('si')
         console.log(show3)
+        res.send({status: 'OK', message: 'Password saved!'})
         // fs.writeFileSync(path, file, "utf-8")
         // console.log('Archivo '+userId+'.json creado!')
 
