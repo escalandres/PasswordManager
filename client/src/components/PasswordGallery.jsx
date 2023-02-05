@@ -1,6 +1,7 @@
 import React, { Component, useEffect, useState, useRef } from "react";
 import Cookies from 'universal-cookie';
 import axios from 'axios';
+import { Navigate, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faFacebook,faGooglePlusG, faLinkedinIn} from "@fortawesome/free-brands-svg-icons";
 import {faSpinner} from "@fortawesome/free-solid-svg-icons"
@@ -11,16 +12,18 @@ import {Button, Form, Alert, Modal, Spinner} from 'react-bootstrap';
 import AlertMessage from "./AlertMessage";
 import "bootstrap/dist/css/bootstrap.min.css";
 let i = 1;
-function encryptMessage(data){
-    var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), import.meta.env.VITE_FILE_KEY).toString();
-    return ciphertext;
-}   
+import { decryptMessage, encryptMessage } from "../../functions/encryption";
 
-function decryptMessage(ciphertext){
-    var bytes = CryptoJS.AES.decrypt(ciphertext, import.meta.env.VITE_FILE_KEY);
-    var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
-    return decryptedData
-}
+// function encryptMessage(data){
+//     var ciphertext = CryptoJS.AES.encrypt(JSON.stringify(data), import.meta.env.VITE_FILE_KEY).toString();
+//     return ciphertext;
+// }   
+
+// function decryptMessage(ciphertext){
+//     var bytes = CryptoJS.AES.decrypt(ciphertext, import.meta.env.VITE_FILE_KEY);
+//     var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+//     return decryptedData
+// }
 
 const cookies = new Cookies();
 const initialState = {
@@ -51,52 +54,46 @@ const state = {
 };
 
 function passData(passwordData){
-    // document.getElementById('modalName').value = name;
-    // document.getElementById('modalEmail').value = email;
-    // document.getElementById('modalUsername').value = username;
-    // document.getElementById('modalPassword').value = password;
-    // document.getElementById('modalUrl').value = url;
     data.name = passwordData.name;
     data.email = passwordData.email;
     data.username = passwordData.username;
     data.password = passwordData.password;
     data.url = passwordData.url;
-    // document.getElementById('modalName').setAttribute('value', passwordData.name);
-    // document.getElementById('modalEmail').setAttribute('value', passwordData.email);
-    // document.getElementById('modalUsername').setAttribute('value', passwordData.username);
-    // document.getElementById('modalPassword').setAttribute('value',passwordData.password);
-    // document.getElementById('modalUrl').setAttribute('value', passwordData.url);
 }
 
-// function PasswordGallery () {
-//class PasswordGallery extends React.Component {
 const PasswordGallery = () => {
     const [passwords, setPasswords] = useState(initialPass);
     const [modal, setModal] = useState(initialBool);
     const [show, setShow] = useState(initialBool);
+    const navigate = useNavigate();
     React.useEffect(() => {
+        
         const fetchData = async () =>{
             try{
-                console.log('Hola')
-                let URL = 'http://localhost:5200/password/get-passwords';
+                let URL = import.meta.env.VITE_SERVER+"/password/get-passwords";
                 const user = cookies.get('user')
                 const answer = await axios.post(`${URL}`, {
                     user
                 });
                 let decryptedData = decryptMessage(answer.data.data, import.meta.env.VITE_FILE_KEY)
-                console.log('passwords')
-                console.log(passwords)
-                pass = decryptedData,
+                
+                pass = decryptedData;
                 setPasswords((passwords) => decryptedData); 
                 //state.passwords = decryptedData;
             } catch{
     
             }
         }
-        // call the function
-        fetchData()
-            // make sure to catch any error
-            .catch(console.error);
+        if(cookies.get('user')){
+            // call the function
+            fetchData()
+                // make sure to catch any error
+                .catch(console.error);
+        }
+        else{
+            navigate("/");
+        }
+        
     }, []);
     const handleShow = () =>{
         setShow((show) => !show);
@@ -114,32 +111,7 @@ const PasswordGallery = () => {
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
-    // useEffect(() => {
-    //     getPasswords();
-    // }, []);
-    // const componentDidMount = async (e) => {
-    //     try{
-    //         console.log('Hola')
-    //         let URL = 'http://localhost:5200/password/get-passwords';
-    //         const user = cookies.get('user')
-    //         const answer = await axios.post(`${URL}`, {
-    //             user
-    //         });
-    //         let decryptedData = decryptMessage(answer.data.data, import.meta.env.VITE_FILE_KEY)
-    //         console.log(passwords)
-    //         pass = decryptedData,
-    //         setPasswords({passwords: decryptedData}); 
-    //         //state.passwords = decryptedData;
-    //     } catch{
 
-    //     }
-    // }
-    const wrapperFunction = (data) => {
-        //do something
-        toggle();
-        //do something
-        passData(data);
-    }
     const handleSubmit = async (e) => {
         e.preventDefault();
             document.getElementById("newPasswordSpinner").classList.remove("hide")

@@ -62,7 +62,7 @@ const Login = () => {
             document.getElementById("load-container").classList.remove("hide")
             const { sname, semail, spassword, lemail, lpassword} = form;
             
-            const URL = 'http://localhost:5200/auth';
+            const URL = import.meta.env.VITE_SERVER+'/auth';
             //if(sname&&semail&&)
 
             //const URL = 'https://chat-app-project-ing-web.herokuapp.com/auth';
