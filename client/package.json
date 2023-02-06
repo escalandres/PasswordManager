@@ -22,7 +22,9 @@
     "fs": "^0.0.1-security",
     "react": "^18.2.0",
     "react-bootstrap": "^2.7.0",
+    "react-bootstrap-sidebar-menu": "^2.0.3",
     "react-dom": "^18.2.0",
+    "react-icons": "^4.7.1",
     "universal-cookie": "^4.0.4",
     "vite-plugin-full-reload": "^1.0.5"
   },

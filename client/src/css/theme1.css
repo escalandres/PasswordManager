@@ -1,0 +1,125 @@
+  /* Theme btn */
+
+  .theme__container__btn1{
+    padding-top: 26px;
+    transform: translate(20%, -20%);
+  }
+  
+  .s-cursor-pointer {
+    cursor: pointer;
+  }
+  
+  .s-relative {
+    position: relative;
+  }
+  
+  .toggle-dark-mode {
+    --toggle-color: var(--blue-300);
+    display: inline-block;
+    width: 42px;
+    height: var(--height);
+    background: var(--toggle-color);
+    border-radius: var(--height);
+  }
+  
+  label {
+    cursor: default;
+  }
+  
+  .s-cross-center {
+    -webkit-align-items: center;
+    -moz-box-align: center;
+    align-items: center;
+    -webkit-align-content: center;
+    align-content: center;
+  }
+  
+  .s-cross-center{
+    display: -webkit-flex;
+    display: -moz-box;
+    display: flex;
+    -webkit-flex-wrap: wrap;
+    flex-wrap: wrap;
+  }
+  
+  .s-opacity-0 {
+    opacity: 0;
+  }
+  
+  input[type="checkbox" i] {
+    background-color: initial;
+    cursor: default;
+    appearance: auto;
+    box-sizing: border-box;
+    margin: 3px 3px 3px 4px;
+    padding: initial;
+    border: initial;
+    box-sizing: border-box;
+  }
+  
+  .toggle-dark-mode .slider {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    top: 50%;
+    -webkit-transition: left var(--duration),-webkit-transform var(--duration);
+    transition: left var(--duration),transform var(--duration),-webkit-transform var(--duration);
+  }
+  
+  .light-theme-toggle{
+    --toggle-color: var(--blue-300);
+    background: var(--toggle-color);
+    left: 0%;
+  }
+  
+  .dark-theme-toggle{
+    --toggle-color: var(--blue-800);
+    background: var(--toggle-color);
+    left: 0%;
+  }
+  
+  .light-theme-span{
+    --toggle-color: var(--blue-300);
+    left: 0%;
+    transform: translateY(-50%);
+    background: var(--body-bg) url('../assets/icons/sun-svgrepo-com4\ \(3\).svg') no-repeat center;
+    border: 1px solid var(--toggle-color);
+  }
+  
+  .dark-theme-span{
+    --toggle-color: var(--blue-800);
+    left: 100%;
+    -webkit-transform: translate(-100%,-50%);
+    transform: translate(-100%,-50%);
+    background: var(--dt-darkest) url('../assets/icons/moon-svgrepo-com.svg') no-repeat center;
+    border: 1px solid var(--toggle-color);
+  }
+  
+  .s-circle {
+    border-radius: 50%;
+  }
+  .s-h-24px {
+    height: 24px;
+  }
+  .s-w-24px {
+    width: 24px;
+  }
+  .s-absolute {
+    position: absolute;
+  }
+  .s-cursor-pointer {
+    cursor: pointer;
+  }
+  .card:hover, .s-shadow-bottom {
+    -webkit-box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+    box-shadow: 0 2px 4px rgb(0 0 0 / 10%);
+  }
+  .card:hover, .s-shadow-bottom {
+    -webkit-box-shadow: 0 0.5rem 1rem -0.5rem #ccc;
+    box-shadow: 0 0.5rem 1rem -0.5rem #ccc;
+  }
+  *, :after, :before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }

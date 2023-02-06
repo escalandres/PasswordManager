@@ -75,7 +75,7 @@ const PasswordGallery = () => {
                 const answer = await axios.post(`${URL}`, {
                     user
                 });
-                let decryptedData = decryptMessage(answer.data.data, import.meta.env.VITE_FILE_KEY)
+                let decryptedData = decryptMessage(answer.data.data)
                 
                 pass = decryptedData;
                 setPasswords((passwords) => decryptedData); 
@@ -224,7 +224,7 @@ const PasswordGallery = () => {
                 
                     {pass.map((password, index) =>{
                         return(
-                            <div className="password-container" id={index} key={index}>
+                            <div className="password-container" id={index} key={index} onClick={() => {toggle();passData(pass[index])}}>
                                 <Form onSubmit={handleSubmit}>
                                     <Form.Group className="form-group">
                                         <Form.Text className="text-muted">{password.name}</Form.Text>
