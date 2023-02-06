@@ -3,6 +3,7 @@
     height: 100%;
     padding: 0;
     margin: 0;
+    
 }
 .row{
     width: 100%;
@@ -43,11 +44,13 @@ main{
     padding: 10px 15px;
     gap: 15px;
     transition: all 0.5s;
+    text-decoration: none;
 }
 .link:hover{
-    background:lightskyblue;
+    background:#d8d7d7;
     color: #fff;
     transition: all 0.5s;
+    text-decoration: none;
 }
 .active{
     background: rgb(241, 241, 241);
@@ -56,4 +59,13 @@ main{
 .icon, .link_text{
     font-size: 20px;
     color: #fff;
+}
+
+.navbar{
+    padding: 0;
+    width: 100%;
+}
+
+.navbar-container{
+    width: 100%;
 }

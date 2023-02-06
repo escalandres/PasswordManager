@@ -12,7 +12,8 @@ import {
     FaRegChartBar,
     FaCommentAlt,
     FaShoppingBag,
-    FaThList
+    FaThList,
+    FaKey
 }from "react-icons/fa";
 import { NavLink } from 'react-router-dom';
 // import { faGear } from 'react-bootstrap-icons';
@@ -24,18 +25,13 @@ const Sidebar = ({children}) => {
     const menuItem=[
         {
             path:"/",
-            name:"Dashboard",
+            name:"Gallery",
             icon:<FaTh/>
         },
         {
-            path:"/about",
-            name:"About",
-            icon:<FaUserAlt/>
-        },
-        {
             path:"/analytics",
-            name:"Analytics",
-            icon:<FaRegChartBar/>
+            name:"Generator",
+            icon:<FaKey/>
         },
         {
             path:"/comment",
@@ -51,13 +47,18 @@ const Sidebar = ({children}) => {
             path:"/productList",
             name:"Product List",
             icon:<FaThList/>
-        }
+        },
+        {
+            path:"/about",
+            name:"About",
+            icon:<FaUserAlt/>
+        },
     ]
     return (
         <div className="sidebar-container">
-            <div style={{width: isOpen ? "200px" : "60px"}} className="sidebar">
+            <div style={{width: isOpen ? "273px" : "60px"}} className="sidebar">
                 <div className="top_section">
-                    <h1 style={{display: isOpen ? "block" : "none"}} className="logo">Logo</h1>
+                    <h1 style={{display: isOpen ? "block" : "none"}} className="logo">Password Manager</h1>
                     <div style={{marginLeft: isOpen ? "50px" : "0px"}} className="bars">
                         <FaBars className="logo-icon" onClick={toggle}/>
                     </div>
