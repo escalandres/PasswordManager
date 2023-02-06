@@ -31,9 +31,7 @@ function App() {
 
   return (
     <div className="App">
-    <RouterProvider router={router}/>
-      {/* <Login /> */}
-      {/* <ResetPassword/> */}
+      <RouterProvider router={router}/>
     </div>
   )
 }

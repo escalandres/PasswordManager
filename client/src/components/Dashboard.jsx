@@ -25,25 +25,25 @@ import '../css/dashboard.css'
 const Dashboard = () =>{
 
     return(
-        <Container className="dashboard-container">
-                <Row className="show-grid">
-                    <Col lg={12} xl={12} md={6}>
-                        <Sidebar>
-                            {/* <Routes>
-                            <Route path="/" element={<Dashboard />} />
-                            <Route path="/dashboard" element={<Dashboard />} />
-                            <Route path="/about" element={<About />} />
-                            <Route path="/comment" element={<Comment />} />
-                            <Route path="/analytics" element={<Analytics />} />
-                            <Route path="/product" element={<Product />} />
-                            <Route path="/productList" element={<ProductList />} />
-                            </Routes> */}
-                        </Sidebar>
-                    </Col>
-                </Row>
+        <div className="dashboard-container">
+            <Row className="show-grid">
+                <Col lg={12} xl={12} md={6}>
+                    <Sidebar>
+                        {/* <Routes>
+                        <Route path="/" element={<Dashboard />} />
+                        <Route path="/dashboard" element={<Dashboard />} />
+                        <Route path="/about" element={<About />} />
+                        <Route path="/comment" element={<Comment />} />
+                        <Route path="/analytics" element={<Analytics />} />
+                        <Route path="/product" element={<Product />} />
+                        <Route path="/productList" element={<ProductList />} />
+                        </Routes> */}
+                    </Sidebar>
+                </Col>
+            </Row>
             
             
-        </Container>
+        </div>
     )
 }
 
