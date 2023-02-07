@@ -130,13 +130,13 @@ const Login = () => {
                         <h1 className="h1-black pm-h1">Create Account</h1>
                         <div className="social-container">
                             <a href="#" className="social">
-                            <FontAwesomeIcon className="icon" icon={faFacebook}/>
+                            <FontAwesomeIcon className="social-icon" icon={faFacebook}/>
                             </a>
                             <a href="#" className="social">
-                            <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
+                            <FontAwesomeIcon className="social-icon" icon={faGooglePlusG} />
                             </a>
                             <a href="#" className="social">
-                            <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
+                            <FontAwesomeIcon className="social-icon" icon={faLinkedinIn} /></a>
                         </div>
                         <span>or use your email for registration</span>
                             <input className="pm-input" type="text" placeholder="Name" name="sname"
@@ -153,13 +153,13 @@ const Login = () => {
                         <h1 className="h1-black pm-h1">Log in</h1>
                         <div className="social-container">
                             <a href="#" className="social">
-                            <FontAwesomeIcon className="icon" icon={faFacebook}/>
+                            <FontAwesomeIcon className="social-icon" icon={faFacebook}/>
                             </a>
                             <a href="#" className="social">
-                            <FontAwesomeIcon className="icon" icon={faGooglePlusG} />
+                            <FontAwesomeIcon className="social-icon" icon={faGooglePlusG} />
                             </a>
                             <a href="#" className="social">
-                            <FontAwesomeIcon className="icon" icon={faLinkedinIn} /></a>
+                            <FontAwesomeIcon className="social-icon" icon={faLinkedinIn} /></a>
                         </div>
                         <span>or use your account</span>
                             <input className="pm-input" type="email" placeholder="Email" name="lemail"

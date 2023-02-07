@@ -64,8 +64,38 @@ main{
 .navbar{
     padding: 0;
     width: 100%;
+    /* background: #f5f7f7; */
+    
 }
 
 .navbar-container{
     width: 100%;
+    background: #f5f7f7;
+    padding: 0 4rem;
+}
+
+.navbar-row{
+    height: 8%;
+}
+
+.nav-btn{
+    font-size: 1.2rem;
+    margin: 0 0.6rem;
+    border-radius: 4px;
+}
+.nav-icon{
+    margin-right: 0.4rem;
+
+}
+.add-btn{
+    
+    border: 0px;
+}
+
+.second-btn{
+    background: rgba(162, 163, 163, 0.379);
+    color: rgba(35, 36, 37, 0.92);
+    fill: rgba(35, 36, 37, 0.92);
+    
+    border: 0px;
 }
