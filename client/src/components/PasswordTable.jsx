@@ -19,12 +19,14 @@ import { decryptMessage, encryptMessage } from "../../functions/encryption";
 //     return ciphertext;
 // }   
 
-// function decryptMessage(ciphertext){
+// function decryptMessage(ciphertext){ value
 //     var bytes = CryptoJS.AES.decrypt(ciphertext, import.meta.env.VITE_FILE_KEY);
 //     var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 //     return decryptedData
 // }
-
+/***
+ * !
+ */
 const cookies = new Cookies();
 const initialState = {
     name: '',
@@ -159,7 +161,7 @@ const PasswordGallery = () => {
             </div>
             
             <Button onClick={handleOpenNewPassword} variant="success">Create new Password</Button>
-        <h1>H</h1>
+
             <div className="table-container">
                 <table className="">
                     <thead>
@@ -173,7 +175,7 @@ const PasswordGallery = () => {
                     {pass.map((password, index) =>{
                         return(
                             <tr>
-                                <td>
+                                <td style={{width: 80}}>
                                     <div className="password-container" id={index} key={index} onClick={() => {toggle();passData(pass[index])}}>
                                         <Form onSubmit={handleSubmit}>
                                             <Form.Group className="form-group">
@@ -196,7 +198,7 @@ const PasswordGallery = () => {
                     </tbody>
                 </table>
             </div>
-            {/* <div className="form-container log-in-container new-password-container">
+            {/* ? <div className="form-container log-in-container new-password-container">
                 <form action="#" onSubmit={handleSubmit}>
                     <h1 className="h1-black">Create a new password</h1>
                         <input type="email" placeholder="Email" name="email"

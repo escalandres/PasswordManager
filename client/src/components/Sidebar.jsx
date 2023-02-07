@@ -56,7 +56,7 @@ const Sidebar = ({children}) => {
     ]
     return (
         <div className="sidebar-container">
-            <div style={{width: isOpen ? "273px" : "60px"}} className="sidebar">
+            <div style={{width: isOpen ? "15%" : "3.7%"}} className="sidebar">
                 <div className="top_section">
                     <h1 style={{display: isOpen ? "block" : "none"}} className="logo">Password Manager</h1>
                     <div style={{marginLeft: isOpen ? "50px" : "0px"}} className="bars">

@@ -34,13 +34,18 @@ const Dashboard = () =>{
     const toggle = () => setIsOpen (!isOpen);
     return(
         <div className="dashboard-container">
-            <Row className="show-grid" style={{margin: 0}}>
-                <Col lg={2} xl={2} md={2} sm={3} xs={3} style={{padding: 0}}>
-                    <Sidebar>
-                    </Sidebar>
-                </Col>
-                <Col lg={10} xl={10} md={8} sm={9} xs={10} style={{padding: 0, marginLeft: 0}}>
-                    <Row className="show-grid navbar-row" style={{margin: 0}}>
+            <div className="rows" style={{margin: 0}}>
+                {/* <Col lg={2} xl={2} md={2} sm={3} xs={3} style={{padding: 0}}> */}
+                {/* <div style={{padding: 0}}> */}
+                
+                <Sidebar/>
+                
+                    
+                    
+                {/* </div> */}
+                {/* <Col lg={10} xl={10} md={8} sm={9} xs={10} style={{padding: 0, marginLeft: 0}}> */}
+                <div className="right-container">
+                    <div className=" navbar-row" style={{margin: 0}}>
                         <Navbar  bg="light" expand="lg" >
                         <div className="navbar-container">
                             {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
@@ -54,12 +59,12 @@ const Dashboard = () =>{
                             </Navbar.Collapse>
                         </div>
                         </Navbar>
-                    </Row>
+                    </div>
                     <Row>
                         <PasswordTable/>
                     </Row>
-                </Col>
-            </Row>
+                </div>
+            </div>
             
             
         </div>

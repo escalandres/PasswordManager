@@ -5,8 +5,10 @@
     margin: 0;
     
 }
-.row{
-    width: 100%;
+.rows{
+    width: 100vw;
+    display: grid;
+    /* flex-direction: column; */
 }
 .logo-icon:hover{
     color: #d8d7d7;
@@ -60,7 +62,16 @@ main{
     font-size: 20px;
     color: #fff;
 }
-
+.left-container{
+    min-width: 4%;
+    max-width: 16%;
+}
+.right-container{
+    flex: 1 1;
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
 .navbar{
     padding: 0;
     width: 100%;
@@ -72,10 +83,12 @@ main{
     width: 100%;
     background: #f5f7f7;
     padding: 0 4rem;
+    
 }
 
 .navbar-row{
     height: 8%;
+    flex: 1;
 }
 
 .nav-btn{
