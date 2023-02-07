@@ -46,7 +46,7 @@ const Sidebar = ({children}) => {
         },
         {
             path:"/productList",
-            name:"Product List",
+            name:"List",
             icon:<FaThList/>
         },
         {
@@ -60,7 +60,7 @@ const Sidebar = ({children}) => {
             {/* <div className={isOpen ? "sidebar wrapper--wgYc0yYGn1" : "sidebar wrapper--wgYc0yYGn1 collapsed--BrviRkpKCo" }> */}
             <div style={{width: isOpen ? "270px" : "60px"}} className="sidebar">
                 <div className="top_section">
-                    <h1 style={{display: isOpen ? "block" : "none"}} className="logo">Password Manager</h1>
+                    <h1 style={{display: isOpen ? "block" : "none"}} className="logo">Manager</h1>
                     <div style={{marginLeft: isOpen ? "50px" : "0px"}} className="bars">
                         <FaBars className="logo-icon" onClick={toggle}/>
                     </div>

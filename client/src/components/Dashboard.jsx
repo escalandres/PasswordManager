@@ -35,15 +35,7 @@ const Dashboard = () =>{
     return(
         <div className="dashboard-container">
             <div className="rows" style={{margin: 0}}>
-                {/* <Col lg={2} xl={2} md={2} sm={3} xs={3} style={{padding: 0}}> */}
-                {/* <div style={{padding: 0}}> */}
-                
                 <Sidebar/>
-                
-                    
-                    
-                {/* </div> */}
-                {/* <Col lg={10} xl={10} md={8} sm={9} xs={10} style={{padding: 0, marginLeft: 0}}> */}
                 <div className="right-container">
                     <div className=" navbar-row" style={{margin: 0}}>
                         <Navbar  bg="light" expand="lg" >
@@ -60,9 +52,9 @@ const Dashboard = () =>{
                         </div>
                         </Navbar>
                     </div>
-                    <Row>
+                    <div className="right-container__body">
                         <PasswordTable/>
-                    </Row>
+                    </div>
                 </div>
             </div>
             
