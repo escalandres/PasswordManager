@@ -57,7 +57,7 @@ const Dashboard = () =>{
                     </div>
                 </div>
             </div>
-            
+            {/**Modal section */}
             
         </div>
     )

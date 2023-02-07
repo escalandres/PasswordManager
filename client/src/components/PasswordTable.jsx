@@ -268,50 +268,7 @@ const PasswordGallery = () => {
                     </Modal.Footer>
                     </Modal.Dialog>
                 </Modal>
-            <Modal
-                    onHide={handleOpenNewPassword}
-                    show={show}
-                    id="newPassword-modal"
-                >
-                    
-                    <Modal.Dialog>
-                    <Form onSubmit={handleSubmit}>
-                        <Modal.Header closeButton>
-                            <div id="newPasswordSpinner" className="hide"><Spinner id="" animation="border"  />;</div>
-                            
-                            <Modal.Title id="modalName">Create a new password</Modal.Title>
-                        </Modal.Header>
-                        <Modal.Body>
-                            <Form.Group className="form-group">
-                                <Form.Label className="label" >Page Name</Form.Label>
-                                <Form.Control id="newPasswordName" name="name" type="text" onChange={handleChange}/>
-                            </Form.Group>
-                            <Form.Group className="form-group">
-                                <Form.Label className="label" >Email</Form.Label>
-                                <Form.Control id="newPasswordEmail" name="email" type="email" onChange={handleChange}/>
-                            </Form.Group>
-                            <Form.Group className="form-group">
-                                <Form.Label className="label">Username</Form.Label>
-                                <Form.Control id="newPasswordUsername" name="username" type="text" onChange={handleChange}/>
-                            </Form.Group>
-                            <Form.Group className="form-group">
-                                <Form.Label className="label">Password</Form.Label>
-                                <Form.Control id="newPasswordPassword" name="password" type="password" onChange={handleChange}/>
-                            </Form.Group>
-                            <Form.Group className="form-group">
-                                <Form.Label className="label">Website</Form.Label>
-                                <Form.Control id="newPasswordUrl" name="url" type="url" onChange={handleChange}/>
-                            </Form.Group>
-                        </Modal.Body>
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleOpenNewPassword}>
-                                Close
-                            </Button>
-                            <Button type="submit">Save Password</Button>
-                        </Modal.Footer>
-                    </Form>
-                    </Modal.Dialog>
-                </Modal>
+            
             </div>
         </div>
         
