@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SidebarMenu from 'react-bootstrap-sidebar-menu';
 import { Button, ButtonToolbar, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter} from 'react-bootstrap';
 import '../css/theme1.css';
+import '../css/sidebar.css'
 import {
     FaTh,
     FaBars,
@@ -56,7 +57,8 @@ const Sidebar = ({children}) => {
     ]
     return (
         <div className="sidebar-container">
-            <div style={{width: isOpen ? "15%" : "3.7%"}} className="sidebar">
+            {/* <div className={isOpen ? "sidebar wrapper--wgYc0yYGn1" : "sidebar wrapper--wgYc0yYGn1 collapsed--BrviRkpKCo" }> */}
+            <div style={{width: isOpen ? "270px" : "60px"}} className="sidebar">
                 <div className="top_section">
                     <h1 style={{display: isOpen ? "block" : "none"}} className="logo">Password Manager</h1>
                     <div style={{marginLeft: isOpen ? "50px" : "0px"}} className="bars">

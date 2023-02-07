@@ -1,0 +1,27 @@
+.collapsed--BrviRkpKCo{
+    min-width: 48px;
+    max-width: 48px;
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.wrapper--wgYc0yYGn1 {
+    max-width: 400px;
+    min-width: 320px;
+    -ms-flex: 0 0 auto;
+    flex: 0 0 auto;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    color: #0e353d;
+    background-color: #d9e6e9;
+    font-size: 11px;
+    min-height: 100vh;
+    max-height: 100vh;
+    transition: min-width 500ms, max-width 500ms;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
