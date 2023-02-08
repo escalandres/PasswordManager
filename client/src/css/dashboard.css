@@ -64,6 +64,8 @@ main{
     font-size: 20px;
     color: #fff;
 }
+
+
 .left-container{
     min-width: 4%;
     max-width: 16%;
@@ -72,26 +74,24 @@ main{
     flex: 1 1;
     display: flex;
     flex-direction: column;
-    width: 50%;
-    background: #f5f7f7;
+    background: white;
 }
 .navbar{
     padding: 0.7rem 0;
     width: 100%;
-    /* background: #f5f7f7; */
-    
+    background: white;
 }
 
 .navbar-container{
     width: 100%;
-    background: #f5f7f7;
+    background: white;
     padding: 0 4rem;
     
 }
 
 .navbar-row{
     height: 7%;
-
+    background: white;
 }
 
 .nav-btn{
@@ -117,7 +117,11 @@ main{
 }
 
 .right-container__body{
-    background: #f5f7f7;
+    background: white;
+}
+
+.table-container{
+    
 }
 
 table{
@@ -145,4 +149,29 @@ table td:nth-child(2) {
 
 table td:last-child {
     width: 25%;
+}
+
+tr{
+    height: 5rem;
+    align-items: center;
+    border-top: 1px solid #d9dfe0   ;
+    border-bottom: 1px solid #d9dfe0 ;
+}
+
+tr:hover{
+    background: #F8F8F8;
+}
+
+td{
+    height: 100%;
+    padding: 1rem 0.5rem;
+}
+
+em{
+    font-size: 0.9rem;
+    font-style: normal;
+    color: #615b57;
+}
+.password-container{
+    padding: 0 2rem;
 }

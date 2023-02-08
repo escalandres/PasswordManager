@@ -38,7 +38,7 @@ const Dashboard = () =>{
                 <Sidebar/>
                 <div className="right-container">
                     <div className=" navbar-row" style={{margin: 0}}>
-                        <Navbar  bg="light" expand="lg" >
+                        <Navbar expand="lg" >
                         <div className="navbar-container">
                             {/* <Navbar.Brand href="#home">React-Bootstrap</Navbar.Brand> */}
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />

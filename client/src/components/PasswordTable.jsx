@@ -160,7 +160,7 @@ const PasswordGallery = () => {
                 <AlertMessage id="message" text={state.text} type={state.type} />            
             </div>
             
-            <Button onClick={handleOpenNewPassword} variant="success">Create new Password</Button>
+            {/* <Button onClick={handleOpenNewPassword} variant="success">Create new Password</Button> */}
 
             <div className="table-container">
                 <table className="">
@@ -173,25 +173,26 @@ const PasswordGallery = () => {
                     </thead>
                     <tbody>
                     {pass.map((password, index) =>{
+                        if(JSON.stringify(password) !== JSON.stringify({name:'',email:'',username:'',password:'',url:''})){
                         return(
                             <tr>
-                                <td style={{width: 80}}>
+                                <td>
                                     <div className="password-container" id={index} key={index} onClick={() => {toggle();passData(pass[index])}}>
-                                        <Form onSubmit={handleSubmit}>
-                                            <Form.Group className="form-group">
-                                                <Form.Label className="text-muted">{password.name}</Form.Label>
-                                                <Form.Text className="">{password.email}</Form.Text>
-                                            </Form.Group>
+                                        <div onSubmit={handleSubmit}>
+                                            <p className="text-muted"><strong>{password.name}</strong></p>
+                                            <em className="">{password.email}</em>
+
                                             {/* <Button onClick={() => {toggle();passData(pass[index])}}>Show Data</Button> */}
-                                        </Form>
+                                        </div>
                                     </div>
                                 </td>
-                                <td>Yesterday</td>
-                                <td>Social Page</td>
+                                <td style={{textAlign: "center"}}>Yesterday</td>
+                                <td style={{textAlign: "center"}}>Social Page</td>
                             </tr>
                             
                             
                         );
+                        }
                     })
 
                     }

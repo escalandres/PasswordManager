@@ -93,9 +93,10 @@ const updateFile = async(req, res) => {
         let file2 = JSON.parse(decryptedFile);
         console.dir(file2)
         file2.push(data) 
+        file2.splice(0,1)
         userFile = JSON.stringify(file2);
         let encryptedFile = encryption.encrypt(userFile, token.password)
-        console.log('Archivo encriptado')
+        console.log('File encrypted')
         fs.writeFileSync(user.path, encryptedFile, (err, file) =>{
             if(err) return console.error(err.message);
             if(file){

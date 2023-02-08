@@ -82,7 +82,7 @@ const Login = () => {
                 setTimeout(() => {
                     // load.classList.add("hide")
                     document.getElementById("load-container").classList.add("hide")
-                    navigate("/password-gallery");
+                    navigate("/dash");
                 }, 2000);
                 
             }
