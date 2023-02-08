@@ -16,6 +16,9 @@ import {
     FaThList,
     FaKey
 }from "react-icons/fa";
+import {
+    CgPassword
+}from "react-icons/cg"; 
 import { NavLink } from 'react-router-dom';
 // import { faGear } from 'react-bootstrap-icons';
 
@@ -32,7 +35,7 @@ const Sidebar = ({children}) => {
         {
             path:"/analytics",
             name:"Generator",
-            icon:<FaKey/>
+            icon:<CgPassword/>
         },
         {
             path:"/comment",

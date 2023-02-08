@@ -1,6 +1,6 @@
 .alert{
     opacity: 0;
-    animation: alert 2s;
+    animation: alert 4s;
 }
 
 @keyframes alert {

@@ -78,7 +78,8 @@ const PasswordGallery = () => {
                     user
                 });
                 let decryptedData = decryptMessage(answer.data.data)
-                
+                console.log('passwords')
+                console.log(decryptedData)
                 pass = decryptedData;
                 setPasswords((passwords) => decryptedData); 
                 //state.passwords = decryptedData;

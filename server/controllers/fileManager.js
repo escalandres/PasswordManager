@@ -93,7 +93,9 @@ const updateFile = async(req, res) => {
         let file2 = JSON.parse(decryptedFile);
         console.dir(file2)
         file2.push(data) 
-        file2.splice(0,1)
+        if(JSON.stringify(file2[0]) === JSON.stringify({name:'',email:'',username:'',password:'',url:''})){
+            file2.splice(0,1)
+        }
         userFile = JSON.stringify(file2);
         let encryptedFile = encryption.encrypt(userFile, token.password)
         console.log('File encrypted')
