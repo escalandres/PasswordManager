@@ -175,20 +175,17 @@ const PasswordGallery = () => {
                     {pass.map((password, index) =>{
                         if(JSON.stringify(password) !== JSON.stringify({name:'',email:'',username:'',password:'',url:''})){
                         return(
-                            <tr>
-                                <td>
-                                    <div className="password-container" id={index} key={index} onClick={() => {toggle();passData(pass[index])}}>
+                            
+                                <tr className="password-container" id={index} key={index} onClick={() => {toggle();passData(pass[index])}}>
+                                    <td style={{paddingLeft: 30}}>
                                         <div onSubmit={handleSubmit}>
                                             <p className="text-muted"><strong>{password.name}</strong></p>
                                             <em className="">{password.email}</em>
-
-                                            {/* <Button onClick={() => {toggle();passData(pass[index])}}>Show Data</Button> */}
                                         </div>
-                                    </div>
-                                </td>
-                                <td style={{textAlign: "center"}}>Yesterday</td>
-                                <td style={{textAlign: "center"}}>Social Page</td>
-                            </tr>
+                                    </td>
+                                    <td style={{textAlign: "center"}}>Yesterday</td>
+                                    <td style={{textAlign: "center"}}>Social Page</td>
+                                </tr>
                             
                             
                         );
@@ -198,22 +195,7 @@ const PasswordGallery = () => {
                     }
                     </tbody>
                 </table>
-            </div>
-            {/* ? <div className="form-container log-in-container new-password-container">
-                <form action="#" onSubmit={handleSubmit}>
-                    <h1 className="h1-black">Create a new password</h1>
-                        <input type="email" placeholder="Email" name="email"
-                            onChange={handleChange}/>
-                        <input type="text" placeholder="username" name="username"
-                            onChange={handleChange}/>
-                        <input type="password" placeholder="Password" name="password"
-                            onChange={handleChange}/>
-                            <input type="url" placeholder="Url" name="url"
-                            onChange={handleChange}/>
-                        <button>Save Password</button>
-                </form>
-            </div> */}
-            
+            </div>            
             <div className="">
                 <div className="passwords-container">
                 

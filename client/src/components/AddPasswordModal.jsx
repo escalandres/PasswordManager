@@ -1,6 +1,6 @@
 import React, {useState} from "react"
 import {Button, Form, Modal, Spinner} from 'react-bootstrap';
-
+import AlertMessage from "./AlertMessage";
 
 const initialState = {
     name: '',
@@ -9,8 +9,14 @@ const initialState = {
     password: '',
     url: '',
 }
+
+const state = {
+    text: '',
+    type: ''
+};
+
 const initialBool = false;
-const createPassword = () =>{
+const AddPasswordModal = (click) =>{
     const [show, setShow] = useState(initialBool);
     const [form, setForm] = useState(initialState);
     const handleOpenNewPassword = () =>{
@@ -20,7 +26,9 @@ const createPassword = () =>{
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     }
-
+    if(click === true){
+        handleOpenNewPassword();
+    }
     const handleSubmit = async (e) => {
         e.preventDefault();
             document.getElementById("newPasswordSpinner").classList.remove("hide")
@@ -45,7 +53,7 @@ const createPassword = () =>{
                     console.log('w')
                     // load.classList.add("hide")
                     document.getElementById("alert-container").classList.add("hide")
-                    window.location.reload();\product
+                    window.location.reload();
                 }, 4000);
             }
             else{
@@ -61,7 +69,12 @@ const createPassword = () =>{
         //}
     }
     return(
-        <Modal
+        <>
+            <div id="alert-container" className="alert-container hide">
+                <AlertMessage id="message" text={state.text} type={state.type} />            
+            </div>
+            
+            <Modal
                     onHide={handleOpenNewPassword}
                     show={show}
                     id="newPassword-modal"
@@ -105,5 +118,8 @@ const createPassword = () =>{
                     </Form>
                     </Modal.Dialog>
                 </Modal>
+        </>
     )
 }
+
+export default AddPasswordModal

@@ -12,6 +12,7 @@ import CryptoJS from "crypto-js";
 import {Button, Form, Alert, Modal, Spinner, Row, Col, Container, Nav, Navbar, NavDropdown, ButtonGroup} from 'react-bootstrap';
 import AlertMessage from "./AlertMessage";
 import PasswordTable from './PasswordTable';
+import AddPasswordModal from "./AddPasswordModal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Sidebar from "./Sidebar";
 import { decryptMessage, encryptMessage } from "../../functions/encryption";
@@ -28,7 +29,6 @@ import {
 }from "react-icons/fa";
 import '../css/dashboard.css'
 
-
 const Dashboard = () =>{
     const[isOpen ,setIsOpen] = useState(false);
     const toggle = () => setIsOpen (!isOpen);
@@ -44,7 +44,7 @@ const Dashboard = () =>{
                             <Navbar.Toggle aria-controls="basic-navbar-nav" />
                             <Navbar.Collapse id="basic-navbar-nav">
                             <Nav className="me-auto">
-                                <Button variant="success" className="add-btn nav-btn"><AiOutlinePlus className="nav-icon"/> Add new</Button>
+                                <Button variant="success" className="add-btn nav-btn"><AiOutlinePlus className="nav-icon" onClick={toggle}/> Add new</Button>
                                 <Button variant="secondary" className="second-btn nav-btn"><FaShare className="nav-icon"/> Share</Button>
                                 <Button variant="secondary" className="second-btn nav-btn"><FaHistory className="nav-icon"/> View history</Button>
                             </Nav>
@@ -58,7 +58,7 @@ const Dashboard = () =>{
                 </div>
             </div>
             {/**Modal section */}
-            
+            <AddPasswordModal click={isOpen} />
         </div>
     )
 }

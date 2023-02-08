@@ -156,6 +156,7 @@ tr{
     align-items: center;
     border-top: 1px solid #d9dfe0   ;
     border-bottom: 1px solid #d9dfe0 ;
+    width: 100%;
 }
 
 tr:hover{
@@ -171,7 +172,4 @@ em{
     font-size: 0.9rem;
     font-style: normal;
     color: #615b57;
-}
-.password-container{
-    padding: 0 2rem;
 }
