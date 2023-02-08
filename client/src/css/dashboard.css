@@ -152,7 +152,7 @@ table td:last-child {
 }
 
 tr{
-    height: 5rem;
+    height: 4.3rem;
     align-items: center;
     border-top: 1px solid #d9dfe0   ;
     border-bottom: 1px solid #d9dfe0 ;
@@ -165,7 +165,11 @@ tr:hover{
 
 td{
     height: 100%;
-    padding: 1rem 0.5rem;
+    padding: 0.5rem 0.5rem;
+}
+
+p{
+    margin: 0;
 }
 
 em{

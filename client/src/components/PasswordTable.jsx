@@ -177,7 +177,7 @@ const PasswordGallery = () => {
                         return(
                             
                                 <tr className="password-container" id={index} key={index} onClick={() => {toggle();passData(pass[index])}}>
-                                    <td style={{paddingLeft: 30}}>
+                                    <td style={{paddingLeft: 50}}>
                                         <div onSubmit={handleSubmit}>
                                             <p className="text-muted"><strong>{password.name}</strong></p>
                                             <em className="">{password.email}</em>
