@@ -166,7 +166,7 @@ const PasswordGallery = () => {
             <div className="table-container">
                 <table className="">
                     <thead>
-                        <tr>
+                        <tr id="password-table__head">
                             <td>ITEM NAME</td>
                             <td>LAST USED</td>
                             <td>CATEGORY</td>
@@ -197,17 +197,7 @@ const PasswordGallery = () => {
                     </tbody>
                 </table>
             </div>            
-            <div className="">
-                <div className="passwords-container">
-                
-                    
-                    
-                    {/* <FontAwesomeIcon className="load-icon fa-pulse fa-3x fa-fw" icon={faSpinner} /> */}
-                    {/* <Alert id="alert" variant="danger" fade="false" show="true">
-                    ¡El email y/o contraseña son incorrectos!
-                </Alert> */}
-                </div>
-            </div>
+
             <div>
             <Modal
                     onHide={toggle}
@@ -236,11 +226,6 @@ const PasswordGallery = () => {
                             <Form.Label className="label">Website</Form.Label>
                             <Form.Control id="modalUrl" name="url" type="url" value={data.url} onChange={handleChange}/>
                         </Form.Group>
-                        {/* <Button onClick={() => {this.handleShow;passData(password.name, password.email, password.username, password.password, password.url)}}>Show Data</Button> */}
-                        {/* <h2>Email: {password.email}</h2>
-                        <h2>Username: {password.username}</h2>
-                        <h2>Password: {password.password}</h2>
-                        <h2>Url: {password.url}</h2> */}
                         </Modal.Body>
                     </Form>
                     

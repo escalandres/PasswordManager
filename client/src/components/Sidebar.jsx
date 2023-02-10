@@ -78,6 +78,45 @@ const Sidebar = ({children}) => {
                 }
             </div>
             {/* <main>{children}</main> */}
+            {/* Modal */}
+            <Modal
+                    onHide={toggle}
+                    show={modal}
+                >
+                    
+                    <Modal.Dialog>
+                    <Form onSubmit={handleSubmit}>
+                        <Modal.Header closeButton>
+                        <Modal.Title id="modalName">{data.name}</Modal.Title>
+                        </Modal.Header>
+                        <Modal.Body>
+                        <Form.Group className="form-group">
+                            <Form.Label className="label" >Email</Form.Label>
+                            <Form.Control id="modalEmail" name="email" type="email" value={data.email} onChange={handleChange}/>
+                        </Form.Group>
+                        <Form.Group className="form-group">
+                            <Form.Label className="label">Username</Form.Label>
+                            <Form.Control id="modalUsername" name="username" type="text" value={data.username} onChange={handleChange}/>
+                        </Form.Group>
+                        <Form.Group className="form-group">
+                            <Form.Label className="label">Password</Form.Label>
+                            <Form.Control id="modalPassword" name="password" type="password" value={data.password} onChange={handleChange}/>
+                        </Form.Group>
+                        <Form.Group className="form-group">
+                            <Form.Label className="label">Website</Form.Label>
+                            <Form.Control id="modalUrl" name="url" type="url" value={data.url} onChange={handleChange}/>
+                        </Form.Group>
+                        </Modal.Body>
+                    </Form>
+                    
+                    <Modal.Footer>
+                    <Button variant="secondary" onClick={toggle}>
+                        Close
+                    </Button>
+                    <Button variant="primary">Understood</Button>
+                    </Modal.Footer>
+                    </Modal.Dialog>
+                </Modal>
         </div>
     );
 };
