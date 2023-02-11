@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import SidebarMenu from 'react-bootstrap-sidebar-menu';
 import { Button, ButtonToolbar, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter} from 'react-bootstrap';
 import '../css/theme1.css';
-import '../css/sidebar.css'
+import '../css/sidebar.css';
+import { generate } from "../../functions/passwordGenerator";
 import {
     FaTh,
     FaBars,
@@ -19,6 +20,9 @@ import {
 import {
     CgPassword
 }from "react-icons/cg"; 
+import {
+    TbRefresh
+}from "react-icons/tb"; 
 import { NavLink } from 'react-router-dom';
 // import { faGear } from 'react-bootstrap-icons';
 
@@ -26,38 +30,56 @@ import { NavLink } from 'react-router-dom';
 const Sidebar = ({children}) => {
     const[isOpen ,setIsOpen] = useState(true);
     const toggle = () => setIsOpen (!isOpen);
+    const[show ,setShow] = useState(false);
+    const openGenerator = () => setShow (!show);
     const menuItem=[
         {
             path:"/",
             name:"Gallery",
+            click:"",
             icon:<FaTh/>
         },
         {
             path:"/analytics",
             name:"Generator",
+            click: openGenerator,
             icon:<CgPassword/>
         },
         {
             path:"/comment",
             name:"Comment",
+            click:"",
             icon:<FaCommentAlt/>
         },
         {
             path:"/product",
             name:"Product",
+            click:"",
             icon:<FaShoppingBag/>
         },
         {
             path:"/productList",
             name:"List",
+            click:"",
             icon:<FaThList/>
         },
         {
             path:"/about",
             name:"About",
+            click:"",
             icon:<FaUserAlt/>
         },
     ]
+    const handleGenerate = () => {
+        let length = document.getElementById("lengthRange").value;
+        let lowerIsChecked = document.getElementById("lowerCheck").checked;
+        let upperIsChecked = document.getElementById("upperCheck").checked;
+        let symbolIsChecked = document.getElementById("symbolsCheck").checked;
+        let numberIsChecked = document.getElementById("numbersCheck").checked;
+        let pass = generate(length, lowerIsChecked, upperIsChecked, symbolIsChecked, numberIsChecked)
+        document.getElementById("passwordInput").innerHTML = pass;
+        console.log(pass)
+    }
     return (
         <div className="sidebar-container">
             {/* <div className={isOpen ? "sidebar wrapper--wgYc0yYGn1" : "sidebar wrapper--wgYc0yYGn1 collapsed--BrviRkpKCo" }> */}
@@ -70,51 +92,64 @@ const Sidebar = ({children}) => {
                 </div>
                 {
                     menuItem.map((item, index)=>(
-                        <NavLink to={item.path} key={index} className="link" activeclassName="active">
+                        <a key={index} className="link" onClick={item.click}>
                             <div className="icon">{item.icon}</div>
-                            <div style={{display: isOpen ? "block" : "none"}} className="link_text">{item.name}</div>
-                        </NavLink>
+                            <div style={{display: isOpen ? "block" : "none"}} className="link_text" >{item.name}</div>
+                        </a>
                     ))
                 }
             </div>
             {/* <main>{children}</main> */}
             {/* Modal */}
             <Modal
-                    onHide={toggle}
-                    show={modal}
+                    onHide={openGenerator}
+                    show={show}
                 >
                     
                     <Modal.Dialog>
-                    <Form onSubmit={handleSubmit}>
-                        <Modal.Header closeButton>
-                        <Modal.Title id="modalName">{data.name}</Modal.Title>
+                        <Modal.Header>
+                            <div className="generatedPasswordContainer">
+                                <div className="passwordAndIndicator">
+                                    <div className="passwordInputContainer">
+                                        <div id="passwordInput"></div>
+                                        <Button id="refreshButton" type="button" className="refresh-btn" onClick={handleGenerate}>
+                                            <TbRefresh className="refresh-icon"/>
+
+                                        </Button>
+
+                                    </div>
+                                </div>
+                                <div className="passwordButtons">
+
+                                </div>
+                            </div>
                         </Modal.Header>
                         <Modal.Body>
-                        <Form.Group className="form-group">
-                            <Form.Label className="label" >Email</Form.Label>
-                            <Form.Control id="modalEmail" name="email" type="email" value={data.email} onChange={handleChange}/>
-                        </Form.Group>
-                        <Form.Group className="form-group">
-                            <Form.Label className="label">Username</Form.Label>
-                            <Form.Control id="modalUsername" name="username" type="text" value={data.username} onChange={handleChange}/>
-                        </Form.Group>
-                        <Form.Group className="form-group">
-                            <Form.Label className="label">Password</Form.Label>
-                            <Form.Control id="modalPassword" name="password" type="password" value={data.password} onChange={handleChange}/>
-                        </Form.Group>
-                        <Form.Group className="form-group">
-                            <Form.Label className="label">Website</Form.Label>
-                            <Form.Control id="modalUrl" name="url" type="url" value={data.url} onChange={handleChange}/>
-                        </Form.Group>
+                            <div className="generatorSettings">
+                                <div className="generatorOptions">
+                                    <div className="lengthContainer">
+                                        <input id="lengthRange" type="range" min="8" max="40"/>
+                                    </div>
+                                    <div className="checkContainer">
+                                        <input id="lowerCheck" type="checkbox" />
+                                        <label className="checkLabel" >Lower Cases (e.g. ah)</label>
+                                    </div>
+                                    <div className="checkContainer">
+                                        <input id="upperCheck" type="checkbox" />
+                                        <label className="checkLabel" >Upper Cases (e.g. TG)</label>
+                                    </div>
+                                    <div className="checkContainer">
+                                        <input id="symbolsCheck" type="checkbox" />
+                                        <label className="checkLabel" >Symbols Cases (e.g. @%&?)</label>
+                                    </div>
+                                    <div className="checkContainer">
+                                        <input id="numbersCheck" type="checkbox" />
+                                        <label className="checkLabel" >Numbers Cases (e.g. 1298)</label>
+                                    </div>
+                                </div>
+                            </div>
                         </Modal.Body>
-                    </Form>
                     
-                    <Modal.Footer>
-                    <Button variant="secondary" onClick={toggle}>
-                        Close
-                    </Button>
-                    <Button variant="primary">Understood</Button>
-                    </Modal.Footer>
                     </Modal.Dialog>
                 </Modal>
         </div>

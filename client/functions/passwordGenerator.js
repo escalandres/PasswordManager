@@ -1,4 +1,4 @@
-export function generate(length, lower, upper, punct, number) {
+export function generate(length, lower, upper, symbol, number) {
     let userPassword = "";
     let passwordCharSet = "";
     var lowercase = "abcdefghijklmnopqrstuvwxyz",
@@ -12,7 +12,7 @@ export function generate(length, lower, upper, punct, number) {
     if (upper) {
         passwordCharSet += uppercase;
     }
-    if (punct) {
+    if (symbol) {
         passwordCharSet += punctuation;
     }
     if (number) {
