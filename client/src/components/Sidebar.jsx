@@ -6,6 +6,7 @@ import SidebarMenu from 'react-bootstrap-sidebar-menu';
 import { Button, ButtonToolbar, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter} from 'react-bootstrap';
 import '../css/theme1.css';
 import '../css/sidebar.css';
+import AlertMessage from "./AlertMessage";
 import { generate } from "../../functions/passwordGenerator";
 import {
     FaTh,
@@ -26,6 +27,11 @@ import {
 import { NavLink } from 'react-router-dom';
 // import { faGear } from 'react-bootstrap-icons';
 
+const state = {
+    text: '',
+    type: ''
+};
+
 
 const Sidebar = ({children}) => {
     const [range, setRange] = useState(40);
@@ -33,6 +39,7 @@ const Sidebar = ({children}) => {
     const toggle = () => setIsOpen (!isOpen);
     const[show ,setShow] = useState(false);
     const openGenerator = () => setShow (!show);
+    const [alert, setAlert] = useState(state) 
     const menuItem=[
         {
             path:"/",
@@ -82,7 +89,15 @@ const Sidebar = ({children}) => {
         let symbolIsChecked = document.getElementById("symbolsCheck").checked;
         let numberIsChecked = document.getElementById("numbersCheck").checked;
         if(lowerIsChecked===false&&upperIsChecked===false&&symbolIsChecked===false&&numberIsChecked===false){
-            alert('Debe selecciona alguna de las opciones!')
+            document.getElementById("generator__alert-container").classList.remove("hide")
+            setAlert({text: "You must select at least one option", type: "danger"})
+            // state.text = ;
+            // state.type = "danger";
+            setTimeout(() => {
+                // load.classList.add("hide")
+                document.getElementById("generator__alert-container").classList.add("hide")
+            }, 4000);
+            //alert('Debe selecciona alguna de las opciones!')
         }else{
         let pass = generate(length, lowerIsChecked, upperIsChecked, symbolIsChecked, numberIsChecked)
         document.getElementById("passwordInput").innerHTML = pass;
@@ -118,9 +133,12 @@ const Sidebar = ({children}) => {
                     <Modal.Dialog>
                         <Modal.Header>
                             <div className="generatedPasswordContainer">
+                                <div id="generator__alert-container" className="alert-container hide">
+                                    <AlertMessage id="message" text={alert.text} type={alert.type} />            
+                                </div>
                                 <div className="passwordAndIndicator">
                                     <div className="passwordInputContainer">
-                                        <div id="passwordInput"></div>
+                                        <div id="passwordInput" ></div>
                                         <Button id="refreshButton" variant="link" className="refresh-btn" onClick={handleGenerate}>
                                             <TbRefresh className="refresh-icon"/>
 
@@ -129,7 +147,7 @@ const Sidebar = ({children}) => {
                                     </div>
                                 </div>
                                 <div className="passwordButtons">
-
+                                
                                 </div>
                             </div>
                         </Modal.Header>
