@@ -28,6 +28,7 @@ import { NavLink } from 'react-router-dom';
 
 
 const Sidebar = ({children}) => {
+    const [range, setRange] = useState(40);
     const[isOpen ,setIsOpen] = useState(true);
     const toggle = () => setIsOpen (!isOpen);
     const[show ,setShow] = useState(false);
@@ -70,15 +71,23 @@ const Sidebar = ({children}) => {
             icon:<FaUserAlt/>
         },
     ]
+    const handleChange = () =>{
+        setRange(parseInt(document.getElementById("lengthRange").value))
+    }
+
     const handleGenerate = () => {
         let length = document.getElementById("lengthRange").value;
         let lowerIsChecked = document.getElementById("lowerCheck").checked;
         let upperIsChecked = document.getElementById("upperCheck").checked;
         let symbolIsChecked = document.getElementById("symbolsCheck").checked;
         let numberIsChecked = document.getElementById("numbersCheck").checked;
+        if(lowerIsChecked===false&&upperIsChecked===false&&symbolIsChecked===false&&numberIsChecked===false){
+            alert('Debe selecciona alguna de las opciones!')
+        }else{
         let pass = generate(length, lowerIsChecked, upperIsChecked, symbolIsChecked, numberIsChecked)
         document.getElementById("passwordInput").innerHTML = pass;
         console.log(pass)
+    }
     }
     return (
         <div className="sidebar-container">
@@ -112,7 +121,7 @@ const Sidebar = ({children}) => {
                                 <div className="passwordAndIndicator">
                                     <div className="passwordInputContainer">
                                         <div id="passwordInput"></div>
-                                        <Button id="refreshButton" type="button" className="refresh-btn" onClick={handleGenerate}>
+                                        <Button id="refreshButton" variant="link" className="refresh-btn" onClick={handleGenerate}>
                                             <TbRefresh className="refresh-icon"/>
 
                                         </Button>
@@ -128,7 +137,8 @@ const Sidebar = ({children}) => {
                             <div className="generatorSettings">
                                 <div className="generatorOptions">
                                     <div className="lengthContainer">
-                                        <input id="lengthRange" type="range" min="8" max="40"/>
+                                    <label id="lengthRangeLabel">LENGTH ({range})</label>
+                                        <input id="lengthRange" type="range" step="1" min="8" max="40" onChange={handleChange}/>
                                     </div>
                                     <div className="checkContainer">
                                         <input id="lowerCheck" type="checkbox" />
