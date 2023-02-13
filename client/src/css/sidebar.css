@@ -27,9 +27,20 @@
 
 }
 
+/* .generatorModal{
+    height: 400px;
+}
+.modal-content{
+    height: 450px;
+} */
+
+#generator__alert-container{
+    margin-bottom: 6px;
+}
+
 .generatedPasswordContainer{
     width: 430px;
-    height: 100px;
+    height: 150px;
 
 }
 
@@ -71,7 +82,7 @@
     float: left;
     background: #fff;
     /* border: 1px solid red; */
-    --password-font-size: 20px;
+    --password-font-size: 17px;
     --password-line-height: 32px;
     --password-letter-spacing: 0.05em;
     margin-left: 12px;
@@ -147,4 +158,12 @@ input[type="radio"]:checked {
 
 .passwordButtons{
     height: 60px;
+    float: right;
+    display: flex;
+    place-items: right;
+    align-items: center;
+}
+
+#copy-btn{
+    position: relative;
 }

@@ -34,6 +34,8 @@ const state = {
 
 
 const Sidebar = ({children}) => {
+    const navigate = useNavigate();
+
     const [range, setRange] = useState(40);
     const[isOpen ,setIsOpen] = useState(true);
     const toggle = () => setIsOpen (!isOpen);
@@ -42,7 +44,7 @@ const Sidebar = ({children}) => {
     const [alert, setAlert] = useState(state) 
     const menuItem=[
         {
-            path:"/",
+            path:"/dash",
             name:"Gallery",
             click:"",
             icon:<FaTh/>
@@ -81,7 +83,9 @@ const Sidebar = ({children}) => {
     const handleChange = () =>{
         setRange(parseInt(document.getElementById("lengthRange").value))
     }
-
+    const handleNavigate = (path) =>{
+        navigate(path)
+    }
     const handleGenerate = () => {
         let length = document.getElementById("lengthRange").value;
         let lowerIsChecked = document.getElementById("lowerCheck").checked;
@@ -117,6 +121,8 @@ const Sidebar = ({children}) => {
                 {
                     menuItem.map((item, index)=>(
                         <a key={index} className="link" onClick={item.click}>
+
+                        {/* <a key={index} className="link" onClick={() => {handleNavigate(item.path)}}> */}
                             <div className="icon">{item.icon}</div>
                             <div style={{display: isOpen ? "block" : "none"}} className="link_text" >{item.name}</div>
                         </a>
@@ -128,6 +134,7 @@ const Sidebar = ({children}) => {
             <Modal
                     onHide={openGenerator}
                     show={show}
+                    className="generatorModal"
                 >
                     
                     <Modal.Dialog>
@@ -147,7 +154,9 @@ const Sidebar = ({children}) => {
                                     </div>
                                 </div>
                                 <div className="passwordButtons">
-                                
+                                    <Button id="copy-btn" variant="primary">
+                                        Copy
+                                    </Button>
                                 </div>
                             </div>
                         </Modal.Header>

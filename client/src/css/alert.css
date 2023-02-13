@@ -3,6 +3,15 @@
     animation: alert 4s;
 }
 
+#alert-message{
+    height: 40px;
+}
+
+#alert-component{
+    height: 100%;
+    padding: 8px 20px;
+    
+}
 @keyframes alert {
 
     0%{
