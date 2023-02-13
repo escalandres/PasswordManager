@@ -138,7 +138,7 @@ const Sidebar = ({children}) => {
                 >
                     
                     <Modal.Dialog>
-                        <Modal.Header>
+                        <Modal.Header className="modalHeader">
                             <div className="generatedPasswordContainer">
                                 <div id="generator__alert-container" className="alert-container hide">
                                     <AlertMessage id="message" text={alert.text} type={alert.type} />            

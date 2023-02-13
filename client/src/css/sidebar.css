@@ -40,8 +40,8 @@
 
 .generatedPasswordContainer{
     width: 430px;
-    height: 150px;
-
+    /* height: 140px; */
+    
 }
 
 .passwordAndIndicator{
@@ -65,6 +65,7 @@
 
 .modal-header{
     background: #D9E6E9;
+    word-wrap: break-word;
 }
 
 #passwordInputContainer{
