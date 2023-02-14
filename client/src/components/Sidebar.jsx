@@ -33,10 +33,12 @@ const state = {
 };
 
 
+
+
 const Sidebar = ({children}) => {
     const navigate = useNavigate();
 
-    const [range, setRange] = useState(40);
+    const [range, setRange] = useState(16);
     const[isOpen ,setIsOpen] = useState(true);
     const toggle = () => setIsOpen (!isOpen);
     const[show ,setShow] = useState(false);
@@ -107,6 +109,20 @@ const Sidebar = ({children}) => {
         document.getElementById("passwordInput").innerHTML = pass;
         console.log(pass)
     }
+
+    }
+
+    const copyNewPassword = () =>{
+        let clipboard = document.getElementById('passwordInput');
+        navigator.clipboard.writeText(clipboard.textContent);
+        document.getElementById("generator__alert-container").classList.remove("hide")
+            setAlert({text: "Password copied on clipboard!", type: "success"})
+            // state.text = ;
+            // state.type = "danger";
+            setTimeout(() => {
+                // load.classList.add("hide")
+                document.getElementById("generator__alert-container").classList.add("hide")
+            }, 4000);
     }
     return (
         <div className="sidebar-container">
@@ -154,7 +170,7 @@ const Sidebar = ({children}) => {
                                     </div>
                                 </div>
                                 <div className="passwordButtons">
-                                    <Button id="copy-btn" variant="primary">
+                                    <Button id="copy-btn" variant="success" onClick={copyNewPassword}>
                                         Copy
                                     </Button>
                                 </div>
@@ -165,7 +181,7 @@ const Sidebar = ({children}) => {
                                 <div className="generatorOptions">
                                     <div className="lengthContainer">
                                     <label id="lengthRangeLabel">LENGTH ({range})</label>
-                                        <input id="lengthRange" type="range" step="1" min="8" max="40" onChange={handleChange}/>
+                                        <input id="lengthRange" type="range" defaultValue="16" step="1" min="8" max="40" onChange={handleChange}/>
                                     </div>
                                     <div className="checkContainer">
                                         <input id="lowerCheck" type="checkbox" />

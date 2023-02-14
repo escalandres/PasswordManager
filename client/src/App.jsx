@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import React, { useState } from 'react'
 import Login from './components/Login'
 import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import ResetPassword from './components/ResetPassword'
@@ -27,6 +27,18 @@ const router = createBrowserRouter(
   ]
 );
 function App() {
+  React.useEffect(() => {
+    let pagetitle = document.title;
+
+    window.addEventListener("blur",()=>{
+      document.title = "Come back here";
+    })
+    window.addEventListener("focus",()=>{
+      document.title = pagetitle;
+    })
+    
+  }, []);
+  
   const [count, setCount] = useState(0)
 
   return (
