@@ -25,6 +25,7 @@ import {
     TbRefresh
 }from "react-icons/tb"; 
 import { NavLink } from 'react-router-dom';
+import FormRange from "react-bootstrap/esm/FormRange";
 // import { faGear } from 'react-bootstrap-icons';
 
 const state = {
@@ -97,13 +98,9 @@ const Sidebar = ({children}) => {
         if(lowerIsChecked===false&&upperIsChecked===false&&symbolIsChecked===false&&numberIsChecked===false){
             document.getElementById("generator__alert-container").classList.remove("hide")
             setAlert({text: "You must select at least one option", type: "danger"})
-            // state.text = ;
-            // state.type = "danger";
             setTimeout(() => {
-                // load.classList.add("hide")
                 document.getElementById("generator__alert-container").classList.add("hide")
             }, 4000);
-            //alert('Debe selecciona alguna de las opciones!')
         }else{
         let pass = generate(length, lowerIsChecked, upperIsChecked, symbolIsChecked, numberIsChecked)
         document.getElementById("passwordInput").innerHTML = pass;
@@ -182,6 +179,8 @@ const Sidebar = ({children}) => {
                                     <div className="lengthContainer">
                                     <label id="lengthRangeLabel">LENGTH ({range})</label>
                                         <input id="lengthRange" type="range" defaultValue="16" step="1" min="8" max="40" onChange={handleChange}/>
+                                        {/* <input id="lengthRange" defaultValue="16" max="40" min="8" step="1" type="range" class="ui-components-cz57ux" value="16" onChange={handleChange}></input> */}
+                                        {/* <FormRange id="lengthRange"></FormRange> */}
                                     </div>
                                     <div className="checkContainer">
                                         <input id="lowerCheck" type="checkbox" />

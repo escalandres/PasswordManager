@@ -143,9 +143,12 @@
     border: 1px solid #0C5161;
 }
 
+
+
+
 #lengthRange{
     width: 300px;
-    background: red;
+    
 }
 
 input:checked, #lowerCheck {
