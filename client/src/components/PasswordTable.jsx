@@ -34,6 +34,7 @@ const initialState = {
     username: '',
     password: '',
     url: '',
+
 }
 
 const data = {
@@ -42,6 +43,7 @@ const data = {
     username: '',
     password: '',
     url: '',
+
 }
 
 const initialPass = [];
@@ -55,18 +57,21 @@ const state = {
     type: ''
 };
 
-function passData(passwordData){
-    data.name = passwordData.name;
-    data.email = passwordData.email;
-    data.username = passwordData.username;
-    data.password = passwordData.password;
-    data.url = passwordData.url;
-}
+// function passData(passwordData, index){
+//     data.name = passwordData.name;
+//     data.email = passwordData.email;
+//     data.username = passwordData.username;
+//     data.password = passwordData.password;
+//     data.url = passwordData.url;
+//     data.index = index;
+// }
 
 const PasswordGallery = () => {
     const [passwords, setPasswords] = useState(initialPass);
     const [modal, setModal] = useState(initialBool);
     const [show, setShow] = useState(initialBool);
+    const [upData, setUpData] = useState(data);
+    const [index, setIndex] = useState(0);
     const navigate = useNavigate();
     React.useEffect(() => {
         
@@ -81,7 +86,7 @@ const PasswordGallery = () => {
                 console.log('passwords')
                 console.log(decryptedData)
                 pass = decryptedData;
-                setPasswords((passwords) => decryptedData); 
+                setPasswords(decryptedData); 
                 //state.passwords = decryptedData;
             } catch{
     
@@ -101,7 +106,10 @@ const PasswordGallery = () => {
     const handleShow = () =>{
         setShow((show) => !show);
     }
-
+    const passData = (passwordData, indice)=>{
+        setUpData(passwordData)
+        setIndex(indice);
+    }
     const [form, setForm] = useState(initialState);
     
     const toggle = () =>{
@@ -112,6 +120,7 @@ const PasswordGallery = () => {
     }
     // const [form, setForm] = useState(initialState);
     const handleChange = (e) => {
+        setUpData({ ...upData, [e.target.name]: e.target.value })
         setForm({ ...form, [e.target.name]: e.target.value });
     }
 
@@ -119,11 +128,11 @@ const PasswordGallery = () => {
         e.preventDefault();
             document.getElementById("newPasswordSpinner").classList.remove("hide")
             const { name, email, username, password, url} = form;
-            const URL = 'http://localhost:5200/password/save-password';
+            const URL = import.meta.env.VITE_SERVER+'/password/save-password';
             const user = cookies.get('user')
             console.log(user)
             const answer = await axios.post(`${URL}`, {
-                name, user, email, username, password, url
+                name, user, email, username, password, url, index
             });
             console.log(answer)
             if(answer.data.status === "OK"){
@@ -177,7 +186,7 @@ const PasswordGallery = () => {
                         if(JSON.stringify(password) !== JSON.stringify({name:'',email:'',username:'',password:'',url:''})){
                         return(
                             
-                                <tr className="password-container" id={index} key={index} onClick={() => {toggle();passData(pass[index])}}>
+                                <tr className="password-container" id={index} key={index} onClick={() => {toggle();passData(pass[index],index)}}>
                                     <td style={{paddingLeft: 50}}>
                                         <div onSubmit={handleSubmit}>
                                             <p className="text-muted"><strong>{password.name}</strong></p>
@@ -207,33 +216,37 @@ const PasswordGallery = () => {
                     <Modal.Dialog>
                     <Form onSubmit={handleSubmit}>
                         <Modal.Header closeButton>
-                        <Modal.Title id="modalName">{data.name}</Modal.Title>
+                        <div id="newPasswordSpinner" className="hide"><Spinner id="" animation="border"  />;</div>
+
+                        <Modal.Title id="modalName">{upData.name}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
                         <Form.Group className="form-group">
                             <Form.Label className="label" >Email</Form.Label>
-                            <Form.Control id="modalEmail" name="email" type="email" value={data.email} onChange={handleChange}/>
+                            <Form.Control id="modalEmail" name="email" type="email" value={upData.email} onChange={handleChange}/>
                         </Form.Group>
                         <Form.Group className="form-group">
                             <Form.Label className="label">Username</Form.Label>
-                            <Form.Control id="modalUsername" name="username" type="text" value={data.username} onChange={handleChange}/>
+                            <Form.Control id="modalUsername" name="username" type="text" value={upData.username} onChange={handleChange}/>
                         </Form.Group>
                         <Form.Group className="form-group">
                             <Form.Label className="label">Password</Form.Label>
-                            <Form.Control id="modalPassword" name="password" type="password" value={data.password} onChange={handleChange}/>
+                            <Form.Control id="modalPassword" name="password" type="password" value={upData.password} onChange={handleChange}/>
                         </Form.Group>
                         <Form.Group className="form-group">
                             <Form.Label className="label">Website</Form.Label>
-                            <Form.Control id="modalUrl" name="url" type="url" value={data.url} onChange={handleChange}/>
+                            <Form.Control id="modalUrl" name="url" type="url" value={upData.url} onChange={handleChange}/>
                         </Form.Group>
+                            <input id="modalIndex" className="hide" name="index" type="number" value={index} disabled/>
                         </Modal.Body>
+                        <Button variant="secondary" onClick={toggle}>
+                        Close
+                    </Button>
+                    <Button type="submit" variant="success">Save Password</Button>
                     </Form>
                     
                     <Modal.Footer>
-                    <Button variant="secondary" onClick={toggle}>
-                        Close
-                    </Button>
-                    <Button variant="primary">Understood</Button>
+                    
                     </Modal.Footer>
                     </Modal.Dialog>
                 </Modal>

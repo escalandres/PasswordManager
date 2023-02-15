@@ -50,7 +50,7 @@ const Dashboard = () =>{
         e.preventDefault();
             document.getElementById("newPasswordSpinner").classList.remove("hide")
             const { name, email, username, password, url} = form;
-            const URL = import.meta.env.VITE_SERVER+'/password/save-password';
+            const URL = import.meta.env.VITE_SERVER+'/password/add-password';
             const user = cookies.get('user')
             console.log(user)
             const answer = await axios.post(`${URL}`, {
@@ -155,7 +155,7 @@ const Dashboard = () =>{
                             <Button variant="secondary" onClick={toggle}>
                                 Close
                             </Button>
-                            <Button type="submit">Save Password</Button>
+                            <Button type="submit" variant="success">Save Password</Button>
                         </Modal.Footer>
                     </Form>
                     </Modal.Dialog>
