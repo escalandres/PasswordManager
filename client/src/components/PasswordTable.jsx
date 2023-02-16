@@ -50,9 +50,6 @@ const initialPass = [];
 const initialBool = false;
 var pass = [];
 const state = {
-    show: false,
-    passwords: [],
-    modal: false,
     text: '',
     type: ''
 };
@@ -68,8 +65,10 @@ const state = {
 
 const PasswordGallery = () => {
     const [passwords, setPasswords] = useState(initialPass);
-    const [modal, setModal] = useState(initialBool);
-    const [show, setShow] = useState(initialBool);
+    const [modal, setModal] = useState(false);
+    const [alert, setAlert] = useState(state) 
+
+    const [show, setShow] = useState(false);
     const [upData, setUpData] = useState(data);
     const [index, setIndex] = useState(0);
     const navigate = useNavigate();
@@ -127,37 +126,51 @@ const PasswordGallery = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
             document.getElementById("newPasswordSpinner").classList.remove("hide")
-            const { name, email, username, password, url} = form;
+            const { name, email, username, password, url} = upData;
             const URL = import.meta.env.VITE_SERVER+'/password/save-password';
             const user = cookies.get('user')
             console.log(user)
+            console.log('name:'+name)
+            console.log('email:'+email)
+
+            console.log('username:'+username)
+            console.log('password:'+password)
+            console.log('url:'+url)
+            
             const answer = await axios.post(`${URL}`, {
                 name, user, email, username, password, url, index
             });
             console.log(answer)
             if(answer.data.status === "OK"){
+                document.getElementById("alert-container").classList.remove("hide")
+
                 document.getElementById("newPasswordSpinner").classList.add("hide")
-                handleOpenNewPassword()
+                toggle()
                 // this.setState({modal: !this.state.modal});
-                state.text = "New password saved successfully!";
-                state.type = "success";
+                setAlert({text: "New password saved successfully!", type: "success"})
                 // document.getElementById("alert-message").setAttribute("text", "New password saved successfully!")
                 // document.getElementById("alert-message").setAttribute("type", "success")
                 // document.getElementById("alert-container").classList.remove("hide")
                 setTimeout(() => {
-                    console.log('w')
+                    
                     // load.classList.add("hide")
                     document.getElementById("alert-container").classList.add("hide")
                     window.location.reload();
                 }, 4000);
             }
             else{
+                document.getElementById("alert-container").classList.remove("hide")
+
                 document.getElementById("newPasswordSpinner").classList.add("hide")
-                handleOpenNewPassword()
-                state.text = "Error on saving password!";
-                state.type = "danger";
+                toggle()
+                setAlert({text: "Error on saving password!", type: "danger"})
                 // document.getElementById("message").setAttribute("text", "")
                 // document.getElementById("message").setAttribute("type", "")
+                setTimeout(() => {
+                    
+                    // load.classList.add("hide")
+                    document.getElementById("alert-container").classList.add("hide")
+                }, 4000);
 
             }
             //window.location.reload();
@@ -167,7 +180,7 @@ const PasswordGallery = () => {
     return(
         <div className="password-table" id="">
             <div id="alert-container" className="alert-container hide">
-                <AlertMessage id="message" text={state.text} type={state.type} />            
+                <AlertMessage id="message" text={alert.text} type={alert.type} />            
             </div>
             
             {/* <Button onClick={handleOpenNewPassword} variant="success">Create new Password</Button> */}
