@@ -191,6 +191,22 @@ app.post('/upload', upload.array("file"), (req, res) =>{
     res.json({ status: "success"});
 })
 
+app.use(function(req, res, next){ 
+    res.status(404); // respond with html page 
+    if (req.accepts('html')){ 
+        res.render('404', { url: req.url }); 
+        return; 
+    } // respond with json 
+    if (req.accepts('json')){ 
+        res.send({ error: 'Not found' }); 
+        return; 
+    } // default to plain-text. send() 
+    res.type('txt').send('Not found'); 
+});
+
+//The 404 Route (ALWAYS Keep this as the last route) 
+app.get('*', function(req, res){ res.send('what???', 404); });
+
 // const storage = multer.diskStorage({
 // 	destination: `${_dirname}/uploads/`,
 // 	filename: (req, file, cb) =>{

@@ -4,6 +4,7 @@ import {createBrowserRouter, RouterProvider} from "react-router-dom";
 import ResetPassword from './components/ResetPassword'
 import PasswordGallery from './components/PasswordGallery';
 import Dashboard from './components/Dashboard';
+import P404 from './components/P404';
 import './App.css'
 
 const router = createBrowserRouter(
@@ -24,6 +25,10 @@ const router = createBrowserRouter(
       path: "/dash",
       element: <Dashboard/>
     },
+    {
+      path: "/404",
+      element: <P404/>
+    },
   ]
 );
 function App() {
@@ -43,7 +48,7 @@ function App() {
 
   return (
     <div className="App">
-      <RouterProvider router={router}/>
+      <RouterProvider router={router} errorElement={P404}/>
     </div>
   )
 }
