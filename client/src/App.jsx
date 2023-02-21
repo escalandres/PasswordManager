@@ -11,7 +11,8 @@ const router = createBrowserRouter(
   [
     {
       path: "/",
-      element: <Login/>
+      element: <Login/>,
+      errorElement: <P404/>
     },
     {
       path: "/change-password",
@@ -48,7 +49,7 @@ function App() {
 
   return (
     <div className="App">
-      <RouterProvider router={router} errorElement={P404}/>
+      <RouterProvider router={router} />
     </div>
   )
 }

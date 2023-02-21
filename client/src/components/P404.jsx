@@ -27,7 +27,7 @@ export default class P404 extends Component{
             </div>
             <div className= "text">Oops. The page you're looking
             for doesn't exist. </div>
-            <a className="button" href="#">Back Home V </a>
+            <a className="button" href="/dash">Back Home </a>
         </div>
       
       )
