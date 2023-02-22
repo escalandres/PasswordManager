@@ -63,7 +63,7 @@ const state = {
 //     data.index = index;
 // }
 
-const PasswordGallery = () => {
+const PasswordTable = () => {
     const [passwords, setPasswords] = useState(initialPass);
     const [modal, setModal] = useState(false);
     const [alert, setAlert] = useState(state) 
@@ -141,45 +141,31 @@ const PasswordGallery = () => {
                 name, user, email, username, password, url, index
             });
             console.log(answer)
-            if(answer.data.status === "OK"){
-                document.getElementById("alert-container").classList.remove("hide")
-
                 document.getElementById("newPasswordSpinner").classList.add("hide")
                 toggle()
-                // this.setState({modal: !this.state.modal});
-                setAlert({text: "New password saved successfully!", type: "success"})
-                // document.getElementById("alert-message").setAttribute("text", "New password saved successfully!")
-                // document.getElementById("alert-message").setAttribute("type", "success")
-                // document.getElementById("alert-container").classList.remove("hide")
-                setTimeout(() => {
-                    
-                    // load.classList.add("hide")
-                    document.getElementById("alert-container").classList.add("hide")
-                    window.location.reload();
-                }, 4000);
+            if(answer.data.status === "OK"){
+                setAlert({text: "Modified password saved successfully!", type: "success"})
+                document.getElementById("modified__alert-container").classList.remove("hide")
+                console.log('si')
             }
             else{
-                document.getElementById("alert-container").classList.remove("hide")
-
-                document.getElementById("newPasswordSpinner").classList.add("hide")
-                toggle()
                 setAlert({text: "Error on saving password!", type: "danger"})
-                // document.getElementById("message").setAttribute("text", "")
-                // document.getElementById("message").setAttribute("type", "")
-                setTimeout(() => {
-                    
-                    // load.classList.add("hide")
-                    document.getElementById("alert-container").classList.add("hide")
-                }, 4000);
+                document.getElementById("modified__alert-container").classList.remove("hide")
 
             }
+
+            setTimeout(() => {
+                // load.classList.add("hide")
+                document.getElementById("modified__alert-container").classList.add("hide")
+                window.location.reload();
+            }, 4000);
             //window.location.reload();
         //}
     }
 
     return(
         <div className="password-table" id="">
-            <div id="alert-container" className="alert-container hide">
+            <div id="modified__alert-container" className="alert-container hide">
                 <AlertMessage id="message" text={alert.text} type={alert.type} />            
             </div>
             
@@ -269,4 +255,4 @@ const PasswordGallery = () => {
         
     )
 }
-export default PasswordGallery
+export default PasswordTable

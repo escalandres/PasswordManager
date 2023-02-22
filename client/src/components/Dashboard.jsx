@@ -42,6 +42,8 @@ const Dashboard = () =>{
     const[isOpen ,setIsOpen] = useState(false);
     const toggle = () => setIsOpen (!isOpen);
     const [form, setForm] = useState(initialState);
+    const [alert, setAlert] = useState(state) 
+
     // const [form, setForm] = useState(initialState);
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -62,8 +64,7 @@ const Dashboard = () =>{
                 document.getElementById("newPasswordSpinner").classList.add("hide")
                 toggle()
                 // this.setState({modal: !this.state.modal});
-                state.text = "New password saved successfully!";
-                state.type = "success";
+                setAlert({text: "New password saved successfully!", type: "success"})
                 // document.getElementById("alert-message").setAttribute("text", "New password saved successfully!")
                 // document.getElementById("alert-message").setAttribute("type", "success")
                 document.getElementById("alert-container").classList.remove("hide")
@@ -77,8 +78,7 @@ const Dashboard = () =>{
             else{
                 document.getElementById("newPasswordSpinner").classList.add("hide")
                 handleOpenNewPassword()
-                state.text = "Error on saving password!";
-                state.type = "danger";
+                setAlert({text: "Error on saving password!", type: "danger"})
                 // document.getElementById("message").setAttribute("text", "")
                 // document.getElementById("message").setAttribute("type", "")
 
@@ -93,7 +93,7 @@ const Dashboard = () =>{
                 <Sidebar/>
                 <div className="right-container">
                     <div id="alert-container" className="alert-container hide">
-                        <AlertMessage id="message" text={state.text} type={state.type} />            
+                        <AlertMessage id="message" text={alert.text} type={alert.type} />            
                     </div>
                     <div className=" navbar-row" style={{margin: 0}}>
                         <Navbar expand="lg" >
