@@ -238,10 +238,12 @@ const PasswordTable = () => {
                         </Form.Group>
                             <input id="modalIndex" className="hide" name="index" type="number" value={index} disabled/>
                         </Modal.Body>
-                        <Button variant="secondary" onClick={toggle}>
-                        Close
-                    </Button>
-                    <Button type="submit" variant="success">Save Password</Button>
+                        <div className="btn-container my-3">
+                            <Button variant="secondary mx-2" onClick={toggle}>Close</Button>
+                            <Button type="submit" variant="success mx-2">Save Password</Button>
+                            <Button variant="danger mx-2 ">Delete Password</Button>
+                        </div>
+                        
                     </Form>
                     
                     <Modal.Footer>
