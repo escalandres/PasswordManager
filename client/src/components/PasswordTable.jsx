@@ -4,7 +4,7 @@ import axios from 'axios';
 import { Navigate, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {faFacebook,faGooglePlusG, faLinkedinIn} from "@fortawesome/free-brands-svg-icons";
-import {faSpinner} from "@fortawesome/free-solid-svg-icons"
+import {faSpinner, faFloppyDisk, faTrash} from "@fortawesome/free-solid-svg-icons"
 import '../css/login.css';
 import '../css/password.css';
 import CryptoJS from "crypto-js";
@@ -220,28 +220,28 @@ const PasswordTable = () => {
                         <Modal.Title id="modalName">{upData.name}</Modal.Title>
                         </Modal.Header>
                         <Modal.Body>
-                        <Form.Group className="form-group">
-                            <Form.Label className="label" >Email</Form.Label>
-                            <Form.Control id="modalEmail" name="email" type="email" value={upData.email} onChange={handleChange}/>
-                        </Form.Group>
-                        <Form.Group className="form-group">
-                            <Form.Label className="label">Username</Form.Label>
-                            <Form.Control id="modalUsername" name="username" type="text" value={upData.username} onChange={handleChange}/>
-                        </Form.Group>
-                        <Form.Group className="form-group">
-                            <Form.Label className="label">Password</Form.Label>
-                            <Form.Control id="modalPassword" name="password" type="password" value={upData.password} onChange={handleChange}/>
-                        </Form.Group>
-                        <Form.Group className="form-group">
-                            <Form.Label className="label">Website</Form.Label>
-                            <Form.Control id="modalUrl" name="url" type="url" value={upData.url} onChange={handleChange}/>
-                        </Form.Group>
+                            <Form.Group className="form-group">
+                                <Form.Label className="label" >Email</Form.Label>
+                                <Form.Control id="modalEmail" name="email" type="email" value={upData.email} onChange={handleChange}/>
+                            </Form.Group>
+                            <Form.Group className="form-group">
+                                <Form.Label className="label">Username</Form.Label>
+                                <Form.Control id="modalUsername" name="username" type="text" value={upData.username} onChange={handleChange}/>
+                            </Form.Group>
+                            <Form.Group className="form-group">
+                                <Form.Label className="label">Password</Form.Label>
+                                <Form.Control id="modalPassword" name="password" type="password" value={upData.password} onChange={handleChange}/>
+                            </Form.Group>
+                            <Form.Group className="form-group">
+                                <Form.Label className="label">Website</Form.Label>
+                                <Form.Control id="modalUrl" name="url" type="url" value={upData.url} onChange={handleChange}/>
+                            </Form.Group>
                             <input id="modalIndex" className="hide" name="index" type="number" value={index} disabled/>
                         </Modal.Body>
                         <div className="btn-container my-3">
+                            <Button type="submit" variant="success mx-2"><FontAwesomeIcon className="password-icon" icon={faFloppyDisk}/> Save</Button>
+                            <Button variant="danger mx-2 "><FontAwesomeIcon className="password-icon" icon={faTrash}/>Delete</Button>
                             <Button variant="secondary mx-2" onClick={toggle}>Close</Button>
-                            <Button type="submit" variant="success mx-2">Save Password</Button>
-                            <Button variant="danger mx-2 ">Delete Password</Button>
                         </div>
                         
                     </Form>

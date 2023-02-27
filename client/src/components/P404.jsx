@@ -2,6 +2,10 @@ import React, { Component } from 'react';
 // import Alert from 'react-bootstrap/Alert';
 import '../css/404.css';
 export default class P404 extends Component{
+  componentDidMount() {
+    document.title = "404 error - Page not found";
+  }
+    
     render(){
         return(
           <div className="wrapper">
