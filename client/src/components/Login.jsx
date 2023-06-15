@@ -38,6 +38,7 @@ const Login = () => {
         logInButton.addEventListener('click', () => {
             container.classList.remove("right-panel-active");
         });
+        
     }, []);
     const navigate = useNavigate();
     const [form, setForm] = useState(initialState);
