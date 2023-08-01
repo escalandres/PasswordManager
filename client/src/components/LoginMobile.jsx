@@ -7,8 +7,7 @@ import {faFacebook,faGooglePlusG, faLinkedinIn} from "@fortawesome/free-brands-s
 import '../css/login.css';
 import {faSpinner} from "@fortawesome/free-solid-svg-icons";
 import AlertMessage from "./AlertMessage";
-import swal from 'sweetalert';
-import toastr from 'toastr';
+// import {Alert} from 'react-bootstrap/';
 import Alert from 'react-bootstrap/Alert';
 
 //
@@ -64,8 +63,7 @@ const Login = () => {
             document.getElementById("load-container").classList.remove("hide")
             const { sname, semail, spassword, lemail, lpassword} = form;
             
-            // const URL = import.meta.env.VITE_SERVER+'/auth';
-            const URL = 'http://localhost:5200/auth';
+            const URL = import.meta.env.VITE_SERVER+'/auth';
             //if(sname&&semail&&)
 
             //const URL = 'https://chat-app-project-ing-web.herokuapp.com/auth';
@@ -82,7 +80,6 @@ const Login = () => {
                     maxAge: 60 * 60 * 4,
                     sameSite: true
                 });
-                toastr.success('Todo bien')
                 setTimeout(() => {
                     // load.classList.add("hide")
                     document.getElementById("load-container").classList.add("hide")
@@ -91,7 +88,6 @@ const Login = () => {
                 
             }
             else{
-                swal("No se puedo iniciar sesión", "Tus datos son incorrectos, vuelve a intentarlo", "error");
                 setTimeout(() => {
                     console.log('p')
                     document.getElementById("load-container").classList.add("hide")

@@ -23,6 +23,7 @@ const ResetPassword = () => {
     const handleSubmit = async (e) => {
         const semail = ''
         e.preventDefault();
+        debugger
             const { name, email, password} = form;
             const URL = 'http://localhost:5200/change-password';
             //console.log(URL)

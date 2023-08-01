@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "scripts": {
-    "dev": "vite",
+    "dev": "vite --host",
     "build": "vite build",
     "preview": "vite preview"
   },
@@ -25,6 +25,8 @@
     "react-bootstrap-sidebar-menu": "^2.0.3",
     "react-dom": "^18.2.0",
     "react-icons": "^4.7.1",
+    "sweetalert": "^2.1.2",
+    "toastr": "^2.1.4",
     "universal-cookie": "^4.0.4",
     "vite-plugin-full-reload": "^1.0.5"
   },
